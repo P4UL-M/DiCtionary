@@ -22,7 +22,7 @@ typedef struct declinaison_noun
 
 typedef struct node
 {
-    char values;
+    char value;
     t_declinaison_noun *declinaisons;
     int nb_declinaisons;
     struct node **children;

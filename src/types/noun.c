@@ -19,7 +19,7 @@ p_tree_noun create_tree()
 p_node_noun create_node(char val)
 {
     p_node_noun node = malloc(sizeof(t_node_noun));
-    node->values = val;
+    node->value = val;
     node->children = malloc(sizeof(p_node_noun) * MAX);
     for (int i = 0; i < MAX; i++)
     {
