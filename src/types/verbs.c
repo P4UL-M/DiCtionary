@@ -3,10 +3,10 @@
 #include <stdbool.h>
 #include "verb.h"
 
-p_tree_verbs create_tree_verbs()
+p_tree_verb create_tree_verb()
 {
-    p_tree_verbs tree = malloc(sizeof(t_tree_verbs));
-    tree->children = malloc(sizeof(p_node_verbs) * MAX);
+    p_tree_verb tree = malloc(sizeof(t_tree_verb));
+    tree->children = malloc(sizeof(p_node_verb) * MAX);
     for (int i = 0; i < MAX; i++)
     {
         tree->children[i] = NULL;
@@ -15,11 +15,11 @@ p_tree_verbs create_tree_verbs()
     return tree;
 }
 
-p_node_verbs create_node_verbs(char val)
+p_node_verb create_node_verb(char val)
 {
-    p_node_verbs node = malloc(sizeof(t_node_verbs));
+    p_node_verb node = malloc(sizeof(t_node_verb));
     node->value = val;
-    node->children = malloc(sizeof(p_node_verbs) * MAX);
+    node->children = malloc(sizeof(p_node_verb) * MAX);
     for (int i = 0; i < MAX; i++)
     {
         node->children[i] = NULL;
@@ -39,7 +39,7 @@ t_conjugaison create_conjugaison(t_personne pers, t_temps temps, char *word)
     return conjugaison;
 }
 
-bool add_child_verbs(p_node_verbs parent, p_node_verbs child)
+bool add_child_verb(p_node_verb parent, p_node_verb child)
 {
     if (parent->nb_children < MAX)
     {
@@ -50,7 +50,7 @@ bool add_child_verbs(p_node_verbs parent, p_node_verbs child)
     return 0;
 }
 
-bool add_conjugaison(p_node_verbs node, t_conjugaison conjugaison)
+bool add_conjugaison(p_node_verb node, t_conjugaison conjugaison)
 {
     if (node->nb_conjugaisons < MAX_CONJUG)
     {

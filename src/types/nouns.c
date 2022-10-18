@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 // Path: src/types/noun.c
-p_tree_noun create_tree()
+p_tree_noun create_tree_noun()
 {
     p_tree_noun tree = malloc(sizeof(t_tree_noun));
     tree->children = malloc(sizeof(p_node_noun) * MAX);
@@ -16,7 +16,7 @@ p_tree_noun create_tree()
     return tree;
 }
 
-p_node_noun create_node(char val)
+p_node_noun create_node_noun(char val)
 {
     p_node_noun node = malloc(sizeof(t_node_noun));
     node->value = val;
