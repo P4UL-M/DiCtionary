@@ -1,41 +1,44 @@
 #ifndef noun_h
 #define noun_h
 
-#define MAX 26 // only 26 letters (take into account accent later)
+#include <stdbool.h>
 
-typedef enum forme
+#define MAX 26 // only 26 letters (take into account accent later)
+#define MAX_DECL 4
+
+typedef enum forme_noun
 {
     Mas_SG,
     Fem_SG,
     Mas_PL,
     Fem_PL,
-} t_forme;
+} t_forme_noun;
 
-typedef struct declinaison
+typedef struct declinaison_noun
 {
-    t_forme forme;
+    t_forme_noun forme;
     char *word;
-} t_declinaison, *p_declinaison;
+} t_declinaison_noun, *p_declinaison_noun;
 
 typedef struct node
 {
-    char val;
-    p_declinaison *declinaisons;
+    char values;
+    t_declinaison_noun *declinaisons;
     int nb_declinaisons;
     struct node **children;
-    int nb_child;
-} t_node, *p_node;
+    int nb_children;
+} t_node_noun, *p_node_noun;
 
 typedef struct tree
 {
-    p_node *children;
+    p_node_noun *children;
     int nb_children;
-} t_tree, *p_tree;
+} t_tree_noun, *p_tree_noun;
 
-p_tree create_tree();
-p_node create_node(char val);
-p_declinaison create_declinaison(t_forme forme, char *word);
-void add_child(p_node parent, p_node child);
-void add_declinaison(p_node node, p_declinaison declinaison);
+p_tree_noun create_tree();
+p_node_noun create_node(char val);
+t_declinaison_noun create_declinaison(t_forme_noun forme, char *word);
+bool add_child(p_node_noun parent, p_node_noun child);
+bool add_declinaison(p_node_noun node, t_declinaison_noun declinaison);
 
 #endif
