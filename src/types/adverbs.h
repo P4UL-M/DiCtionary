@@ -1,5 +1,5 @@
-#ifndef adverbs.h
-#define adverbs.h
+#ifndef adverbs_h
+#define adverbs_h
 
 #define MAX 26 // only 26 letters (take into account accent later)
 
@@ -12,7 +12,7 @@ typedef struct node_adv
 
 typedef struct tree_adv
 {
-    p_node *children;
+    p_node_adv *children;
     int nb_children;
 } t_tree_adv, *p_tree_adv;
 
