@@ -1,9 +1,12 @@
 #ifndef verb_h
 #define verb_h
 
-#define MAX 26 // only 26 letters (take into account accent later)
+#include <stdbool.h>
 
-typedef enum formes
+#define MAX 26 // only 26 letters (take into account accent later)
+#define MAX_CONJUG 18
+
+typedef enum personne
 {
     SG_P1,
     SG_P2,
@@ -38,8 +41,8 @@ typedef struct conjugaison
 
 typedef struct node
 {
-    char val;
-    p_conjugaison *conjugaisons;
+    char value;
+    t_conjugaison *conjugaisons;
     int nb_conjugaisons;
     struct node **children;
     int nb_children;
@@ -53,8 +56,8 @@ typedef struct tree_verbs
 
 p_tree_verbs create_tree_verbs();
 p_node_verbs create_node_verbs(char val);
-p_conjugaison create_conjugaison(t_personne pers, t_temps temps, char *word);
-void add_child_verbs(p_node_verbs parent, p_node_verbs child);
-void add_conjugaison(p_node_verbs node, p_conjugaison conjugaison);
+t_conjugaison create_conjugaison(t_personne pers, t_temps temps, char *word);
+bool add_child_verbs(p_node_verbs parent, p_node_verbs child);
+bool add_conjugaison(p_node_verbs node, t_conjugaison conjugaison);
 
 #endif

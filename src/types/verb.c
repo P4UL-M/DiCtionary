@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "verb.h"
 
 p_tree_verbs create_tree_verbs()
 {
-    p_tree_verbs tree = malloc(sizeof(p_tree_verbs));
+    p_tree_verbs tree = malloc(sizeof(t_tree_verbs));
     tree->children = malloc(sizeof(p_node_verbs) * MAX);
     for (int i = 0; i < MAX; i++)
     {
@@ -16,46 +17,46 @@ p_tree_verbs create_tree_verbs()
 
 p_node_verbs create_node_verbs(char val)
 {
-    p_node_verbs node = malloc(sizeof(p_node_verbs));
-    node->val = val;
+    p_node_verbs node = malloc(sizeof(t_node_verbs));
+    node->value = val;
     node->children = malloc(sizeof(p_node_verbs) * MAX);
     for (int i = 0; i < MAX; i++)
     {
         node->children[i] = NULL;
     }
     node->nb_children = 0;
-    node->conjugaisons = malloc(sizeof(p_conjugaison) * 18); // To change if we want to integrate all times
-    for (int i = 0; i < 18; i++)
-    {
-        node->conjugaisons[i] = NULL;
-    }
+    node->conjugaisons = malloc(sizeof(t_conjugaison) * MAX_CONJUG);
     node->nb_conjugaisons = 0;
     return node;
 }
 
-p_conjugaison create_conjugaison(t_personne pers, t_temps temps, char *word)
+t_conjugaison create_conjugaison(t_personne pers, t_temps temps, char *word)
 {
-    p_conjugaison conjugaison = malloc(sizeof(conjugaison));
-    conjugaison->personne = pers;
-    conjugaison->temps = temps;
-    conjugaison->word = word;
+    t_conjugaison conjugaison = {
+        .personne = pers,
+        .temps = temps,
+        .word = word};
     return conjugaison;
 }
 
-void add_child_verbs(p_node_verbs parent, p_node_verbs child)
+bool add_child_verbs(p_node_verbs parent, p_node_verbs child)
 {
     if (parent->nb_children < MAX)
     {
         parent->children[parent->nb_children] = child;
         parent->nb_children++;
+        return 1;
     }
+    return 0;
 }
 
-void add_conjugaison(p_node_verbs node, p_conjugaison conjugaison)
+bool add_conjugaison(p_node_verbs node, t_conjugaison conjugaison)
 {
-    if (node->nb_conjugaisons < 18)
+    if (node->nb_conjugaisons < MAX_CONJUG)
     {
         node->conjugaisons[node->nb_conjugaisons] = conjugaison;
         node->nb_conjugaisons++;
+        return 1;
     }
+    return 0;
 }
