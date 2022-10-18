@@ -18,12 +18,12 @@ typedef struct declinaison_noun
 {
     t_forme_noun forme;
     char *word;
-} t_declinaison_noun, *p_declinaison_noun;
+} t_declinaison_noun, *list_declinaison_noun;
 
 typedef struct node
 {
-    char values;
-    t_declinaison_noun *declinaisons;
+    char value;
+    list_declinaison_noun declinaisons;
     int nb_declinaisons;
     struct node **children;
     int nb_children;

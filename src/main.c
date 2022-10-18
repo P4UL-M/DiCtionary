@@ -11,6 +11,6 @@ int main()
     add_declinaison(node, declinaison);
     tree->children[0] = node;
     tree->nb_children++;
-    printf("%c, %s, %d", tree->children[0]->values, tree->children[0]->declinaisons[0].word, tree->nb_children);
+    printf("%c, %s, %d", tree->children[0]->value, tree->children[0]->declinaisons[0].word, tree->nb_children);
     return 0;
 }
