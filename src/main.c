@@ -14,9 +14,6 @@ int main()
     printf("Hello world\n");
     p_tree_adj tree = create_tree_noun();
     p_node_adj node = create_node_noun('a');
-    printf("Hello world\n");
-    p_tree_noun tree = create_tree_noun();
-    p_node_noun node = create_node_noun('a');
     t_declinaison_noun declinaison = create_declinaison(Mas_SG, "test");
     add_declinaison(node, declinaison);
     tree->children[0] = node;

@@ -3,9 +3,10 @@ Quentin Cardona, Axel Loones and Paul Mairesse
 This file contains the menu*/
 #include "menu.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "search.h"
 #ifdef _WIN32
-#include <Windows.h>
+#include <windows.h>
 #define CLEAR "cls"
 #define sleep Sleep
 #else
