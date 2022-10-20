@@ -13,27 +13,27 @@ This file contains the menu*/
 #include <unistd.h>
 #define CLEAR "clear"
 #endif
-#define ANSI_COLOR_RED "\x1b[0m\x1b[31;1;4m"
-#define ANSI_COLOR_GREEN "\x1b[0m\x1b[32;3m"
+#define ANSI_COLOR_RED "\x1b[0m\x1b[31;4m"
+#define ANSI_COLOR_GREEN "\x1b[0m\x1b[32;1;3m"
 #define ANSI_COLOR_YELLOW "\x1b[0m\x1b[33m"
 #define ANSI_COLOR_BLUE "\x1b[0m\x1b[34m"
 #define ANSI_COLOR_MAGENTA "\x1b[0m\x1b[35m"
 #define ANSI_COLOR_CYAN "\x1b[0m\x1b[36m"
 #define ANSI_COLOR_RESET "\x1b[0m"
-#define ANSI_BACKGROUND_WHITE "\x1b[0m\x1b[47;39m"
+#define ANSI_BACKGROUND_WHITE "\x1b[0m\x1b[39;1m\e[47m\e[K"
 
 void menu()
 {
     int action;
     system(CLEAR);
-    printf("%s\tWelcome in the DiCtionary\t\n", ANSI_BACKGROUND_WHITE);
+    printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
     do
     {
         printf("%sDo you want to :\n", ANSI_COLOR_GREEN);
         printf("%s1.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
         printf("%s2.%s Generate a random sentence? (Type 1 or 2)\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
         printf(ANSI_COLOR_RESET);
-        printf(">");
+        printf("\n>");
         scanf("%d", &action);
         fflush(stdin);
     } while (action < 1 || action > 2);
