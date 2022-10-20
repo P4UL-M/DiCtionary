@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include "types/nouns.h"
 #include "types/verbs.h"
+#include "functions/dictionary.h"
 
 int main()
 {
@@ -21,5 +22,7 @@ int main()
     tree2->children[0] = node2;
     tree2->nb_children++;
     printf("%c, %s, %d\n", tree2->children[0]->value, tree2->children[0]->conjugaisons[0].word, tree2->nb_children);
+    p_tree_noun tree3 = create_tree_noun();
+    extractFile("data/dictionnaire.txt", tree3);
     return 0;
 }
