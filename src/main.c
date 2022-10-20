@@ -9,7 +9,7 @@
 
 int main()
 {
-    clock_t t;
+    /*clock_t t;
     t = clock();
     printf("Hello world\n");
     p_tree_adj tree = create_tree_noun();
@@ -33,7 +33,7 @@ int main()
     p_tree_noun tree3 = create_tree_noun();
     extractFile("data/dictionnaire.txt", tree3);
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
-    extractFile("data/dictionnaire.txt", tree3);
+    extractFile("data/dictionnaire.txt", tree3);*/
     menu();
     return 0;
 }

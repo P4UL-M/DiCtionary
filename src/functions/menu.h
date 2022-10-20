@@ -7,5 +7,6 @@ This file contains the menu*/
 void menu();
 void search();
 void generate_sentence();
+void waitKey();
 
 #endif
