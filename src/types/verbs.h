@@ -5,6 +5,7 @@
 
 #define MAX 26 // only 26 letters (take into account accent later)
 #define MAX_CONJUG 18
+#define VERB_TYPE "Ver"
 
 typedef enum personne
 {

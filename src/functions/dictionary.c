@@ -1,42 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <regex.h> // for regular expressions
 #include <string.h>
 
 #include "dictionary.h"
 #include "../types/nouns.h"
+#include "../types/verbs.h"
+#include "../types/adverbs.h"
 
-regex_t compileRegex()
+char **extractWord(char *source)
 {
-    regex_t regex;
-    if (regcomp(&regex, NOUN_REGEX, 0) != 0)
-        printf("regcomp error\n");
-    return regex;
-}
-
-char **extractWord(regex_t regex, char *source)
-{
-    size_t nmatch = 4;
-    regmatch_t pmatch[nmatch];
-    char **output = malloc(sizeof(char *) * (nmatch - 1));
-    if (!regexec(&regex, source, nmatch, pmatch, 0))
-    {
-        for (unsigned int i = 1; i < nmatch; i++)
-        {
-            if (pmatch[i].rm_so == (size_t)-1)
-                break; // No more groups
-
-            char sourceCopy[strlen(source) + 1];
-            strcpy(sourceCopy, source);
-            sourceCopy[pmatch[i].rm_eo] = 0;
-            output[i - 1] = sourceCopy + pmatch[i].rm_so;
-        }
-    }
-    else
-    {
-        // printf("No match\n");
-        return NULL;
-    }
+    source[strcspn(source, "\n")] = 0;
+    char **output = malloc(sizeof(char *) * 3);
+    // separate the word, the base form and the type
+    output[0] = strtok(source, "\t");
+    output[1] = strtok(NULL, "\t");
+    output[2] = strtok(NULL, "\t");
     return output;
 }
 
@@ -56,19 +34,35 @@ void extractFile(char *path, p_tree_noun tree)
     char line[MAX_SIZE_LINE];
     int i = 0;
 
-    regex_t regex = compileRegex();
-
-    while (fgets(line, MAX_SIZE_LINE, fp) != NULL && i < NB_LINES)
+    while (fgets(line, MAX_SIZE_LINE, fp))
     {
-        // printf("%d |%s", ++i, line);
-        char **extractedStrings = extractWord(regex, line);
+        char **extractedStrings = extractWord(line);
         if (extractedStrings != NULL)
         {
-            // printf("%s\t%s\t%s", extractedStrings[0], extractedStrings[1], extractedStrings[2]);
+            char *type = strtok(extractedStrings[2], ":");
+            // if (strcmp(type, NOUN_TYPE))
+            // {
+            //     printf("Noun\n");
+            // }
+            // if (strcmp(type, VERB_TYPE))
+            // {
+            //     printf("Verb\n");
+            // }
+            // if (strcmp(type, ADJECTIVE_TYPE))
+            // {
+            //     printf("Adjective\n");
+            // }
+            // if (strcmp(type, ADVERB_TYPE))
+            // {
+            //     printf("Adverb\n");
+            // }
+            // else
+            // {
+            //     printf("Unknown type : %s, [%s,%s,%s,%s]\n", type, NOUN_TYPE, VERB_TYPE, ADJECTIVE_TYPE, ADVERB_TYPE);
+            // }
         }
-        // printf("\n");
         free(extractedStrings);
         i++;
     }
-    regfree(&regex);
+    printf("number of lines : %d\n", i);
 }

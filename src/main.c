@@ -1,14 +1,18 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
+
 #include "types/nouns.h"
 #include "types/verbs.h"
 #include "functions/dictionary.h"
 
 int main()
 {
+    clock_t t;
+    t = clock();
     printf("Hello world\n");
-    p_tree_noun tree = create_tree_noun();
-    p_node_noun node = create_node_noun('a');
+    p_tree_adj tree = create_tree_noun();
+    p_node_adj node = create_node_noun('a');
     t_declinaison_noun declinaison = create_declinaison(Mas_SG, "test");
     add_declinaison(node, declinaison);
     tree->children[0] = node;
@@ -24,5 +28,6 @@ int main()
     printf("%c, %s, %d\n", tree2->children[0]->value, tree2->children[0]->conjugaisons[0].word, tree2->nb_children);
     p_tree_noun tree3 = create_tree_noun();
     extractFile("data/dictionnaire.txt", tree3);
+    printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

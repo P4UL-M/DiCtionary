@@ -2,6 +2,7 @@
 #define adverbs_h
 
 #define MAX 26 // only 26 letters (take into account accent later)
+#define ADVERB_TYPE "Adv"
 
 typedef struct node_adv
 {
