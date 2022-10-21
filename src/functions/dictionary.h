@@ -6,7 +6,7 @@ This file contains the functions in order to extract text from the dictionary*/
 
 #include "../types/nouns.h"
 
-#define NB_LINES 287976
+#define NB_LINES 287977
 #define MAX_SIZE_LINE 256
 
 void extractFile(char *path, p_tree_noun tree);

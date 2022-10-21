@@ -6,7 +6,7 @@ This file contains the functions for the verbs*/
 
 #include <stdbool.h>
 
-#define MAX 26 // only 26 letters (take into account accent later)
+#define MAX 30
 #define MAX_CONJUG 18
 #define VERB_TYPE "Ver"
 

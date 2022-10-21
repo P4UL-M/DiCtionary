@@ -6,7 +6,7 @@ This file contains the functions for the nouns*/
 
 #include <stdbool.h>
 
-#define MAX 26 // only 26 letters (take into account accent later)
+#define MAX 30
 #define MAX_DECL 4
 #define NOUN_TYPE "Nom"
 #define ADJECTIVE_TYPE "Adj"
