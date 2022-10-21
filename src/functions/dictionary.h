@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains the functions in order to extract text from the dictionary*/
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
 

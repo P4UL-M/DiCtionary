@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains the functions for the verbs*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>

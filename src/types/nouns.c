@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains the functions for the nouns*/
 #include "nouns.h"
 #include <stdlib.h>
 #include <stdio.h>

@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains the functions in order to extract text from the dictionary*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

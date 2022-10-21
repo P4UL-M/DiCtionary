@@ -5,6 +5,9 @@ This file contains the menu*/
 #include <stdio.h>
 #include <stdlib.h>
 #include "search.h"
+#include "../types/adverbs.h"
+#include "../types/nouns.h"
+#include "../types/verbs.h"
 #ifdef _WIN32
 #include <windows.h>
 #define CLEAR "cls"
@@ -23,15 +26,16 @@ This file contains the menu*/
 #define ANSI_BACKGROUND_WHITE "\x1b[0m\x1b[39;1m\e[47m\e[K"
 
 void menu()
+// Function that contains the main menu
 {
     int action;
     system(CLEAR);
     printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
     do
     {
-        printf("%sDo you want to :\n", ANSI_COLOR_GREEN);
+        printf("%sDo you want to:\n", ANSI_COLOR_GREEN);
         printf("%s1.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf("%s2.%s Generate a random sentence? (Type 1 or 2)\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+        printf("%s2.%s Generate a random sentence?\n(Type 1 or 2)\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
         printf(ANSI_COLOR_RESET);
         printf("\n>");
         scanf("%d", &action);
@@ -49,11 +53,38 @@ void menu()
 }
 
 void search()
+// Function to launch the search of a word
 {
-    printf("Hello\n");
+    char searching[50];
+    system(CLEAR);
+    printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
+    printf("%sEnter the word you want to search:\n", ANSI_COLOR_GREEN);
+    printf(ANSI_COLOR_RESET);
+    printf("\n>");
+    scanf("%49s", &searching);
+    p_version_noun result_noun = searchnoun(NounDictionary, searching);
+    if (result_noun != NULL)
+    {
+        return;
+    }
+    p_version_noun result_verb = searchverb(VerbDictionary, searching);
+    if (result_verb != NULL)
+    {
+        return;
+    }
+    p_version_adj result_adj = searchadj(AdjDictionary, searching);
+    if (result_adj != NULL)
+    {
+        return;
+    }
+    p_node_adv result_adv = searchadv(AdvDictionary, searching);
+    {
+        return;
+    }
 }
 
 void generate_sentence()
+// Function to generate a random sentence
 {
     printf("World\n");
 }

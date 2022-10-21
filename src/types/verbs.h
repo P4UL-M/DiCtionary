@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains the functions for the verbs*/
 #ifndef verb_h
 #define verb_h
 
@@ -41,7 +44,7 @@ typedef struct conjugaison
 typedef struct node_verb
 {
     char value;
-    t_conjugaison *conjugaisons;
+    list_conjugaison conjugaisons;
     int nb_conjugaisons;
     struct node_verb **children;
     int nb_children;
@@ -52,6 +55,14 @@ typedef struct tree_verb
     p_node_verb *children;
     int nb_children;
 } t_tree_verb, *p_tree_verb;
+
+typedef struct version_verb
+{
+    char *word;
+    t_personne personne;
+    t_temps temps;
+    list_conjugaison conjugaisons;
+} t_version_verb, *p_version_verb;
 
 p_tree_verb create_tree_verb();
 p_node_verb create_node_verb(char val);

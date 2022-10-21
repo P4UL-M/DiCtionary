@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains the functions for the nouns*/
 #ifndef noun_h
 #define noun_h
 
@@ -44,6 +47,15 @@ typedef struct tree_noun
 } t_tree_noun, *p_tree_noun;
 
 typedef struct tree_noun t_tree_adj, *p_tree_adj;
+
+typedef struct version_noun
+{
+    char *word;
+    t_forme_noun forme;
+    list_declinaison_noun declinaisons;
+} t_version_noun, *p_version_noun;
+
+typedef struct version_noun t_version_adj, *p_version_adj;
 
 p_tree_noun create_tree_noun();
 p_node_noun create_node_noun(char val);
