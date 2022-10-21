@@ -8,7 +8,7 @@ This file contains the main algorithm*/
 #include "types/nouns.h"
 #include "types/verbs.h"
 #include "functions/dictionary.h"
-#include "functions/menu.h"
+#include "menu/menu_main.h"
 
 int main()
 {

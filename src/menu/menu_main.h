@@ -1,8 +1,8 @@
 /*DiCtionary
 Quentin Cardona, Axel Loones and Paul Mairesse
-This file contains the menu*/
-#ifndef MENU_H
-#define MENU_H
+This file contains the main menu*/
+#ifndef MENU_MAIN_H
+#define MENU_MAIN_H
 
 void menu();
 void search();
