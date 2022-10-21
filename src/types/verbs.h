@@ -59,8 +59,7 @@ typedef struct tree_verb
 typedef struct version_verb
 {
     char *word;
-    t_personne personne;
-    t_temps temps;
+    t_conjugaison conj;
     list_conjugaison conjugaisons;
 } t_version_verb, *p_version_verb;
 

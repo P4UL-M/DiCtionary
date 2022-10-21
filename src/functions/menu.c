@@ -65,6 +65,13 @@ void search()
     p_version_noun result_noun = searchnoun(NounDictionary, searching);
     if (result_noun != NULL)
     {
+        printf("%s is a noun that is ", result_noun->word);
+        return;
+    }
+    p_version_adj result_adj = searchadj(AdjDictionary, searching);
+    if (result_adj != NULL)
+    {
+        printf("%s is an adjectif that is ", result_adj->word);
         return;
     }
     p_version_noun result_verb = searchverb(VerbDictionary, searching);
@@ -72,15 +79,13 @@ void search()
     {
         return;
     }
-    p_version_adj result_adj = searchadj(AdjDictionary, searching);
-    if (result_adj != NULL)
-    {
-        return;
-    }
     p_node_adv result_adv = searchadv(AdvDictionary, searching);
     {
+        printf("%s is an adverb\n");
         return;
     }
+    printf("%s doesn't appear in the DiCtionary", searching);
+    return;
 }
 
 void generate_sentence()
@@ -102,5 +107,119 @@ void waitKey()
             fflush(stdin);
             break;
         }
+    }
+}
+
+void printdeclinaison(t_forme_noun forme)
+{
+    switch (forme)
+    {
+    case Mas_SG:
+        printf("singular masculine");
+        break;
+    case Mas_PL:
+        printf("plural masculine");
+        break;
+    case Fem_SG:
+        printf("singular feminine");
+        break;
+    case Fem_PL:
+        printf("plural feminine");
+        break;
+    default:
+        printf("all we know");
+        break;
+    }
+}
+
+void printversionnoun(p_version_noun vers)
+{
+    printdeclinaison(vers->forme);
+    if (vers->declinaisons == NULL)
+    {
+        printf("\nIt has no other form\n");
+        return;
+    }
+    printf("\nIts derivatives are :\n");
+    for (int i = 0; i < sizeof(vers->declinaisons) / sizeof(t_declinaison_noun); i++)
+    {
+        printf("%s that is ", vers->declinaisons[i].word);
+        printdeclinaison(vers->declinaisons[i].forme);
+        printf("\n");
+    }
+}
+
+void printperson(t_personne pers)
+{
+    switch (pers)
+    {
+    case SG_P1:
+        printf("first person singular");
+        break;
+    case SG_P2:
+        printf("second person singular");
+        break;
+    case SG_P3:
+        printf("third person singular");
+        break;
+    case PL_P1:
+        printf("first person plural");
+        break;
+    case PL_P2:
+        printf("second person plural");
+        break;
+    case PL_P3:
+        printf("third person plural");
+        break;
+    default:
+        printf("i don't know which person sorry x'(");
+        break;
+    }
+}
+
+void printconjugaison(t_conjugaison conj)
+{
+    switch (conj.temps)
+    {
+    case Inf:
+        printf("infinitive");
+        break;
+    case IImp:
+        printf("indicative imperfect at the");
+        printperson(conj.personne);
+        break;
+    case IPre:
+        printf("indicative present at the");
+        printperson(conj.personne);
+        break;
+    case IFut:
+        printf("indicative future at the");
+        printperson(conj.personne);
+        break;
+    case SPre:
+        printf("subjonctive present at the");
+        printperson(conj.personne);
+        break;
+    case IPsimp:
+        printf("indicative simple past at the");
+        printperson(conj.personne);
+        break;
+    case SImp:
+        printf("subjonctive imperfect at the");
+        printperson(conj.personne);
+        break;
+    case CPre:
+        printf("condintional present at the");
+        printperson(conj.personne);
+        break;
+    case PPre:
+        printf("present participe");
+        break;
+    case PPas:
+        printf("past participe");
+        break;
+    default:
+        printf("verb ?");
+        break;
     }
 }
