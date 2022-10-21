@@ -25,6 +25,12 @@ This file contains the menu*/
 #define ANSI_COLOR_RESET "\x1b[0m"
 #define ANSI_BACKGROUND_WHITE "\x1b[0m\x1b[39;1m\e[47m\e[K"
 
+void printversionverb(p_version_verb vers);
+void printconjugaison(t_conjugaison conj);
+void printperson(t_personne pers);
+void printversionnoun(p_version_noun vers);
+void printdeclinaison(t_forme_noun forme);
+
 void menu()
 // Function that contains the main menu
 {
@@ -66,17 +72,21 @@ void search()
     if (result_noun != NULL)
     {
         printf("%s is a noun that is ", result_noun->word);
+        printversionnoun(result_noun);
         return;
     }
     p_version_adj result_adj = searchadj(AdjDictionary, searching);
     if (result_adj != NULL)
     {
         printf("%s is an adjectif that is ", result_adj->word);
+        printversionnoun(result_adj);
         return;
     }
     p_version_noun result_verb = searchverb(VerbDictionary, searching);
     if (result_verb != NULL)
     {
+        printf("%s is a verb that is conjugated at the ", result_verb->word);
+        printversionverb(result_verb);
         return;
     }
     p_node_adv result_adv = searchadv(AdvDictionary, searching);
@@ -221,5 +231,22 @@ void printconjugaison(t_conjugaison conj)
     default:
         printf("verb ?");
         break;
+    }
+}
+
+void printversionverb(p_version_verb vers)
+{
+    printconjugaison(vers->conj);
+    if (vers->conjugaisons == NULL)
+    {
+        printf("\nIt has no other form\n");
+        return;
+    }
+    printf("\nIts derivatives are :\n");
+    for (int i = 0; i < sizeof(vers->conjugaisons) / sizeof(t_conjugaison); i++)
+    {
+        printf("%s that is conjugated at the ", vers->conjugaisons[i].word);
+        printconjugaison(vers->conjugaisons[i]);
+        printf("\n");
     }
 }
