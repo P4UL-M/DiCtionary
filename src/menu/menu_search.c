@@ -15,10 +15,11 @@ This file contains the functions to adapt the search in the menu*/
 #define ANSI_COLOR_RESET "\x1b[0m"
 #define ANSI_BACKGROUND_WHITE "\x1b[0m\x1b[39;1m\e[47m\e[K"
 
-void printdeclinaison(t_forme_noun forme)
+void displayDeclinaison(t_declinaison_noun decli)
 // To print the form of the noun
 {
-    switch (forme)
+    printf("%s that is ", decli.word);
+    switch (decli.forme)
     {
     case Mas_SG:
         printf("singular masculine");
@@ -38,25 +39,29 @@ void printdeclinaison(t_forme_noun forme)
     }
 }
 
-void printversionnoun(p_version_noun vers)
+void displayNoun(t_noun noun)
 // To print all declinaisons for the noun
 {
-    printdeclinaison(vers->forme);
-    if (vers->declinaisons == NULL)
+    displayDeclinaison(noun.declinaisons[noun.studyIndex]);
+    printf("\n");
+    if (noun.declinaisons == NULL)
     {
-        printf("\nIt has no other form\n");
+        printf("It has no other form\n");
         return;
     }
-    printf("\nIts derivatives are :\n");
-    for (int i = 0; i < sizeof(vers->declinaisons) / sizeof(t_declinaison_noun); i++)
+    printf("Its derivatives are :\n");
+    for (int i = 0; i < noun.nb_declinaisons; i++)
     {
-        printf("%s that is ", vers->declinaisons[i].word);
-        printdeclinaison(vers->declinaisons[i].forme);
-        printf("\n");
+        if (i != noun.studyIndex)
+        {
+            printf("-> ");
+            displayDeclinaison(noun.declinaisons[i]);
+            printf("\n");
+        }
     }
 }
 
-void printperson(t_personne pers)
+void dysplayPerson(t_personne pers)
 // To print the details for the person of the verb
 {
     switch (pers)
@@ -85,9 +90,10 @@ void printperson(t_personne pers)
     }
 }
 
-void printconjugaison(t_conjugaison conj)
+void displayConjugaison(t_conjugaison conj)
 // To print the details of the conjugaison of the verb
 {
+    printf("%s that is ", conj.word);
     switch (conj.temps)
     {
     case Inf:
@@ -95,31 +101,31 @@ void printconjugaison(t_conjugaison conj)
         break;
     case IImp:
         printf("indicative imperfect at the");
-        printperson(conj.personne);
+        dysplayPerson(conj.personne);
         break;
     case IPre:
         printf("indicative present at the");
-        printperson(conj.personne);
+        dysplayPerson(conj.personne);
         break;
     case IFut:
         printf("indicative future at the");
-        printperson(conj.personne);
+        dysplayPerson(conj.personne);
         break;
     case SPre:
         printf("subjonctive present at the");
-        printperson(conj.personne);
+        dysplayPerson(conj.personne);
         break;
     case IPsimp:
         printf("indicative simple past at the");
-        printperson(conj.personne);
+        dysplayPerson(conj.personne);
         break;
     case SImp:
         printf("subjonctive imperfect at the");
-        printperson(conj.personne);
+        dysplayPerson(conj.personne);
         break;
     case CPre:
         printf("condintional present at the");
-        printperson(conj.personne);
+        dysplayPerson(conj.personne);
         break;
     case PPre:
         printf("present participe");
@@ -133,20 +139,23 @@ void printconjugaison(t_conjugaison conj)
     }
 }
 
-void printversionverb(p_version_verb vers)
+void displayVerb(t_verb verb)
 // To print all conjugaisons of the verb
 {
-    printconjugaison(vers->conj);
-    if (vers->conjugaisons == NULL)
+    displayConjugaison(verb.conjugaisons[verb.studyIndex]);
+    printf("\n");
+    if (verb.conjugaisons == NULL)
     {
-        printf("\nIt has no other form\n");
+        printf("It has no other form\n");
         return;
     }
-    printf("\nIts derivatives are :\n");
-    for (int i = 0; i < sizeof(vers->conjugaisons) / sizeof(t_conjugaison); i++)
+    printf("Its derivatives are :\n");
+    for (int i = 0; i < verb.nb_conjugaisons; i++)
     {
-        printf("%s that is conjugated at the ", vers->conjugaisons[i].word);
-        printconjugaison(vers->conjugaisons[i]);
-        printf("\n");
+        if (i != verb.studyIndex)
+        {
+            displayConjugaison(verb.conjugaisons[i]);
+            printf("\n");
+        }
     }
 }

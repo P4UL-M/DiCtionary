@@ -20,10 +20,10 @@ typedef struct tree_adv
     int nb_children;
 } t_tree_adv, *p_tree_adv;
 
-typedef struct version_adv
+typedef struct adv
 {
     char *word;
-} t_version_adv, *p_version_adv;
+} t_adv, *p_adv;
 
 p_tree_adv create_tree_adv();
 

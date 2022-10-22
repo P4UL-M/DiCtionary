@@ -27,79 +27,90 @@ This file contains the main menu*/
 #define ANSI_COLOR_RESET "\x1b[0m"
 #define ANSI_BACKGROUND_WHITE "\x1b[0m\x1b[39;1m\e[47m\e[K"
 
+void title()
+{
+    system(CLEAR);
+    printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
+}
+
 void menu()
 // Function that contains the main menu
 {
+start:
+    title();
     int action;
-    system(CLEAR);
-    printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
+    t_dictionary dico;
     do
     {
         printf("%sDo you want to:\n", ANSI_COLOR_GREEN);
         printf("%s1.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf("%s2.%s Generate a random sentence?\n(Type 1 or 2)\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+        printf("%s2.%s Generate a random sentence?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+        printf("%s3.%s Exit?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
         printf(ANSI_COLOR_RESET);
         printf("\n>");
         scanf("%d", &action);
         fflush(stdin);
-    } while (action < 1 || action > 2);
-    if (action == 1)
+    } while (action < 1 || action > 3);
+    switch (action)
     {
-        search();
-    }
-    else
-    {
+    case 1:
+        search(dico);
+        break;
+    case 2:
         generate_sentence();
+        break;
+    default:
+        goto stop;
+        break;
     }
+    waitKey();
+    goto start;
+stop:
     return;
 }
 
-void search()
+void search(t_dictionary dico)
 // Function to launch the search of a word
 {
-    char searching[50];
-    system(CLEAR);
-    printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
+    title();
     printf("%sEnter the word you want to search:\n", ANSI_COLOR_GREEN);
     printf(ANSI_COLOR_RESET);
     printf("\n>");
-    scanf("%49s", &searching);
-    p_version_noun result_noun = searchnoun(NounDictionary, searching);
+    char searching[50];
+    scanf("%50s", searching);
+    p_noun result_noun = searchNoun(dico.nouns, searching);
     if (result_noun != NULL)
     {
-        printf("%s is a noun that is ", result_noun->word);
-        printversionnoun(result_noun);
+        displayNoun(result_noun);
         return;
     }
-    p_version_adj result_adj = searchadj(AdjDictionary, searching);
+    p_adj result_adj = searchAdj(dico.adjectives, searching);
     if (result_adj != NULL)
     {
-        printf("%s is an adjectif that is ", result_adj->word);
-        printversionnoun(result_adj);
+        displayNoun(result_adj);
         return;
     }
-    p_version_noun result_verb = searchverb(VerbDictionary, searching);
+    p_verb result_verb = searchVerb(dico.verbs, searching);
     if (result_verb != NULL)
     {
-        printf("%s is a verb that is conjugated at the ", result_verb->word);
-        printversionverb(result_verb);
+        displayVerb(result_verb);
         return;
     }
-    p_node_adv result_adv = searchadv(AdvDictionary, searching);
+    p_adv result_adv = searchAdv(dico.adverbs, searching);
+    if (result_adv != NULL)
     {
-        printf("%s is an adverb\n");
+        printf("%s is an adverb\n", result_adv->word);
         return;
     }
-    printf("%s doesn't appear in the DiCtionary", searching);
+    printf("%s doesn't appear in the DiCtionary.\n", searching);
     return;
 }
 
 void generate_sentence()
 // Function to generate a random sentence
 {
-    int generation_mode;
-    system(CLEAR);
-    printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
+    title();
+    int generation_mode = 0;
     printf(ANSI_COLOR_RESET);
     printf("Which form of sentence do you want to generate?\n");
     printf("1. Noun - Adjective - Verb - Noun\n");
@@ -108,7 +119,8 @@ void generate_sentence()
     do
     {
         printf(">");
-        scanf("%d", generation_mode);
+        scanf("%d", &generation_mode);
+        fflush(stdin);
     } while (generation_mode < 1 || generation_mode > 3); // Ne pas oublier l'easter egg
 }
 
@@ -116,7 +128,7 @@ void waitKey()
 // Function to wait for the users in resolution
 {
     fflush(stdin);
-    printf("Press a key to continue...\n");
+    printf("\nPress a key to continue...\n");
     sleep(1);
     while (1)
     {

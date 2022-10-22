@@ -56,12 +56,13 @@ typedef struct tree_verb
     int nb_children;
 } t_tree_verb, *p_tree_verb;
 
-typedef struct version_verb
+typedef struct verb
 {
     char *word;
-    t_conjugaison conj;
     list_conjugaison conjugaisons;
-} t_version_verb, *p_version_verb;
+    int nb_conjugaisons;
+    int studyIndex;
+} t_verb, *p_verb;
 
 p_tree_verb create_tree_verb();
 p_node_verb create_node_verb(char val);
