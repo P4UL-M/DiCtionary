@@ -8,11 +8,11 @@ This file contains the main algorithm*/
 #include "types/nouns.h"
 #include "types/verbs.h"
 #include "functions/dictionary.h"
-#include "functions/menu.h"
+#include "menu/menu_main.h"
 
 int main()
 {
-    /*clock_t t;
+    clock_t t;
     t = clock();
     printf("Hello world\n");
     p_tree_adj tree = create_tree_noun();
@@ -31,9 +31,8 @@ int main()
     tree2->nb_children++;
     printf("%c, %s, %d\n", tree2->children[0]->value, tree2->children[0]->conjugaisons[0].word, tree2->nb_children);
     p_tree_noun tree3 = create_tree_noun();
-    extractFile("data/dictionnaire.txt", tree3);
-    printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
-    extractFile("data/dictionnaire.txt", tree3);*/
+    // extractFile("data/dico2.txt", tree3);
     menu();
+    printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

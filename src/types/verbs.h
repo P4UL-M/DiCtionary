@@ -6,7 +6,7 @@ This file contains the functions for the verbs*/
 
 #include <stdbool.h>
 
-#define MAX 26 // only 26 letters (take into account accent later)
+#define MAX 30
 #define MAX_CONJUG 18
 #define VERB_TYPE "Ver"
 
@@ -56,13 +56,13 @@ typedef struct tree_verb
     int nb_children;
 } t_tree_verb, *p_tree_verb;
 
-typedef struct version_verb
+typedef struct verb
 {
     char *word;
-    t_personne personne;
-    t_temps temps;
     list_conjugaison conjugaisons;
-} t_version_verb, *p_version_verb;
+    int nb_conjugaisons;
+    int studyIndex;
+} t_verb, *p_verb;
 
 p_tree_verb create_tree_verb();
 p_node_verb create_node_verb(char val);

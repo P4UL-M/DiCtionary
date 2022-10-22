@@ -1,9 +1,19 @@
-#include "dictionary.h"
-#include "adverbs.h"
-#include "nouns.h"
-#include "verbs.h"
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains the functions in order to extract text from the dictionary*/
+#ifndef SEARCH_H
+#define SEARCH_H
 
-char* searchnoun(t_tree_noun t,char* word);
-char* searchadjective(t_tree_adj t,char* word);
-char* searchadverb(t_tree_adv t,char* word);
-char* searchverb(t_tree_verb t,char* word);
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "../types/nouns.h"
+#include "../types/verbs.h"
+#include "../types/adverbs.h"
+
+p_noun searchNoun(p_tree_noun, char *);
+p_verb searchVerb(p_tree_verb, char *);
+p_adj searchAdj(p_tree_adj, char *);
+p_adv searchAdv(p_tree_adv, char *);
+
+#endif
