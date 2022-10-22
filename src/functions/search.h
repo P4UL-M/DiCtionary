@@ -16,4 +16,8 @@ p_verb searchVerb(p_tree_verb, char *);
 p_adj searchAdj(p_tree_adj, char *);
 p_adv searchAdv(p_tree_adv, char *);
 
+p_noun randomNoun(p_tree_noun);
+p_verb randomVerb(p_tree_verb);
+p_adj randomAdj(p_tree_adj);
+p_adv randomAdv(p_tree_adv);
 #endif
