@@ -2,6 +2,7 @@
 Quentin Cardona, Axel Loones and Paul Mairesse
 This file contains the main menu*/
 #include "menu_main.h"
+#include "menu_search.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include "../functions/search.h"
@@ -96,7 +97,19 @@ void search()
 void generate_sentence()
 // Function to generate a random sentence
 {
-    printf("World\n");
+    int generation_mode;
+    system(CLEAR);
+    printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
+    printf(ANSI_COLOR_RESET);
+    printf("Which form of sentence do you want to generate?\n");
+    printf("1. Noun - Adjective - Verb - Noun\n");
+    printf("2. Noun - \"qui\" - Verb - Verb - Noun - Adjective\n");
+    printf("3. Case 3 not yet incorporated...\n");
+    do
+    {
+        printf(">");
+        scanf("%d", generation_mode);
+    } while (generation_mode < 1 || generation_mode > 3); // Ne pas oublier l'easter egg
 }
 
 void waitKey()
