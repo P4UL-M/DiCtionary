@@ -5,87 +5,66 @@
 #include "../types/verbs.h"
 #include "../types/adverbs.h"
 
-p_node_noun searchNoun(p_tree_noun tree, char *noun)
-{
-    int foundletter;
+p_node_noun searchNoun(p_tree_noun tree, char *noun){
     p_node_noun n=malloc(sizeof(p_node_noun));
     n=tree->children[noun[0]];
-    for(int i=0;noun[i]!='\0';i++){
-        foundletter=0;
-        for(int j=97;j<MAX+97;j++){
-            if(n->children[j]->value==noun[i]){
-                foundletter=1;
-                if(noun[i+1]=='\0'){
-                    return n->children[j];
-                }
-                n=n->children[j];
+    for(int i=1;noun[i]!='\0';i++){
+        if(n->children[noun[i]]!=NULL){
+            if(noun[i+1]=='\0'){
+                return n->children[noun[i]];
             }
+            n=n->children[noun[i]];
         }
-        if(foundletter==0){
-            return 0;
+        else{
+            return NULL;
         }
     }
 }
-p_node_verb searchVerb(p_tree_verb tree, char *verb)
-{
-    int foundletter;
+
+p_node_verb searchVerb(p_tree_verb tree, char *verb){
     p_node_verb n=malloc(sizeof(p_node_verb));
     n=tree->children[verb[0]];
-    for(int i=0;verb[i]!='\0';i++){
-        foundletter=0;
-        for(int j=97;j<MAX+97;j++){
-            if(n->children[j]->value==verb[i]){
-                foundletter=1;
-                if(verb[i+1]=='\0'){
-                    return n->children[j];
-                }
-                n=n->children[j];
+    for(int i=1;verb[i]!='\0';i++){
+        if(n->children[verb[i]]!=NULL){
+            if(verb[i+1]=='\0'){
+                return n->children[verb[i]];
             }
+            n=n->children[verb[i]];
         }
-        if(foundletter==0){
-            return 0;
+        else{
+            return NULL;
         }
     }
 }
-p_node_adj searchAdj(p_tree_adj tree, char *adj)
-{
-    int foundletter;
+
+p_node_adj searchAdj(p_tree_adj tree, char *adj){
     p_node_adj n=malloc(sizeof(p_node_adj));
     n=tree->children[adj[0]];
-    for(int i=0;adj[i]!='\0';i++){
-        foundletter=0;
-        for(int j=97;j<MAX+97;j++){
-            if(n->children[j]->value==adj[i]){
-                foundletter=1;
-                if(adj[i+1]=='\0'){
-                    return n->children[j];
-                }
-                n=n->children[j];
+    for(int i=1;adj[i]!='\0';i++){
+        if(n->children[adj[i]]!=NULL){
+            if(adj[i+1]=='\0'){
+                return n->children[adj[i]];
             }
+            n=n->children[adj[i]];
         }
-        if(foundletter==0){
-            return 0;
+        else{
+            return NULL;
         }
     }
 }
-p_node_adv searchAdv(p_tree_adv tree, char *adv)
-{
-    int foundletter;
+
+p_node_adv searchAdv(p_tree_adv tree, char *adv){
     p_node_adv n=malloc(sizeof(p_node_adv));
     n=tree->children[adv[0]];
-    for(int i=0;adv[i]!='\0';i++){
-        foundletter=0;
-        for(int j=97;j<MAX+97;j++){
-            if(n->children[j]->value==adv[i]){
-                foundletter=1;
-                if(adv[i+1]=='\0'){
-                    return n->children[j];
-                }
-                n=n->children[j];
+    for(int i=1;adv[i]!='\0';i++){
+        if(n->children[adv[i]]!=NULL){
+            if(adv[i+1]=='\0'){
+                return n->children[adv[i]];
             }
+            n=n->children[adv[i]];
         }
-        if(foundletter==0){
-            return 0;
+        else{
+            return NULL;
         }
     }
 }
