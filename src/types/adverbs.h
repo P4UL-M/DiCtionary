@@ -9,7 +9,7 @@ This file contains the functions for the adverbs*/
 
 typedef struct node_adv
 {
-    char val;
+    char value;
     struct node_adv **children;
     int nb_child;
 } t_node_adv, *p_node_adv;

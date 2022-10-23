@@ -11,13 +11,13 @@ This file contains the functions in order to extract text from the dictionary*/
 #include "../types/verbs.h"
 #include "../types/adverbs.h"
 
-p_noun searchNoun(p_tree_noun, char *);
-p_verb searchVerb(p_tree_verb, char *);
-p_adj searchAdj(p_tree_adj, char *);
-p_adv searchAdv(p_tree_adv, char *);
+p_node_noun searchNoun(p_tree_noun, char *);
+p_node_verb searchVerb(p_tree_verb, char *);
+p_node_adj searchAdj(p_tree_adj, char *);
+p_node_adv searchAdv(p_tree_adv, char *);
 
-p_noun randomNoun(p_tree_noun);
+/*p_noun randomNoun(p_tree_noun);
 p_verb randomVerb(p_tree_verb);
 p_adj randomAdj(p_tree_adj);
-p_adv randomAdv(p_tree_adv);
+p_adv randomAdv(p_tree_adv);*/
 #endif

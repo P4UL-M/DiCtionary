@@ -20,7 +20,7 @@ p_tree_adv create_tree_adv()
 p_node_adv createnode_adv(char val)
 {
     p_node_adv node = malloc(sizeof(t_node_adv));
-    node->val = val;
+    node->value = val;
     node->children = malloc(sizeof(p_node_adv) * MAX);
     for (int i = 0; i < MAX; i++)
     {
