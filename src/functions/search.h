@@ -16,8 +16,8 @@ p_node_verb searchVerb(p_tree_verb, char *);
 p_node_adj searchAdj(p_tree_adj, char *);
 p_node_adv searchAdv(p_tree_adv, char *);
 
-/*p_noun randomNoun(p_tree_noun);
-p_verb randomVerb(p_tree_verb);
-p_adj randomAdj(p_tree_adj);
-p_adv randomAdv(p_tree_adv);*/
+/*p_node_noun randomNoun(p_tree_noun);
+p_node_verb randomVerb(p_tree_verb);
+p_node_adj randomAdj(p_tree_adj);
+p_node_adv randomAdv(p_tree_adv);*/
 #endif

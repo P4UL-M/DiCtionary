@@ -12,7 +12,7 @@ p_node_noun searchNoun(p_tree_noun tree, char *noun)
     n=tree->children[noun[0]];
     for(int i=0;noun[i]!='\0';i++){
         foundletter=0;
-        for(int j=0;j<MAX;j++){
+        for(int j=97;j<MAX+97;j++){
             if(n->children[j]->value==noun[i]){
                 foundletter=1;
                 if(noun[i+1]=='\0'){
@@ -33,7 +33,7 @@ p_node_verb searchVerb(p_tree_verb tree, char *verb)
     n=tree->children[verb[0]];
     for(int i=0;verb[i]!='\0';i++){
         foundletter=0;
-        for(int j=0;j<MAX;j++){
+        for(int j=97;j<MAX+97;j++){
             if(n->children[j]->value==verb[i]){
                 foundletter=1;
                 if(verb[i+1]=='\0'){
@@ -54,7 +54,7 @@ p_node_adj searchAdj(p_tree_adj tree, char *adj)
     n=tree->children[adj[0]];
     for(int i=0;adj[i]!='\0';i++){
         foundletter=0;
-        for(int j=0;j<MAX;j++){
+        for(int j=97;j<MAX+97;j++){
             if(n->children[j]->value==adj[i]){
                 foundletter=1;
                 if(adj[i+1]=='\0'){
@@ -75,7 +75,7 @@ p_node_adv searchAdv(p_tree_adv tree, char *adv)
     n=tree->children[adv[0]];
     for(int i=0;adv[i]!='\0';i++){
         foundletter=0;
-        for(int j=0;j<MAX;j++){
+        for(int j=97;j<MAX+97;j++){
             if(n->children[j]->value==adv[i]){
                 foundletter=1;
                 if(adv[i+1]=='\0'){
@@ -90,10 +90,10 @@ p_node_adv searchAdv(p_tree_adv tree, char *adv)
     }
 }
 
-/*p_noun randomNoun(p_tree_noun tree){
+/*p_node_noun randomNoun(p_tree_noun tree){
     srand(time(0));
-    p_tree_noun t=malloc(sizeof(t_tree_noun));
-    t=tree;
+    p_node_noun n=malloc(sizeof(p_node_noun));
+    n=tree->children[];
     char* word;
     for(int j=0;j<round(rand()*MAX);j++){
         int i=round(rand()*MAX); 
@@ -101,7 +101,7 @@ p_node_adv searchAdv(p_tree_adv tree, char *adv)
     }
 }
 
-p_verb randomVerb(p_tree_verb tree);
-p_adj randomAdj(p_tree_adj tree);
-p_adv randomAdv(p_tree_adv tree); 
+p_node_verb randomVerb(p_tree_verb tree);
+p_node_adj randomAdj(p_tree_adj tree);
+p_node_adv randomAdv(p_tree_adv tree); 
 */
