@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "../types/struct.h"
 #include "../types/constants.h"
 
@@ -56,20 +57,20 @@ p_node search(p_tree tree, char *noun)
     return current;
 }
 
-/*p_node findRandom(p_tree tree){
-    srand(time(NULL));
-    return randomNextLetter(tree->children);
-}
-
 p_node randomNextLetter(p_child current){
     int letter=rand()%26;
     for(int i=0;(i<letter) && (current->next!=NULL);i++){
         current=current->next;
     }
-    if((current->node->form!=NULL){
+    if(current->node->forms!=NULL){
         if((current->node->children==NULL)||(rand()%7==1)){
             return current->node;
         }
     }
-    randomNextLetter(current->node->children);
-}*/
+    return randomNextLetter(current->node->children);
+}
+
+p_node findRandom(p_tree tree){
+    srand(time(NULL));
+    return randomNextLetter(tree->children);
+}
