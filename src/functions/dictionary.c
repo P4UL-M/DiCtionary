@@ -6,9 +6,7 @@ This file contains the functions in order to extract text from the dictionary*/
 #include <string.h>
 
 #include "dictionary.h"
-#include "../types/nouns.h"
-#include "../types/verbs.h"
-#include "../types/adverbs.h"
+#include "../types/struct.h"
 
 char **extractWord(char *source)
 {
@@ -21,11 +19,7 @@ char **extractWord(char *source)
     return output;
 }
 
-void addToTree(char *declined_noun, char *base, char *declinaison, p_tree_noun tree)
-{
-}
-
-void extractFile(char *path, p_tree_noun tree)
+t_dictionary extractFile(char *path)
 {
     FILE *fp;
     fp = fopen(path, "r");
@@ -36,7 +30,11 @@ void extractFile(char *path, p_tree_noun tree)
     }
     char line[MAX_SIZE_LINE];
     int i = 0;
-
+    t_dictionary dictionary;
+    dictionary.nouns = create_tree();
+    dictionary.adjectives = create_tree();
+    dictionary.adverbs = create_tree();
+    dictionary.verbs = create_tree();
     while (fgets(line, MAX_SIZE_LINE, fp))
     {
         char **extractedStrings = extractWord(line);
@@ -68,4 +66,6 @@ void extractFile(char *path, p_tree_noun tree)
         i++;
     }
     printf("number of lines : %d\n", i);
+    fclose(fp);
+    return dictionary;
 }

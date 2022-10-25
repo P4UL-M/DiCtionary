@@ -1,86 +1,75 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../types/nouns.h"
-#include "../types/verbs.h"
-#include "../types/adverbs.h"
+#include "../types/struct.h"
+#include "../types/constants.h"
 
-p_node_noun searchNoun(p_tree_noun tree, char *noun){
-    p_node_noun n=malloc(sizeof(p_node_noun));
-    n=tree->children[noun[0]];
-    for(int i=1;noun[i]!='\0';i++){
-        if(n->children[noun[i]]!=NULL){
-            if(noun[i+1]=='\0'){
-                return n->children[noun[i]];
-            }
-            n=n->children[noun[i]];
+p_node searchInChild(p_node parent, char myChar)
+{
+    if (parent == NULL)
+    {
+        return NULL;
+    }
+    if (parent->children == NULL)
+        return NULL;
+    p_node current = NULL;
+    p_child i = parent->children;
+    do
+    {
+        if (i->node->value == myChar)
+        {
+            current = i->node;
         }
-        else{
+        i = i->next;
+    } while (i != NULL && current == NULL);
+    return current;
+}
+
+p_node search(p_tree tree, char *noun)
+{
+    if (tree == NULL)
+    {
+        return NULL;
+    }
+    p_node current = NULL;
+    p_child i = tree->children;
+    do
+    {
+        if (i->node->value == noun[0])
+        {
+            current = i->node;
+        }
+        i = i->next;
+    } while (i != NULL && current == NULL);
+    if (current == NULL)
+    {
+        return NULL;
+    }
+    for (int i = 1; noun[i] != '\0'; i++)
+    {
+        current = searchInChild(current, noun[i]);
+        if (current == NULL)
+        {
             return NULL;
         }
     }
+    return current;
 }
 
-p_node_verb searchVerb(p_tree_verb tree, char *verb){
-    p_node_verb n=malloc(sizeof(p_node_verb));
-    n=tree->children[verb[0]];
-    for(int i=1;verb[i]!='\0';i++){
-        if(n->children[verb[i]]!=NULL){
-            if(verb[i+1]=='\0'){
-                return n->children[verb[i]];
-            }
-            n=n->children[verb[i]];
-        }
-        else{
-            return NULL;
+/*p_node findRandom(p_tree tree){
+    srand(time(NULL));
+    return randomNextLetter(tree->children);
+}
+
+p_node randomNextLetter(p_child current){
+    int letter=rand()%26;
+    for(int i=0;(i<letter) && (current->next!=NULL);i++){
+        current=current->next;
+    }
+    if((current->node->form!=NULL){
+        if((current->node->children==NULL)||(rand()%7==1)){
+            return current->node;
         }
     }
-}
-
-p_node_adj searchAdj(p_tree_adj tree, char *adj){
-    p_node_adj n=malloc(sizeof(p_node_adj));
-    n=tree->children[adj[0]];
-    for(int i=1;adj[i]!='\0';i++){
-        if(n->children[adj[i]]!=NULL){
-            if(adj[i+1]=='\0'){
-                return n->children[adj[i]];
-            }
-            n=n->children[adj[i]];
-        }
-        else{
-            return NULL;
-        }
-    }
-}
-
-p_node_adv searchAdv(p_tree_adv tree, char *adv){
-    p_node_adv n=malloc(sizeof(p_node_adv));
-    n=tree->children[adv[0]];
-    for(int i=1;adv[i]!='\0';i++){
-        if(n->children[adv[i]]!=NULL){
-            if(adv[i+1]=='\0'){
-                return n->children[adv[i]];
-            }
-            n=n->children[adv[i]];
-        }
-        else{
-            return NULL;
-        }
-    }
-}
-
-/*p_node_noun randomNoun(p_tree_noun tree){
-    srand(time(0));
-    p_node_noun n=malloc(sizeof(p_node_noun));
-    n=tree->children[];
-    char* word;
-    for(int j=0;j<round(rand()*MAX);j++){
-        int i=round(rand()*MAX); 
-        word[j]=t->children[i];
-    }
-}
-
-p_node_verb randomVerb(p_tree_verb tree);
-p_node_adj randomAdj(p_tree_adj tree);
-p_node_adv randomAdv(p_tree_adv tree); 
-*/
+    randomNextLetter(current->node->children);
+}*/
