@@ -4,8 +4,10 @@ This file contains the main menu*/
 #ifndef MENU_MAIN_H
 #define MENU_MAIN_H
 
+#include "../functions/dictionary.h"
+
 void menu();
-void search();
+void search_menu(t_dictionary);
 void generate_sentence();
 void waitKey();
 

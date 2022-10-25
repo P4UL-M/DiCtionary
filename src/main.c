@@ -9,6 +9,7 @@ This file contains the main algorithm*/
 #include "functions/dictionary.h"
 //#include "menu/menu_main.h"
 #include "functions/search.h"
+#include "menu/menu_main.h"
 
 int main()
 {
@@ -28,6 +29,7 @@ int main()
     add_form(current, "c", "c");
     p_node result = search(tree, "abc");
     printf("%c %s %s\n", result->value, result->forms->tag, result->forms->word);
+    menu();
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

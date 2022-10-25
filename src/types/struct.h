@@ -3,7 +3,6 @@ Quentin Cardona, Axel Loones and Paul Mairesse
 This file contains the functions for the structures*/
 #ifndef struct_h
 #define struct_h
-#include <stdbool.h>
 
 typedef struct s_form
 {

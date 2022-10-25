@@ -5,11 +5,10 @@ This file contains the main menu*/
 #include "menu_search.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include "../functions/search.h"
 #include "../functions/dictionary.h"
-#include "../types/adverbs.h"
-#include "../types/nouns.h"
-#include "../types/verbs.h"
+#include "../types/struct.h"
 #ifdef _WIN32
 #include <windows.h>
 #define CLEAR "cls"
@@ -36,40 +35,41 @@ void title()
 void menu()
 // Function that contains the main menu
 {
-start:
-    title();
-    int action;
-    t_dictionary dico;
-    do
+    bool flag = true;
+    while (flag)
     {
-        printf("%sDo you want to:\n", ANSI_COLOR_GREEN);
-        printf("%s1.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf("%s2.%s Generate a random sentence?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf("%s3.%s Exit?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf(ANSI_COLOR_RESET);
-        printf("\n>");
-        scanf("%d", &action);
-        fflush(stdin);
-    } while (action < 1 || action > 3);
-    switch (action)
-    {
-    case 1:
-        search(dico);
-        break;
-    case 2:
-        generate_sentence();
-        break;
-    default:
-        goto stop;
-        break;
+        title();
+        int action;
+        t_dictionary dico;
+        do
+        {
+            printf("%sDo you want to:\n", ANSI_COLOR_GREEN);
+            printf("%s1.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf("%s2.%s Generate a random sentence?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf("%s3.%s Exit?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf(ANSI_COLOR_RESET);
+            printf("\n>");
+            scanf("%d", &action);
+            fflush(stdin);
+        } while (action < 1 || action > 3);
+        switch (action)
+        {
+        case 1:
+            search_menu(dico);
+            break;
+        case 2:
+            generate_sentence();
+            break;
+        default:
+            flag = false;
+            break;
+        }
+        waitKey();
     }
-    waitKey();
-    goto start;
-stop:
     return;
 }
 
-void search(t_dictionary dico)
+void search_menu(t_dictionary dico)
 // Function to launch the search of a word
 {
     title();
@@ -78,28 +78,28 @@ void search(t_dictionary dico)
     printf("\n>");
     char searching[50];
     scanf("%50s", searching);
-    p_noun result_noun = searchNoun(dico.nouns, searching);
+    p_node result_noun = search(dico.nouns, searching);
     if (result_noun != NULL)
     {
-        displayNoun(result_noun);
+        displayResult(result_noun);
         return;
     }
-    p_adj result_adj = searchAdj(dico.adjectives, searching);
+    p_node result_adj = search(dico.adjectives, searching);
     if (result_adj != NULL)
     {
-        displayNoun(result_adj);
+        displayResult(result_adj);
         return;
     }
-    p_verb result_verb = searchVerb(dico.verbs, searching);
+    p_node result_verb = search(dico.verbs, searching);
     if (result_verb != NULL)
     {
         displayVerb(result_verb);
         return;
     }
-    p_adv result_adv = searchAdv(dico.adverbs, searching);
+    p_node result_adv = search(dico.adverbs, searching);
     if (result_adv != NULL)
     {
-        printf("%s is an adverb\n", result_adv->word);
+        printf("%s is an adverb\n", searching);
         return;
     }
     printf("%s doesn't appear in the DiCtionary.\n", searching);
