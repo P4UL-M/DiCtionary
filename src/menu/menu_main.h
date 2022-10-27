@@ -8,7 +8,7 @@ This file contains the main menu*/
 
 void menu();
 void search_menu(t_dictionary);
-void generate_sentence();
+void generate_sentence_menu(int, t_dictionary);
 void waitKey();
 
 #endif

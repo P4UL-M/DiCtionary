@@ -3,6 +3,7 @@ Quentin Cardona, Axel Loones and Paul Mairesse
 This file contains the main menu*/
 #include "menu_main.h"
 #include "menu_search.h"
+#include "menu_generation.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -58,7 +59,7 @@ void menu()
             search_menu(dico);
             break;
         case 2:
-            generate_sentence();
+            generate_sentence(dico);
             break;
         default:
             flag = false;
@@ -78,35 +79,57 @@ void search_menu(t_dictionary dico)
     printf("\n>");
     char searching[50];
     scanf("%50s", searching);
-    p_node result_noun = search(dico.nouns, searching);
-    if (result_noun != NULL)
+    p_node result = search(dico.nouns, searching);
+    if (result != NULL)
     {
-        displayResult(result_noun);
+        p_form form = getForm(result, searching);
+        printf("%s is a noun that is ", searching);
+        displayResult(form);
+        if (form->word != searching)
+        {
+            printf("It comes from %s, a noun that is ", result->forms->word);
+            displayResult(result->forms);
+        }
         return;
     }
-    p_node result_adj = search(dico.adjectives, searching);
-    if (result_adj != NULL)
+    result = search(dico.adjectives, searching);
+    if (result != NULL)
     {
-        displayResult(result_adj);
+        p_form form = getForm(result, searching);
+        printf("%s is an adjective that is ", result->forms->word);
+        displayResult(form);
+        if (form->word != searching)
+        {
+            printf("It comes from %s, an adjective that is ", result->forms->word);
+            displayResult(result->forms);
+        }
         return;
     }
-    p_node result_verb = search(dico.verbs, searching);
-    if (result_verb != NULL)
+    p_node result = search(dico.adverbs, searching);
+    if (result != NULL)
     {
-        displayVerb(result_verb);
+        printf("%s is an adverb\n", result->forms->word);
+        displayResult(result->forms);
         return;
     }
-    p_node result_adv = search(dico.adverbs, searching);
-    if (result_adv != NULL)
+    p_node result = search(dico.verbs, searching);
+    if (result != NULL)
     {
-        printf("%s is an adverb\n", searching);
+        p_form getForm(result, searching);
+        printf("%s is a verb that is conjugated at the ", result->forms->word);
+        displayResult(result->forms);
+        if (form->word != searching)
+        {
+            printf("It comes from %s, a verb that is conjugated at the ", result->forms->word);
+            displayResult(result->forms);
+        }
         return;
     }
     printf("%s doesn't appear in the DiCtionary.\n", searching);
     return;
 }
 
-void generate_sentence()
+void generate_sentence_menu(t_dictionary dico)
 // Function to generate a random sentence
 {
     title();
@@ -122,6 +145,7 @@ void generate_sentence()
         scanf("%d", &generation_mode);
         fflush(stdin);
     } while (generation_mode < 1 || generation_mode > 3); // Ne pas oublier l'easter egg
+    generate_sentence(generation_mode, dico);
 }
 
 void waitKey()

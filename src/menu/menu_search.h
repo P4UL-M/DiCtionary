@@ -12,7 +12,7 @@ This file contains the functions to adapt the search in the menu*/
 void displayVerb();
 void displayConjugaison();
 void dysplayPerson();
-void displayResult(p_node);
+void displayResult(p_form);
 void displayDeclinaison();
 
 #endif
