@@ -7,7 +7,7 @@ This file contains the functions for the structures*/
 typedef struct s_form
 {
     char *word;
-    char *tag;
+    int tag;
     struct s_form *next;
 } t_form, *p_form;
 

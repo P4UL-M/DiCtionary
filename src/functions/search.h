@@ -9,4 +9,5 @@ This file contains the functions in order to extract text from the dictionary*/
 p_node search(p_tree, char *);
 p_node randomNextLetter(p_child);
 p_node findRandom(p_tree);
+p_form according(p_node, int);
 #endif

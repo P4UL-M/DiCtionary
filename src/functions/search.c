@@ -67,5 +67,24 @@ p_node randomNextLetter(p_child current)
 p_node findRandom(p_tree tree)
 {
     srand(time(NULL));
-    return randomNextLetter(tree->children);
+    p_node returned = NULL;
+    while(returned==NULL){
+        returned = randomNextLetter(tree->children);
+    }
+    return returned;
+}
+
+p_form according(p_tree tree, int form){
+    p_node current_node= findRandom(tree);
+    p_form current_form=current_node->forms;
+    while(current_form->tag!=form){
+        if(current_form->next==NULL){
+            current_node= findRandom(tree);
+            current_form=current_node->forms;
+        }
+        else{
+        current_form=current_form->next;
+        }
+    }
+    return current_form;
 }
