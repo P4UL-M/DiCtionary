@@ -5,6 +5,7 @@ This file contains the functions in order to extract text from the dictionary*/
 #define DICTIONARY_H
 
 #include "../types/struct.h"
+#include "../types/constants.h"
 
 #define NB_LINES 287977
 #define MAX_SIZE_LINE 256

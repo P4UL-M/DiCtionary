@@ -44,22 +44,64 @@ void addBaseInTree(p_tree tree, char *word)
     }
 }
 
-void addInTree(p_tree tree, char *word, char *base, char *tag)
+void addInTree(p_tree tree, char *word, char *base, int tag)
 {
-    if (tag == NULL && search(tree, word) == NULL)
+    if (search(tree, base) == NULL)
     {
-        addBaseInTree(tree, word);
+        addBaseInTree(tree, base);
     }
     else
     {
         p_node node = search(tree, base);
-        if (node == NULL)
+        if (strcmp(word, base) != 0)
         {
-            addBaseInTree(tree, base);
-            node = search(tree, base);
+            add_form(node, word, tag);
         }
-        add_form(node, word, tag);
     }
+}
+
+int getFlags(char *tag, int type)
+{
+    char *flag = strtok(tag, "+");
+    int flags = 0;
+    do
+    {
+        if (strtok(flag, P1) == 0 && type == 1)
+            flags += P1_BIT;
+        else if (strtok(flag, P2) == 0 && type == 1)
+            flags += P2_BIT;
+        else if (strtok(flag, P3) == 0 && type == 1)
+            flags += P3_BIT;
+        else if (strtok(flag, Mas) == 0 && type == 2)
+            flags += Mas_BIT;
+        else if (strtok(flag, Fem) == 0 && type == 2)
+            flags += Fem_BIT;
+        else if (strtok(flag, PL) == 0)
+            flags += PL_BIT;
+        else if (strtok(flag, SG) == 0)
+            flags += SG_BIT;
+        else if (strtok(flag, IPre) == 0 && type == 1)
+            flags += IPre_BIT;
+        else if (strtok(flag, IImp) == 0 && type == 1)
+            flags += IImp_BIT;
+        else if (strtok(flag, SPre) == 0 && type == 1)
+            flags += SPre_BIT;
+        else if (strtok(flag, IPsimp) == 0 && type == 1)
+            flags += IPsimp_BIT;
+        else if (strtok(flag, PPre) == 0 && type == 1)
+            flags += PPre_BIT;
+        else if (strtok(flag, SImp) == 0 && type == 1)
+            flags += SImp_BIT;
+        else if (strtok(flag, PPas) == 0 && type == 1)
+            flags += PPas_BIT;
+        else if (strtok(flag, IFut) == 0 && type == 1)
+            flags += IFut_BIT;
+        else if (strtok(flag, CPre) == 0 && type == 1)
+            flags += CPre_BIT;
+        else if (strtok(flag, Inf) == 0 && type == 1)
+            flags += Inf_BIT;
+    } while (strtok(NULL, "+"));
+    return flags;
 }
 
 t_dictionary extractFile(char *path)
@@ -80,36 +122,41 @@ t_dictionary extractFile(char *path)
     dictionary.verbs = create_tree();
     while (fgets(line, MAX_SIZE_LINE, fp))
     {
-        // printf("line %d: %s", i, line);
         char **extractedStrings = extractWord(line);
         if (extractedStrings != NULL)
         {
             char *type = strtok(extractedStrings[2], ":");
             if (strcmp(type, NOUN_TYPE) == 0)
             {
-                // printf("noun -> '%s'\n", type);
                 char *form = NULL;
-                while (form = strtok(NULL, ":"))
+                while ((form = strtok(NULL, ":")))
                 {
-                    // printf("form : '%s' - word : '%s' - base : '%s'\n", form, extractedStrings[0], extractedStrings[1]);
-                    addInTree(dictionary.nouns, extractedStrings[0], extractedStrings[1], form);
+                    addInTree(dictionary.nouns, extractedStrings[0], extractedStrings[1], getFlags(form, 2));
                 }
             }
             else if (strcmp(type, VERB_TYPE) == 0)
             {
-                // printf("Verb\n");
+                char *form = NULL;
+                while ((form = strtok(NULL, ":")))
+                {
+                    addInTree(dictionary.verbs, extractedStrings[0], extractedStrings[1], getFlags(form, 1));
+                }
             }
             else if (strcmp(type, ADJECTIVE_TYPE) == 0)
             {
-                // printf("Adjective\n");
+                char *form = NULL;
+                while ((form = strtok(NULL, ":")))
+                {
+                    addInTree(dictionary.adjectives, extractedStrings[0], extractedStrings[1], getFlags(form, 2));
+                }
             }
             else if (strcmp(type, ADVERB_TYPE) == 0)
             {
-                // printf("Adverb\n");
+                addInTree(dictionary.adverbs, extractedStrings[0], extractedStrings[1], 0);
             }
             else
             {
-                // printf("Unknown type : %s, [%d,%d,%d,%d]\n", type, strcmp(type, NOUN_TYPE), strcmp(type, VERB_TYPE), strcmp(type, ADJECTIVE_TYPE), strcmp(type, ADVERB_TYPE));
+                printf("Unknown type : %s, [%d,%d,%d,%d]\n", type, strcmp(type, NOUN_TYPE), strcmp(type, VERB_TYPE), strcmp(type, ADJECTIVE_TYPE), strcmp(type, ADVERB_TYPE));
             }
         }
         free(extractedStrings);

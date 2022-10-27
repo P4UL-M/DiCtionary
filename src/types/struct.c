@@ -103,7 +103,7 @@ p_node get_child_from_tree(p_tree tree, char letter)
     return NULL;
 }
 
-void add_form(p_node node, char *word, char *tag)
+void add_form(p_node node, char *word, int tag)
 {
     if (node->forms == NULL)
     {

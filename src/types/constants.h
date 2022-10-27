@@ -41,26 +41,26 @@ This file contains the constants and define*/
 #define ANSI_BACKGROUND_WHITE "\x1b[0m\x1b[39;1m\e[47m\e[K"
 
 // binary constants
-#define SG_BIT b '0x1'
-#define PL_BIT b '0x2'
+#define SG_BIT 1
+#define PL_BIT 2
 
-#define P1_BIT b '0x4'
-#define P2_BIT b '0x8'
-#define P3_BIT b '0x10'
+#define P1_BIT 4
+#define P2_BIT 8
+#define P3_BIT 16
 
-#define IPre_BIT b '0x20'
-#define IImp_BIT b '0x40'
-#define SPre_BIT b '0x80'
-#define IPsimp_BIT b '0x100'
-#define PPre_BIT b '0x200'
-#define SImp_BIT b '0x400'
-#define PPas_BIT b 'Ox800'
-#define IFut_BIT b '0x1000'
-#define CPre_BIT b '0x2000'
-#define Inf_BIT b '0x4000'
+#define IPre_BIT 32
+#define IImp_BIT 64
+#define SPre_BIT 128
+#define IPsimp_BIT 256
+#define PPre_BIT 512
+#define SImp_BIT 1024
+#define PPas_BIT 2048
+#define IFut_BIT 4096
+#define CPre_BIT 8192
+#define Inf_BIT 16384
 
-#define Mas_BIT b '0x4'
-#define Fem_BIT b '0x8'
+#define Mas_BIT 4
+#define Fem_BIT 8
 
 unsigned int get_bit(char *str);
 
