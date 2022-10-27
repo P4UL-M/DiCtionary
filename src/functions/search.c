@@ -88,3 +88,19 @@ p_form according(p_tree tree, int form){
     }
     return current_form;
 }
+
+p_form getForm(p_node node, char *form)
+{
+    if (node == NULL)
+        return NULL;
+    p_form current = node->forms;
+    while (current != NULL)
+    {
+        if (strcmp(current->word, form) == 0)
+        {
+            return current;
+        }
+        current = current->next;
+    }
+    return NULL;
+}

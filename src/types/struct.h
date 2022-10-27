@@ -29,6 +29,12 @@ typedef struct s_tree
     struct s_child *children;
 } t_tree, *p_tree;
 
+typedef struct t_word
+{
+    char *base;
+    struct s_form *forms;
+} t_word, *p_word;
+
 p_tree create_tree();
 void add_child(p_node parent, char letter);
 void add_child_to_tree(p_tree tree, char letter);
