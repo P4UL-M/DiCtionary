@@ -79,6 +79,7 @@ void searchMenu(t_dictionary dico)
     printf("\n>");
     char target[50];
     scanf("%50s", target);
+    printf("%s\nSearching in Nouns...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
     p_word result = getWord(dico.nouns, target);
     p_form form = getForm(result, target);
     if (result != NULL && form != NULL)
@@ -87,6 +88,7 @@ void searchMenu(t_dictionary dico)
         displayForm(form, 2);
         return;
     }
+    printf("%s\nSearching in Adjectives...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
     result = getWord(dico.adjectives, target);
     form = getForm(result, target);
     if (result != NULL && form != NULL)
@@ -95,12 +97,14 @@ void searchMenu(t_dictionary dico)
         displayForm(form, 2);
         return;
     }
+    printf("%s\nSearching in Adverbs...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
     result = getWord(dico.adverbs, target);
     if (result != NULL)
     {
         printf("%s is an adverb\n", target);
         return;
     }
+    printf("%s\nSearching in Verbs...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
     result = getWord(dico.verbs, target);
     form = getForm(result, target);
     if (result != NULL && form != NULL)

@@ -14,8 +14,12 @@ p_tree create_tree()
     return tree;
 }
 
-void add_child(p_node parent, char letter)
+p_node add_child(p_node parent, char letter)
 {
+    if ((int)letter < 0)
+    {
+        printf("NOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO\n");
+    }
     if (parent->children == NULL)
     {
         p_child child = malloc(sizeof(t_child));
@@ -27,7 +31,7 @@ void add_child(p_node parent, char letter)
         child->node->value = letter;
         child->node->children = NULL;
         child->node->forms = NULL;
-        return;
+        return child->node;
     }
     p_child current = parent->children;
     while (current->next != NULL)
@@ -42,10 +46,10 @@ void add_child(p_node parent, char letter)
     current->next->node->value = letter;
     current->next->node->children = NULL;
     current->next->node->forms = NULL;
-    return;
+    return current->next->node;
 }
 
-void add_child_to_tree(p_tree tree, char letter)
+p_node add_child_to_tree(p_tree tree, char letter)
 {
     if (tree->children == NULL)
     {
@@ -58,7 +62,7 @@ void add_child_to_tree(p_tree tree, char letter)
         child->node->value = letter;
         child->node->children = NULL;
         child->node->forms = NULL;
-        return;
+        return child->node;
     }
     p_child current = tree->children;
     while (current->next != NULL)
@@ -73,7 +77,7 @@ void add_child_to_tree(p_tree tree, char letter)
     current->next->node->value = letter;
     current->next->node->children = NULL;
     current->next->node->forms = NULL;
-    return;
+    return current->next->node;
 }
 
 p_node get_child(p_node parent, char letter)

@@ -21,38 +21,37 @@ char **extractWord(char *source)
     return output;
 }
 
-void addBaseInTree(p_tree tree, char *word)
+p_node addBaseInTree(p_tree tree, char *word)
 {
     p_node node = get_child_from_tree(tree, word[0]);
     if (node == NULL)
     {
-        add_child_to_tree(tree, word[0]);
-        node = get_child_from_tree(tree, word[0]);
+        node = add_child_to_tree(tree, word[0]);
     }
     for (int i = 1; i < strlen(word); i++)
     {
         p_node child = get_child(node, word[i]);
         if (child == NULL)
         {
-            add_child(node, word[i]);
-            node = get_child(node, word[i]);
+            node = add_child(node, word[i]);
         }
         else
         {
             node = child;
         }
     }
+    return node;
 }
 
 void addInTree(p_tree tree, char *word, char *base, int tag)
 {
-    if (search(tree, base) == NULL)
+    p_node node = search(tree, base);
+    if (node == NULL)
     {
-        addBaseInTree(tree, base);
+        node = addBaseInTree(tree, base);
     }
     if (tag != 0)
     {
-        p_node node = search(tree, base);
         addForm(node, word, tag);
     }
 }
@@ -63,41 +62,41 @@ int getFlags(char *tag, int type)
     int flags = 0;
     do
     {
-        if (strtok(flag, P1) == 0 && type == 1)
+        if (strcmp(flag, P1) == 0 && type == 1)
             flags += P1_BIT;
-        else if (strtok(flag, P2) == 0 && type == 1)
+        else if (strcmp(flag, P2) == 0 && type == 1)
             flags += P2_BIT;
-        else if (strtok(flag, P3) == 0 && type == 1)
+        else if (strcmp(flag, P3) == 0 && type == 1)
             flags += P3_BIT;
-        else if (strtok(flag, Mas) == 0 && type == 2)
+        else if (strcmp(flag, Mas) == 0 && type == 2)
             flags += Mas_BIT;
-        else if (strtok(flag, Fem) == 0 && type == 2)
+        else if (strcmp(flag, Fem) == 0 && type == 2)
             flags += Fem_BIT;
-        else if (strtok(flag, PL) == 0)
+        else if (strcmp(flag, PL) == 0)
             flags += PL_BIT;
-        else if (strtok(flag, SG) == 0)
+        else if (strcmp(flag, SG) == 0)
             flags += SG_BIT;
-        else if (strtok(flag, IPre) == 0 && type == 1)
+        else if (strcmp(flag, IPre) == 0 && type == 1)
             flags += IPre_BIT;
-        else if (strtok(flag, IImp) == 0 && type == 1)
+        else if (strcmp(flag, IImp) == 0 && type == 1)
             flags += IImp_BIT;
-        else if (strtok(flag, SPre) == 0 && type == 1)
+        else if (strcmp(flag, SPre) == 0 && type == 1)
             flags += SPre_BIT;
-        else if (strtok(flag, IPsimp) == 0 && type == 1)
+        else if (strcmp(flag, IPsimp) == 0 && type == 1)
             flags += IPsimp_BIT;
-        else if (strtok(flag, PPre) == 0 && type == 1)
+        else if (strcmp(flag, PPre) == 0 && type == 1)
             flags += PPre_BIT;
-        else if (strtok(flag, SImp) == 0 && type == 1)
+        else if (strcmp(flag, SImp) == 0 && type == 1)
             flags += SImp_BIT;
-        else if (strtok(flag, PPas) == 0 && type == 1)
+        else if (strcmp(flag, PPas) == 0 && type == 1)
             flags += PPas_BIT;
-        else if (strtok(flag, IFut) == 0 && type == 1)
+        else if (strcmp(flag, IFut) == 0 && type == 1)
             flags += IFut_BIT;
-        else if (strtok(flag, CPre) == 0 && type == 1)
+        else if (strcmp(flag, CPre) == 0 && type == 1)
             flags += CPre_BIT;
-        else if (strtok(flag, Inf) == 0 && type == 1)
+        else if (strcmp(flag, Inf) == 0 && type == 1)
             flags += Inf_BIT;
-    } while (strtok(NULL, "+"));
+    } while ((flag = strtok(NULL, "+")));
     return flags;
 }
 
@@ -153,7 +152,7 @@ t_dictionary extractFile(char *path)
             }
             else
             {
-                printf("Unknown type : %s, [%d,%d,%d,%d]\n", type, strcmp(type, NOUN_TYPE), strcmp(type, VERB_TYPE), strcmp(type, ADJECTIVE_TYPE), strcmp(type, ADVERB_TYPE));
+                // printf("Unknown type : %s, [%d,%d,%d,%d]\n", type, strcmp(type, NOUN_TYPE), strcmp(type, VERB_TYPE), strcmp(type, ADJECTIVE_TYPE), strcmp(type, ADVERB_TYPE));
             }
         }
         free(extractedStrings);

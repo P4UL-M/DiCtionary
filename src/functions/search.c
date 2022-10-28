@@ -4,6 +4,8 @@
 #include <time.h>
 #include "../types/struct.h"
 #include "../types/constants.h"
+#include "../types/pile.h"
+#include "../library/cache.h" // TODO : give credit for library (uhash owner and us in last project)
 
 p_node searchInChild(p_node parent, char myChar)
 {
@@ -22,7 +24,7 @@ p_node searchInChild(p_node parent, char myChar)
     return current;
 }
 
-p_node search(p_tree tree, char *noun)
+p_node search(p_tree tree, char *word)
 {
     if (tree == NULL)
         return NULL;
@@ -30,7 +32,7 @@ p_node search(p_tree tree, char *noun)
     p_child i = tree->children;
     while (i != NULL && current == NULL)
     {
-        if (i->node->value == noun[0])
+        if (i->node->value == word[0])
         {
             current = i->node;
         }
@@ -38,61 +40,13 @@ p_node search(p_tree tree, char *noun)
     };
     if (current == NULL)
         return NULL;
-    for (int i = 1; noun[i] != '\0'; i++)
+    for (int i = 1; word[i] != '\0'; i++)
     {
-        current = searchInChild(current, noun[i]);
+        current = searchInChild(current, word[i]);
         if (current == NULL)
             return NULL;
     }
     return current;
-}
-
-p_node randomNextLetter(p_child current)
-{
-    int letter = rand() % 26;
-    for (int i = 0; (i < letter) && (current->next != NULL); i++)
-    {
-        current = current->next;
-    }
-    if (current->node->forms != NULL)
-    {
-        if ((current->node->children == NULL) || (rand() % 7 == 1))
-        {
-            return current->node;
-        }
-    }
-    return randomNextLetter(current->node->children);
-}
-
-p_node findRandom(p_tree tree)
-{
-    srand(time(NULL));
-    p_node returned = NULL;
-    while (returned == NULL)
-    {
-        returned = randomNextLetter(tree->children);
-    }
-    return returned;
-}
-
-// TODO : rewrite this function
-p_form according(p_tree tree, int form)
-{
-    p_node current_node = findRandom(tree);
-    p_form current_form = current_node->forms;
-    while (current_form->tag != form)
-    {
-        if (current_form->next == NULL)
-        {
-            current_node = findRandom(tree);
-            current_form = current_node->forms;
-        }
-        else
-        {
-            current_form = current_form->next;
-        }
-    }
-    return current_form;
 }
 
 p_form getForm(p_word node, char *form)
@@ -111,18 +65,95 @@ p_form getForm(p_word node, char *form)
     return NULL;
 }
 
+p_node depileSearch(p_pile pile, p_node node, char *word)
+{
+    if (node == NULL)
+    {
+        node = dequeue(pile);
+    }
+    if (find_entry((int)node) != NULL) // if already check
+    {
+        return NULL;
+    }
+    // search for our word in all child of our node
+    // ideal is breath traversal but useless with recursion so prefix is the way to go
+    p_form curr_form = node->forms;
+    while (curr_form != NULL)
+    {
+        if (strcmp(curr_form->word, word) == 0)
+        {
+            return node;
+        }
+        curr_form = curr_form->next;
+    }
+    if (node->children != NULL)
+    {
+        for (p_child child = node->children; child != NULL; child = child->next)
+        {
+            p_node child_node = depileSearch(pile, child->node, word);
+            if (child_node != NULL)
+            {
+                return child_node;
+            }
+        }
+    }
+    add_entry((int)node, node);
+    if (isEmpty(pile))
+        return NULL;
+    else
+        return depileSearch(pile, NULL, word);
+}
+
+p_node trueSearch(p_tree tree, char *word)
+{
+    if (tree == NULL)
+        return NULL;
+    p_node current = NULL;
+    p_child i = tree->children;
+    p_pile pile = createEmptyPile();
+    while (i != NULL && current == NULL)
+    {
+        if (i->node->value == word[0])
+        {
+            current = i->node;
+        }
+        i = i->next;
+    };
+    if (current == NULL)
+        return NULL;
+    enqueue(pile, current);
+    for (int i = 1; word[i] != '\0'; i++)
+    {
+        current = searchInChild(current, word[i]);
+        if (current == NULL)
+        {
+            p_node node = depileSearch(pile, NULL, word);
+            return node;
+        }
+        enqueue(pile, current);
+    }
+    return current;
+}
+
 p_word getWord(p_tree tree, char *word)
 {
     if (tree == NULL)
         return NULL;
     p_node current = search(tree, word);
     if (current == NULL)
-        return NULL;
+    {
+        current = trueSearch(tree, word);
+        if (current == NULL)
+            return NULL;
+        p_word result = malloc(sizeof(t_word));
+        result->base = malloc(sizeof(char) * (strlen(word) + 1));
+        strcpy(result->base, word);
+        result->forms = current->forms;
+        return result;
+    }
     p_word result = malloc(sizeof(t_word));
     result->base = malloc(sizeof(char) * (strlen(word) + 1));
     strcpy(result->base, word);
     result->forms = current->forms;
-    result->study = malloc(sizeof(char) * (strlen(word) + 1));
-    strcpy(result->study, word);
     return result;
 }
