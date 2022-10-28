@@ -5,6 +5,7 @@ This file contains the functions for the structures*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 
 p_tree create_tree()
 {
@@ -103,12 +104,13 @@ p_node get_child_from_tree(p_tree tree, char letter)
     return NULL;
 }
 
-void add_form(p_node node, char *word, int tag)
+void addForm(p_node node, char *word, int tag)
 {
     if (node->forms == NULL)
     {
         node->forms = malloc(sizeof(t_form));
-        node->forms->word = word;
+        node->forms->word = malloc(sizeof(char) * (strlen(word) + 1));
+        strcpy(node->forms->word, word);
         node->forms->tag = tag;
         node->forms->next = NULL;
         return;
@@ -119,7 +121,8 @@ void add_form(p_node node, char *word, int tag)
         current = current->next;
     }
     current->next = malloc(sizeof(t_form));
-    current->next->word = word;
+    current->next->word = malloc(sizeof(char) * (strlen(word) + 1));
+    strcpy(current->next->word, word);
     current->next->tag = tag;
     current->next->next = NULL;
     return;

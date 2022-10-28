@@ -1,9 +1,9 @@
 /*DiCtionary
 Quentin Cardona, Axel Loones and Paul Mairesse
 This file contains the main menu*/
-#include "menu_main.h"
-#include "menu_search.h"
-#include "menu_generation.h"
+#include "menu.h"
+#include "display.h"
+// #include "menu_generation.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -33,17 +33,16 @@ void title()
     printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
 }
 
-void menu()
+void menu(t_dictionary dico)
 // Function that contains the main menu
 {
     bool flag = true;
     while (flag)
     {
-        title();
         int action;
-        t_dictionary dico;
         do
         {
+            title();
             printf("%sDo you want to:\n", ANSI_COLOR_GREEN);
             printf("%s1.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
             printf("%s2.%s Generate a random sentence?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
@@ -56,80 +55,65 @@ void menu()
         switch (action)
         {
         case 1:
-            search_menu(dico);
+            searchMenu(dico);
+            waitKey();
             break;
         case 2:
-            generate_sentence(dico);
+            waitKey();
+            // generate_sentence(dico);
             break;
         default:
             flag = false;
             break;
         }
-        waitKey();
     }
     return;
 }
 
-void search_menu(t_dictionary dico)
+void searchMenu(t_dictionary dico)
 // Function to launch the search of a word
 {
     title();
     printf("%sEnter the word you want to search:\n", ANSI_COLOR_GREEN);
     printf(ANSI_COLOR_RESET);
     printf("\n>");
-    char searching[50];
-    scanf("%50s", searching);
-    p_node result = search(dico.nouns, searching);
-    if (result != NULL)
+    char target[50];
+    scanf("%50s", target);
+    p_word result = getWord(dico.nouns, target);
+    p_form form = getForm(result, target);
+    if (result != NULL && form != NULL)
     {
-        p_form form = getForm(result, searching);
-        printf("%s is a noun that is ", searching);
-        displayResult(form);
-        if (form->word != searching)
-        {
-            printf("It comes from %s, a noun that is ", result->forms->word);
-            displayResult(result->forms);
-        }
+        printf("%s is an noun that is ", target);
+        displayForm(form, 2);
         return;
     }
-    result = search(dico.adjectives, searching);
-    if (result != NULL)
+    result = getWord(dico.adjectives, target);
+    form = getForm(result, target);
+    if (result != NULL && form != NULL)
     {
-        p_form form = getForm(result, searching);
-        printf("%s is an adjective that is ", result->forms->word);
-        displayResult(form);
-        if (form->word != searching)
-        {
-            printf("It comes from %s, an adjective that is ", result->forms->word);
-            displayResult(result->forms);
-        }
+        printf("%s is an adjective that is ", target);
+        displayForm(form, 2);
         return;
     }
-    p_node result = search(dico.adverbs, searching);
+    result = getWord(dico.adverbs, target);
     if (result != NULL)
     {
-        printf("%s is an adverb\n", result->forms->word);
-        displayResult(result->forms);
+        printf("%s is an adverb\n", target);
         return;
     }
-    p_node result = search(dico.verbs, searching);
-    if (result != NULL)
+    result = getWord(dico.verbs, target);
+    form = getForm(result, target);
+    if (result != NULL && form != NULL)
     {
-        p_form getForm(result, searching);
-        printf("%s is a verb that is conjugated at the ", result->forms->word);
-        displayResult(result->forms);
-        if (form->word != searching)
-        {
-            printf("It comes from %s, a verb that is conjugated at the ", result->forms->word);
-            displayResult(result->forms);
-        }
+        printf("%s is an verb that is ", target);
+        displayForm(form, 1);
         return;
     }
-    printf("%s doesn't appear in the DiCtionary.\n", searching);
+    printf("%s doesn't appear in the DiCtionary.\n", target);
     return;
 }
 
-void generate_sentence_menu(t_dictionary dico)
+void generateSentenceMenu(t_dictionary dico)
 // Function to generate a random sentence
 {
     title();
@@ -145,7 +129,7 @@ void generate_sentence_menu(t_dictionary dico)
         scanf("%d", &generation_mode);
         fflush(stdin);
     } while (generation_mode < 1 || generation_mode > 3); // Ne pas oublier l'easter egg
-    generate_sentence(generation_mode, dico);
+    // generate_sentence(generation_mode, dico);
 }
 
 void waitKey()

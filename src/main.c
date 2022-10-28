@@ -7,9 +7,8 @@ This file contains the main algorithm*/
 
 #include "types/struct.h"
 #include "functions/dictionary.h"
-//#include "menu/menu_main.h"
 #include "functions/search.h"
-#include "menu/menu_main.h"
+#include "menu/menu.h"
 
 int main()
 {
@@ -18,7 +17,7 @@ int main()
     printf("Hello world\n");
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
-    menu();
+    menu(dictionary);
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

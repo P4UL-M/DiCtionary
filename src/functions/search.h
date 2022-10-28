@@ -10,6 +10,7 @@ p_node search(p_tree, char *);
 p_node randomNextLetter(p_child);
 p_node findRandom(p_tree);
 p_form according(p_node, int);
-p_form getForm(p_node, char *);
+p_form getForm(p_word, char *);
+p_word getWord(p_tree, char *);
 
 #endif

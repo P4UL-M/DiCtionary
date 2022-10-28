@@ -68,28 +68,34 @@ p_node findRandom(p_tree tree)
 {
     srand(time(NULL));
     p_node returned = NULL;
-    while(returned==NULL){
+    while (returned == NULL)
+    {
         returned = randomNextLetter(tree->children);
     }
     return returned;
 }
 
-p_form according(p_tree tree, int form){
-    p_node current_node= findRandom(tree);
-    p_form current_form=current_node->forms;
-    while(current_form->tag!=form){
-        if(current_form->next==NULL){
-            current_node= findRandom(tree);
-            current_form=current_node->forms;
+// TODO : rewrite this function
+p_form according(p_tree tree, int form)
+{
+    p_node current_node = findRandom(tree);
+    p_form current_form = current_node->forms;
+    while (current_form->tag != form)
+    {
+        if (current_form->next == NULL)
+        {
+            current_node = findRandom(tree);
+            current_form = current_node->forms;
         }
-        else{
-        current_form=current_form->next;
+        else
+        {
+            current_form = current_form->next;
         }
     }
     return current_form;
 }
 
-p_form getForm(p_node node, char *form)
+p_form getForm(p_word node, char *form)
 {
     if (node == NULL)
         return NULL;
@@ -103,4 +109,20 @@ p_form getForm(p_node node, char *form)
         current = current->next;
     }
     return NULL;
+}
+
+p_word getWord(p_tree tree, char *word)
+{
+    if (tree == NULL)
+        return NULL;
+    p_node current = search(tree, word);
+    if (current == NULL)
+        return NULL;
+    p_word result = malloc(sizeof(t_word));
+    result->base = malloc(sizeof(char) * (strlen(word) + 1));
+    strcpy(result->base, word);
+    result->forms = current->forms;
+    result->study = malloc(sizeof(char) * (strlen(word) + 1));
+    strcpy(result->study, word);
+    return result;
 }

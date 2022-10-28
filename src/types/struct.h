@@ -33,12 +33,13 @@ typedef struct t_word
 {
     char *base;
     struct s_form *forms;
+    char *study;
 } t_word, *p_word;
 
 p_tree create_tree();
 void add_child(p_node parent, char letter);
 void add_child_to_tree(p_tree tree, char letter);
-void add_form(p_node node, char *word, int tag);
+void addForm(p_node node, char *word, int tag);
 p_node get_child(p_node parent, char letter);
 p_node get_child_from_tree(p_tree tree, char letter);
 

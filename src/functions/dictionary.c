@@ -50,13 +50,10 @@ void addInTree(p_tree tree, char *word, char *base, int tag)
     {
         addBaseInTree(tree, base);
     }
-    else
+    if (tag != 0)
     {
         p_node node = search(tree, base);
-        if (strcmp(word, base) != 0)
-        {
-            add_form(node, word, tag);
-        }
+        addForm(node, word, tag);
     }
 }
 

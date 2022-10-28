@@ -1,8 +1,8 @@
 /*DiCtionary
 Quentin Cardona, Axel Loones and Paul Mairesse
 This file contains the functions to adapt the search in the menu*/
-#ifndef MENU_SEARCH_H
-#define MENU_SEARCH_H
+#ifndef DISPLAY_H
+#define DISPLAY_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,8 +11,8 @@ This file contains the functions to adapt the search in the menu*/
 
 void displayVerb();
 void displayConjugaison();
-void dysplayPerson();
-void displayResult(p_form);
+void displayPerson();
+void displayForm(p_form, int);
 void displayDeclinaison();
 
 #endif
