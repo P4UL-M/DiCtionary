@@ -9,7 +9,9 @@ This file contains the main menu*/
 #include <stdbool.h>
 #include "../functions/search.h"
 #include "../functions/dictionary.h"
+#include "../functions/random.h"
 #include "../types/struct.h"
+#include "../types/intTree.h"
 #ifdef _WIN32
 #include <windows.h>
 #define CLEAR "cls"
@@ -37,6 +39,9 @@ void menu(t_dictionary dico)
 // Function that contains the main menu
 {
     bool flag = true;
+    p_itree ponderation = createPonderationTree(dico.verbs);
+    p_node node;
+    int nbNoun = 0;
     while (flag)
     {
         int action;
@@ -59,6 +64,13 @@ void menu(t_dictionary dico)
             waitKey();
             break;
         case 2:
+            for (p_ichild child = ponderation->children; child != NULL; child = child->next)
+            {
+                nbNoun += child->node->value;
+            }
+            node = trueRandom(dico.verbs, ponderation);
+            printf("%s", ANSI_COLOR_YELLOW);
+            printf("the word is : %s", node->forms->word);
             waitKey();
             // generate_sentence(dico);
             break;

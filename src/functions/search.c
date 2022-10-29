@@ -24,6 +24,7 @@ p_node searchInChild(p_node parent, char myChar)
     return current;
 }
 
+// useless with true search which found the word with the same perfomance even with base form
 p_node search(p_tree tree, char *word)
 {
     if (tree == NULL)
@@ -139,17 +140,10 @@ p_word getWord(p_tree tree, char *word)
 {
     if (tree == NULL)
         return NULL;
-    p_node current = search(tree, word);
+    p_node current = trueSearch(tree, word);
     if (current == NULL)
     {
-        current = trueSearch(tree, word);
-        if (current == NULL)
-            return NULL;
-        p_word result = malloc(sizeof(t_word));
-        result->base = malloc(sizeof(char) * (strlen(word) + 1));
-        strcpy(result->base, word);
-        result->forms = current->forms;
-        return result;
+        return NULL;
     }
     p_word result = malloc(sizeof(t_word));
     result->base = malloc(sizeof(char) * (strlen(word) + 1));

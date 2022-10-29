@@ -38,6 +38,7 @@ typedef struct t_word
 p_tree create_tree();
 p_node add_child(p_node parent, char letter);
 p_node add_child_to_tree(p_tree tree, char letter);
+int countForms(p_node);
 void addForm(p_node node, char *word, int tag);
 p_node get_child(p_node parent, char letter);
 p_node get_child_from_tree(p_tree tree, char letter);

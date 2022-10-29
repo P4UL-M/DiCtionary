@@ -148,7 +148,7 @@ t_dictionary extractFile(char *path)
             }
             else if (strcmp(type, ADVERB_TYPE) == 0)
             {
-                addInTree(dictionary.adverbs, extractedStrings[0], extractedStrings[1], 0);
+                addInTree(dictionary.adverbs, extractedStrings[0], extractedStrings[1], -1);
             }
             else
             {

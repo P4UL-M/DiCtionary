@@ -42,7 +42,7 @@ void displayForm(p_form form, int type)
     else if ((form->tag & P2_BIT) == P2_BIT && type == 1)
         printf("second person ");
     else if ((form->tag & P3_BIT) == P3_BIT && type == 1)
-        printf("third person");
+        printf("third person ");
 
     // Plural/Singular:
     if ((form->tag & PL_BIT) == PL_BIT)
