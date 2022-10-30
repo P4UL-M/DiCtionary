@@ -74,10 +74,7 @@ p_node depileSearch(p_pile pile, p_node node, char *word)
         node = dequeue(pile);
     }
     if (find_entry(node)) // if already check
-    {
-        printf("already check\n");
         return NULL;
-    }
     // search for our word in all child of our node
     // ideal is breath traversal but useless with recursion so prefix is the way to go
     p_form curr_form = node->forms;

@@ -16,7 +16,7 @@ void add_entry(p_node hash)
     // add an entry to the cache
     HashEntry *s = (HashEntry *)malloc(sizeof(HashEntry));
     s->hash = hash;
-    HASH_FIND_PTR(mycache, hash, s); // add the entry to the cache with uthash
+    HASH_ADD_PTR(mycache, hash, s); // add the entry to the cache with uthash
 }
 
 bool find_entry(p_node hashCode)
