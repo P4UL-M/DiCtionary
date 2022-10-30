@@ -59,8 +59,8 @@ This file contains the constants and define*/
 #define CPre_BIT 8192
 #define Inf_BIT 16384
 
-#define Mas_BIT 4
-#define Fem_BIT 8
+#define Mas_BIT 32768
+#define Fem_BIT 65536
 
 unsigned int get_bit(char *str);
 
