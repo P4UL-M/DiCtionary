@@ -53,20 +53,22 @@ void displayForm(p_form form)
         printf("singular");
 
     // Masculine/Feminine
-    if ((form->tag & Mas_BIT) == Mas_BIT && !isVerb)
+    if ((form->tag & Mas_BIT) == Mas_BIT)
         printf(" masculine");
-    else if ((form->tag & Fem_BIT) == Fem_BIT && !isVerb)
+    else if ((form->tag & Fem_BIT) == Fem_BIT)
         printf(" feminine");
 }
 
-void displayForms(p_word word, p_form form, bool isVerb)
+void displayForms(p_word word, p_form form)
 {
-    displayForm(form, isVerb);
+    displayForm(form);
+    printf("\n1\n");
     p_form baseform = getForm(word, word->base);
+    printf(("baseform : %s\n", baseform->word));
     if (baseform != form)
     {
         printf("\nIt comes from %s, that is ", baseform->word);
-        displayForm(baseform, isVerb);
+        displayForm(baseform);
     }
     p_form temp = word->forms->next;
     printf("\nIts alternative forms are :");
@@ -74,9 +76,8 @@ void displayForms(p_word word, p_form form, bool isVerb)
     {
         if (temp != form)
         {
-            printf("temp : %s\nform : %s\n", temp->word, form->word);
-            printf("\n%s that is ");
-            displayForm(temp, isVerb);
+            printf("\n%s that is ", temp->word);
+            displayForm(temp);
         }
         temp = temp->next;
     }
