@@ -40,49 +40,9 @@ p_node add_child(p_node parent, char letter)
     return child->node;
 }
 
-p_node add_child_to_tree(p_tree tree, char letter)
-{
-    p_child child = malloc(sizeof(t_child));
-    if (tree->children == NULL)
-    {
-        tree->children = child;
-    }
-    else
-    {
-        p_child current = tree->children;
-        while (current->next != NULL)
-        {
-            current = current->next;
-        }
-        current->next = child;
-    }
-    // attribute of the child struct
-    child->node = malloc(sizeof(t_node));
-    child->next = NULL;
-    // attribute of the node struct
-    child->node->value = letter;
-    child->node->children = NULL;
-    child->node->forms = NULL;
-    return child->node;
-}
-
 p_node get_child(p_node parent, char letter)
 {
     p_child current = parent->children;
-    while (current != NULL)
-    {
-        if (current->node->value == letter)
-        {
-            return current->node;
-        }
-        current = current->next;
-    }
-    return NULL;
-}
-
-p_node get_child_from_tree(p_tree tree, char letter)
-{
-    p_child current = tree->children;
     while (current != NULL)
     {
         if (current->node->value == letter)

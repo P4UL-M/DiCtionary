@@ -11,12 +11,12 @@ This file contains function to interact with the cache*/
 
 typedef struct
 {
-    long long int hash;
-    p_node *node;
+    p_node hash;
     UT_hash_handle hh;
 } HashEntry;
 
-void add_entry(long long int, p_node); // add an entry to the cache
-p_node find_entry(int);                // find an entry in the cache
+void add_entry(p_node);  // add an entry to the cache
+bool find_entry(p_node); // find an entry in the cache
+void clear_cache();      // clear the cache
 
 #endif

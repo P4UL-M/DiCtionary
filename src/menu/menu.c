@@ -49,21 +49,26 @@ void menu(t_dictionary dico)
         {
             title();
             printf("%sDo you want to:\n", ANSI_COLOR_GREEN);
-            printf("%s1.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-            printf("%s2.%s Generate a random sentence?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-            printf("%s3.%s Exit?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf("%s1.%s Search for a basic word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf("%s2.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf("%s3.%s Generate a random sentence?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf("%s4.%s Exit?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
             printf(ANSI_COLOR_RESET);
             printf("\n>");
             scanf("%d", &action);
             fflush(stdin);
-        } while (action < 1 || action > 3);
+        } while (action < 1 || action > 4);
         switch (action)
         {
         case 1:
-            searchMenu(dico);
+            searchMenu(dico, false);
             waitKey();
             break;
         case 2:
+            searchMenu(dico, true);
+            waitKey();
+            break;
+        case 3:
             for (p_ichild child = ponderation->children; child != NULL; child = child->next)
             {
                 nbNoun += child->node->value;
@@ -82,7 +87,7 @@ void menu(t_dictionary dico)
     return;
 }
 
-void searchMenu(t_dictionary dico)
+void searchMenu(t_dictionary dico, bool trueSearch)
 // Function to launch the search of a word
 {
     title();
@@ -92,7 +97,7 @@ void searchMenu(t_dictionary dico)
     char target[50];
     scanf("%50s", target);
     printf("%s\nSearching in Nouns...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
-    p_word result = getWord(dico.nouns, target);
+    p_word result = getWord(dico.nouns, target, trueSearch);
     p_form form = getForm(result, target);
     if (result != NULL && form != NULL)
     {
@@ -101,7 +106,7 @@ void searchMenu(t_dictionary dico)
         return;
     }
     printf("%s\nSearching in Adjectives...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
-    result = getWord(dico.adjectives, target);
+    result = getWord(dico.adjectives, target, trueSearch);
     form = getForm(result, target);
     if (result != NULL && form != NULL)
     {
@@ -110,14 +115,14 @@ void searchMenu(t_dictionary dico)
         return;
     }
     printf("%s\nSearching in Adverbs...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
-    result = getWord(dico.adverbs, target);
+    result = getWord(dico.adverbs, target, trueSearch);
     if (result != NULL)
     {
         printf("%s is an adverb\n", target);
         return;
     }
     printf("%s\nSearching in Verbs...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
-    result = getWord(dico.verbs, target);
+    result = getWord(dico.verbs, target, trueSearch);
     form = getForm(result, target);
     if (result != NULL && form != NULL)
     {

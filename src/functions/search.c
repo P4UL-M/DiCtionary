@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
 #include <time.h>
 #include "../types/struct.h"
@@ -72,8 +73,9 @@ p_node depileSearch(p_pile pile, p_node node, char *word)
     {
         node = dequeue(pile);
     }
-    if (find_entry((int)node) != NULL) // if already check
+    if (find_entry(node)) // if already check
     {
+        printf("already check\n");
         return NULL;
     }
     // search for our word in all child of our node
@@ -98,7 +100,7 @@ p_node depileSearch(p_pile pile, p_node node, char *word)
             }
         }
     }
-    add_entry((int)node, node);
+    add_entry(node);
     if (isEmpty(pile))
         return NULL;
     else
@@ -107,23 +109,13 @@ p_node depileSearch(p_pile pile, p_node node, char *word)
 
 p_node trueSearch(p_tree tree, char *word)
 {
+    clear_cache();
     if (tree == NULL)
         return NULL;
-    p_node current = NULL;
-    p_child i = tree->children;
+    p_node current = tree;
     p_pile pile = createEmptyPile();
-    while (i != NULL && current == NULL)
-    {
-        if (i->node->value == word[0])
-        {
-            current = i->node;
-        }
-        i = i->next;
-    };
-    if (current == NULL)
-        return NULL;
     enqueue(pile, current);
-    for (int i = 1; word[i] != '\0'; i++)
+    for (int i = 0; word[i] != '\0'; i++)
     {
         current = searchInChild(current, word[i]);
         if (current == NULL)
@@ -136,15 +128,17 @@ p_node trueSearch(p_tree tree, char *word)
     return current;
 }
 
-p_word getWord(p_tree tree, char *word)
+p_word getWord(p_tree tree, char *word, bool truesearch)
 {
     if (tree == NULL)
         return NULL;
-    p_node current = trueSearch(tree, word);
+    p_node current = NULL;
+    if (truesearch)
+        current = trueSearch(tree, word);
+    else
+        current = search(tree, word);
     if (current == NULL)
-    {
         return NULL;
-    }
     p_word result = malloc(sizeof(t_word));
     result->base = malloc(sizeof(char) * (strlen(word) + 1));
     strcpy(result->base, word);

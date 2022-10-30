@@ -18,7 +18,7 @@ void displayForm(p_form form, int type)
         return;
     }
     else if ((form->tag & PPas_BIT) == PPas_BIT && type == 1)
-        printf("past participe\n");
+        printf("past participe ");
     else if ((form->tag & PPre_BIT) == PPre_BIT && type == 1)
         printf("present participe\n");
     else if ((form->tag & IImp_BIT) == IImp_BIT && type == 1)

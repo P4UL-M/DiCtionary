@@ -11,23 +11,29 @@ This file contains function to interact with the cache*/
 
 HashEntry *mycache = NULL;
 
-void add_entry(long long int hash, p_node node)
+void add_entry(p_node hash)
 {
     // add an entry to the cache
     HashEntry *s = (HashEntry *)malloc(sizeof(HashEntry));
-    s->node = node;
     s->hash = hash;
-    HASH_ADD_INT(mycache, hash, s); // add the entry to the cache with uthash
+    HASH_FIND_PTR(mycache, hash, s); // add the entry to the cache with uthash
 }
 
-p_node find_entry(int hashCode)
+bool find_entry(p_node hashCode)
 {
     // find an entry in the cache
     HashEntry *s;
-    HASH_FIND_INT(mycache, &hashCode, s); // find the entry in the cache with uthash
-    if (s != NULL)
+    HASH_FIND_PTR(mycache, &hashCode, s); // find the entry in the cache with uthash
+    return (s != NULL);
+}
+
+void clear_cache()
+{
+    // clear the cache
+    HashEntry *current_entry, *tmp;
+    HASH_ITER(hh, mycache, current_entry, tmp)
     {
-        return s->node;
+        HASH_DEL(mycache, current_entry); // delete the entry from the cache with uthash
+        free(current_entry);              // free the memory
     }
-    return NULL;
 }

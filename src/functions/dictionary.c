@@ -21,14 +21,9 @@ char **extractWord(char *source)
     return output;
 }
 
-p_node addBaseInTree(p_tree tree, char *word)
+p_node addBaseInTree(p_tree node, char *word)
 {
-    p_node node = get_child_from_tree(tree, word[0]);
-    if (node == NULL)
-    {
-        node = add_child_to_tree(tree, word[0]);
-    }
-    for (int i = 1; i < strlen(word); i++)
+    for (int i = 0; i < strlen(word); i++)
     {
         p_node child = get_child(node, word[i]);
         if (child == NULL)
@@ -50,10 +45,7 @@ void addInTree(p_tree tree, char *word, char *base, int tag)
     {
         node = addBaseInTree(tree, base);
     }
-    if (tag != 0)
-    {
-        addForm(node, word, tag);
-    }
+    addForm(node, word, tag);
 }
 
 int getFlags(char *tag, int type)
@@ -148,7 +140,7 @@ t_dictionary extractFile(char *path)
             }
             else if (strcmp(type, ADVERB_TYPE) == 0)
             {
-                addInTree(dictionary.adverbs, extractedStrings[0], extractedStrings[1], -1);
+                addInTree(dictionary.adverbs, extractedStrings[0], extractedStrings[1], 0);
             }
             else
             {
