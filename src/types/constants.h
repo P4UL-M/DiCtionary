@@ -62,6 +62,8 @@ This file contains the constants and define*/
 #define Mas_BIT 32768
 #define Fem_BIT 65536
 
+#define Main_BIT 131072
+
 unsigned int get_bit(char *str);
 
 #endif

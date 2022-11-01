@@ -20,7 +20,7 @@ void displayForm(p_form form)
     else if ((form->tag & PPas_BIT) == PPas_BIT)
         printf("past participe ");
     else if ((form->tag & PPre_BIT) == PPre_BIT)
-        printf("present participe\n");
+        printf("present participe");
     else if ((form->tag & IImp_BIT) == IImp_BIT)
         printf("imperfect of the indicative at the ");
     else if ((form->tag & SPre_BIT) == SPre_BIT)
@@ -52,7 +52,8 @@ void displayForm(p_form form)
 
     // Masculine/Feminine
     if ((form->tag & Mas_BIT) == Mas_BIT)
-        printf(" masculine\n");
+        printf(" masculine");
     else if ((form->tag & Fem_BIT) == Fem_BIT)
-        printf(" feminine\n");
+        printf(" feminine");
+    printf("\n");
 }

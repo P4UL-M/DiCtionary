@@ -45,6 +45,10 @@ void addInTree(p_tree tree, char *word, char *base, int tag)
     {
         node = addBaseInTree(tree, base);
     }
+    if (strcmp(word, base) == 0)
+    {
+        tag += Main_BIT;
+    }
     addForm(node, word, tag);
 }
 

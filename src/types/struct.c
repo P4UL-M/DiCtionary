@@ -68,24 +68,23 @@ int countForms(p_node node)
 
 void addForm(p_node node, char *word, int tag)
 {
+    p_form current = malloc(sizeof(t_form));
     if (node->forms == NULL)
     {
-        node->forms = malloc(sizeof(t_form));
-        node->forms->word = malloc(sizeof(char) * (strlen(word) + 1));
-        strcpy(node->forms->word, word);
-        node->forms->tag = tag;
-        node->forms->next = NULL;
-        return;
+        node->forms = current;
     }
-    p_form current = node->forms;
-    while (current->next != NULL)
+    else
     {
-        current = current->next;
+        p_form index = node->forms;
+        while (current->next != NULL)
+        {
+            index = index->next;
+        }
+        index->next = current;
     }
-    current->next = malloc(sizeof(t_form));
-    current->next->word = malloc(sizeof(char) * (strlen(word) + 1));
-    strcpy(current->next->word, word);
-    current->next->tag = tag;
-    current->next->next = NULL;
+    current->word = malloc(sizeof(char) * (strlen(word) + 1));
+    strcpy(current->word, word);
+    current->tag = tag;
+    current->next = NULL;
     return;
 }
