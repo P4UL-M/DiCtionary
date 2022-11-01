@@ -98,7 +98,7 @@ void searchMenu(t_dictionary dico, bool trueSearch)
     if (result != NULL && form != NULL)
     {
         printf("%s is an noun that is ", target);
-        displayForm(form);
+        displayForms(result, form);
         return;
     }
     printf("%s\nSearching in Adjectives...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
@@ -107,7 +107,7 @@ void searchMenu(t_dictionary dico, bool trueSearch)
     if (result != NULL && form != NULL)
     {
         printf("%s is an adjective that is ", target);
-        displayForm(form);
+        displayForms(result, form);
         return;
     }
     printf("%s\nSearching in Adverbs...%s\n", ANSI_COLOR_YELLOW, ANSI_COLOR_RESET);
@@ -123,7 +123,7 @@ void searchMenu(t_dictionary dico, bool trueSearch)
     if (result != NULL && form != NULL)
     {
         printf("%s is an verb that is ", target);
-        displayForm(form);
+        displayForms(result, form);
         return;
     }
     printf("%s doesn't appear in the DiCtionary.\n", target);

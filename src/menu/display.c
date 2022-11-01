@@ -4,8 +4,10 @@ This file contains the functions to adapt the search in the menu*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "../types/struct.h"
 #include "../types/constants.h"
+#include "../functions/search.h"
 #include "display.h"
 
 void displayForm(p_form form)
@@ -55,5 +57,32 @@ void displayForm(p_form form)
         printf(" masculine");
     else if ((form->tag & Fem_BIT) == Fem_BIT)
         printf(" feminine");
+<<<<<<< HEAD
     printf("\n");
+=======
+}
+
+void displayForms(p_word word, p_form form)
+{
+    displayForm(form);
+    printf("\n1\n");
+    p_form baseform = getForm(word, word->base);
+    printf(("baseform : %s\n", baseform->word));
+    if (baseform != form)
+    {
+        printf("\nIt comes from %s, that is ", baseform->word);
+        displayForm(baseform);
+    }
+    p_form temp = word->forms->next;
+    printf("\nIts alternative forms are :");
+    while (temp != NULL)
+    {
+        if (temp != form)
+        {
+            printf("\n%s that is ", temp->word);
+            displayForm(temp);
+        }
+        temp = temp->next;
+    }
+>>>>>>> 9c64f31f4d45b0377d3175f397307332870ae850
 }
