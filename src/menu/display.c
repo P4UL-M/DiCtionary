@@ -57,9 +57,7 @@ void displayForm(p_form form)
         printf(" masculine");
     else if ((form->tag & Fem_BIT) == Fem_BIT)
         printf(" feminine");
-<<<<<<< HEAD
     printf("\n");
-=======
 }
 
 void displayForms(p_word word, p_form form)
@@ -84,5 +82,4 @@ void displayForms(p_word word, p_form form)
         }
         temp = temp->next;
     }
->>>>>>> 9c64f31f4d45b0377d3175f397307332870ae850
 }
