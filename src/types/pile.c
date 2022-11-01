@@ -18,7 +18,7 @@ bool isEmpty(p_pile pile)
     return pile->head == NULL;
 }
 
-void enqueue(p_pile pile, p_node value)
+void enpile(p_pile pile, p_node value)
 {
     p_pnode node = (p_pnode)malloc(sizeof(t_pnode));
     node->next = pile->head;
@@ -27,7 +27,7 @@ void enqueue(p_pile pile, p_node value)
     return;
 }
 
-p_node dequeue(p_pile pile)
+p_node depile(p_pile pile)
 {
     if (isEmpty(pile))
         return NULL;
@@ -45,11 +45,11 @@ void displayNode(p_pnode node)
     printf("%c", node->node->value);
 }
 
-void displayQueue(p_pile pile)
+void displayPile(p_pile pile)
 {
     if (isEmpty(pile))
     {
-        printf("Empty queue\n");
+        printf("Empty pile\n");
         return;
     }
     printf("current word is : '");

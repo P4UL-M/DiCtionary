@@ -14,9 +14,9 @@ typedef struct s_pile
 } t_pile, *p_pile;
 
 p_pile createEmptyPile();
-void enqueue(p_pile, p_node);
-p_node dequeue(p_pile);
+void enpile(p_pile, p_node);
+p_node depile(p_pile);
 bool isEmpty();
-void displayQueue(p_pile);
+void displayPile(p_pile);
 
 #endif

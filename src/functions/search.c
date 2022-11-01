@@ -71,7 +71,7 @@ p_node depileSearch(p_pile pile, p_node node, char *word)
 {
     if (node == NULL)
     {
-        node = dequeue(pile);
+        node = depile(pile);
     }
     if (find_entry(node)) // if already check
         return NULL;
@@ -111,7 +111,7 @@ p_node trueSearch(p_tree tree, char *word)
         return NULL;
     p_node current = tree;
     p_pile pile = createEmptyPile();
-    enqueue(pile, current);
+    enpile(pile, current);
     for (int i = 0; word[i] != '\0'; i++)
     {
         current = searchInChild(current, word[i]);
@@ -120,7 +120,7 @@ p_node trueSearch(p_tree tree, char *word)
             p_node node = depileSearch(pile, NULL, word);
             return node;
         }
-        enqueue(pile, current);
+        enpile(pile, current);
     }
     return current;
 }
