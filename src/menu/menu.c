@@ -11,7 +11,6 @@ This file contains the main menu*/
 #include "../functions/dictionary.h"
 #include "../functions/random.h"
 #include "../types/struct.h"
-#include "../types/intTree.h"
 #include "../library/cache.h"
 #ifdef _WIN32
 #include <windows.h>
@@ -32,7 +31,7 @@ This file contains the main menu*/
 
 void title()
 {
-    system(CLEAR);
+    // system(CLEAR);
     printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
 }
 
@@ -40,7 +39,9 @@ void menu(t_dictionary dico)
 // Function that contains the main menu
 {
     bool flag = true;
-    p_itree ponderation = createPonderationTree(dico.verbs);
+    printf("NUMBERS OF NOUNS: %d\n", dico.verbs->ponderation);
+    buildPonderation(dico.verbs);
+    printf("NUMBERS OF NOUNS: %d\n", dico.verbs->ponderation);
     p_node node;
     while (flag)
     {
@@ -69,7 +70,7 @@ void menu(t_dictionary dico)
             waitKey();
             break;
         case 3:
-            node = trueRandom(dico.verbs, ponderation);
+            node = trueRandom(dico.verbs);
             printf("%s", ANSI_COLOR_YELLOW);
             printf("the word is : %s", node->forms->word);
             waitKey();

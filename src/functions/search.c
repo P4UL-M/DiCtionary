@@ -67,6 +67,22 @@ p_form getForm(p_word node, char *form)
     return NULL;
 }
 
+p_form getFormByIndex(p_node node, int index)
+{
+    if (node == NULL)
+        return NULL;
+    p_form current = node->forms;
+    while (current != NULL)
+    {
+        if ((current->tag & index) == index)
+        {
+            return current;
+        }
+        current = current->next;
+    }
+    return NULL;
+}
+
 p_node depileSearch(p_pile pile, p_node node, char *word)
 {
     if (node == NULL)
@@ -112,17 +128,16 @@ p_node trueSearch(p_tree tree, char *word)
     p_node current = tree;
     p_pile pile = createEmptyPile();
     enpile(pile, current);
-    for (int i = 0; word[i] != '\0'; i++)
+    for (int i = 0; word[i] != '\0' && current != NULL; i++)
     {
         current = searchInChild(current, word[i]);
-        if (current == NULL)
+        if (current != NULL)
         {
-            p_node node = depileSearch(pile, NULL, word);
-            return node;
+            enpile(pile, current);
         }
-        enpile(pile, current);
     }
-    return current;
+    p_node node = depileSearch(pile, NULL, word);
+    return node;
 }
 
 p_word getWord(p_tree tree, char *word, bool truesearch)
@@ -138,7 +153,8 @@ p_word getWord(p_tree tree, char *word, bool truesearch)
         return NULL;
     p_word result = malloc(sizeof(t_word));
     result->base = malloc(sizeof(char) * (strlen(word) + 1));
-    strcpy(result->base, word);
+    p_form main = getFormByIndex(current, Main_BIT);
+    strcpy(result->base, main ? main->word : word);
     result->forms = current->forms;
     return result;
 }

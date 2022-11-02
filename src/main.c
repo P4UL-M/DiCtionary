@@ -16,7 +16,7 @@ int main()
     t = clock();
     printf("Hello world\n");
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
-    printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
+    printf("time of execution: %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
     menu(dictionary);
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;

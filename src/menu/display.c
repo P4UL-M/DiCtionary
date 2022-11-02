@@ -65,7 +65,7 @@ void displayForms(p_word word, p_form form)
     displayForm(form);
     printf("\n1\n");
     p_form baseform = getForm(word, word->base);
-    printf(("baseform : %s\n", baseform->word));
+    printf("baseform : %s\n", baseform->word);
     if (baseform != form)
     {
         printf("\nIt comes from %s, that is ", baseform->word);

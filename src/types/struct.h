@@ -14,6 +14,7 @@ typedef struct s_form
 typedef struct s_node
 {
     char value;
+    int ponderation;
     struct s_form *forms;
     struct s_child *children;
 } t_node, *p_node;
