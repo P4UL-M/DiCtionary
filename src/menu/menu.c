@@ -70,7 +70,7 @@ void menu(t_dictionary dico)
             waitKey();
             break;
         case 3:
-            randomWord = trueRandom(dico.verbs);
+            randomWord = getRandomWord(dico.verbs, true);
             printf("%s", ANSI_COLOR_YELLOW);
             printf("the word is : %s", randomWord->base);
             waitKey();

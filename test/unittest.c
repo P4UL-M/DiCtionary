@@ -107,7 +107,7 @@ int main()
     buildPonderation(dictionary.verbs);
     for (int i = 0; i < 10000000; i++)
     {
-        p_word word = trueRandom(dictionary.verbs);
+        p_word word = getRandomWord(dictionary.verbs, true);
         if (word == NULL)
         {
             printf("Error in random\n");

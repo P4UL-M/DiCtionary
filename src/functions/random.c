@@ -40,7 +40,7 @@ p_node trueRandomNextLetter(p_node node)
     return trueRandomNextLetter(nodeChild->node);
 }
 
-p_word trueRandom(p_tree dico)
+p_node trueRandom(p_tree dico)
 {
     srand(time(NULL));
     int ponderation = dico->ponderation;
@@ -51,13 +51,7 @@ p_word trueRandom(p_tree dico)
         random -= nodeChild->node->ponderation;
         nodeChild = nodeChild->next;
     }
-    p_node node = trueRandomNextLetter(nodeChild->node);
-    p_word result = malloc(sizeof(t_word));
-    result->forms = node->forms;
-    p_form main = getFormByIndex(node, Main_BIT);
-    result->base = malloc(sizeof(char) * (main ? (strlen(main->word) + 1) : (strlen(node->forms->word) + 1)));
-    strcpy(result->base, main ? main->word : node->forms->word);
-    return result;
+    return trueRandomNextLetter(nodeChild->node);
 }
 
 p_node randomNextLetter(p_child current)
@@ -106,4 +100,19 @@ p_form according(p_tree tree, int form)
         }
     }
     return current_form;
+}
+
+p_word getRandomWord(p_tree tree, bool truerandom)
+{
+    p_node node;
+    if (truerandom)
+        node = trueRandom(tree);
+    else
+        node = findRandom(tree);
+    p_word result = malloc(sizeof(t_word));
+    result->forms = node->forms;
+    p_form main = getFormByIndex(node, Main_BIT);
+    result->base = malloc(sizeof(char) * (main ? (strlen(main->word) + 1) : (strlen(node->forms->word) + 1)));
+    strcpy(result->base, main ? main->word : node->forms->word);
+    return result;
 }
