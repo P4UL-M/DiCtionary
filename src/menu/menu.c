@@ -31,7 +31,7 @@ This file contains the main menu*/
 
 void title()
 {
-    // system(CLEAR);
+    system(CLEAR);
     printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
 }
 
