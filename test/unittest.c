@@ -8,6 +8,7 @@ This file contains the main algorithm*/
 #include "../src/types/struct.h"
 #include "../src/functions/dictionary.h"
 #include "../src/functions/search.h"
+#include "../src/functions/random.h"
 #include "../src/menu/menu.h"
 
 int checkExtract(t_dictionary dictionary, char *path)
@@ -99,10 +100,21 @@ int main()
     t = clock();
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
-    if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
+    // if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
+    // {
+    //     printf("Extracted file is correct\n");
+    // }
+    buildPonderation(dictionary.verbs);
+    for (int i = 0; i < 10000000; i++)
     {
-        printf("Extracted file is correct\n");
+        p_word word = trueRandom(dictionary.verbs);
+        if (word == NULL)
+        {
+            printf("Error in random\n");
+            return 1;
+        }
     }
+    printf("No error in random\n");
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

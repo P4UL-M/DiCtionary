@@ -42,7 +42,7 @@ void menu(t_dictionary dico)
     printf("NUMBERS OF NOUNS: %d\n", dico.verbs->ponderation);
     buildPonderation(dico.verbs);
     printf("NUMBERS OF NOUNS: %d\n", dico.verbs->ponderation);
-    p_node node;
+    p_word randomWord;
     while (flag)
     {
         int action;
@@ -70,9 +70,9 @@ void menu(t_dictionary dico)
             waitKey();
             break;
         case 3:
-            node = trueRandom(dico.verbs);
+            randomWord = trueRandom(dico.verbs);
             printf("%s", ANSI_COLOR_YELLOW);
-            printf("the word is : %s", node->forms->word);
+            printf("the word is : %s", randomWord->base);
             waitKey();
             // generate_sentence(dico);
             break;

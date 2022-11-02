@@ -4,6 +4,8 @@
 #include <time.h>
 #include "../types/struct.h"
 #include "../types/constants.h"
+#include "../functions/random.h"
+#include "../functions/search.h"
 #include "random.h"
 
 int buildPonderation(p_node node)
@@ -24,7 +26,8 @@ int buildPonderation(p_node node)
 p_node trueRandomNextLetter(p_node node)
 {
     int random = rand() % node->ponderation;
-    if (node->forms != NULL && random <= countForms(node))
+    random -= countForms(node);
+    if (node->forms != NULL && random <= 0)
     {
         return node;
     }
@@ -37,8 +40,9 @@ p_node trueRandomNextLetter(p_node node)
     return trueRandomNextLetter(nodeChild->node);
 }
 
-p_node trueRandom(p_tree dico)
+p_word trueRandom(p_tree dico)
 {
+    srand(time(NULL));
     int ponderation = dico->ponderation;
     int random = rand() % ponderation;
     p_child nodeChild = dico->children;
@@ -47,7 +51,13 @@ p_node trueRandom(p_tree dico)
         random -= nodeChild->node->ponderation;
         nodeChild = nodeChild->next;
     }
-    return trueRandomNextLetter(nodeChild->node);
+    p_node node = trueRandomNextLetter(nodeChild->node);
+    p_word result = malloc(sizeof(t_word));
+    result->forms = node->forms;
+    p_form main = getFormByIndex(node, Main_BIT);
+    result->base = malloc(sizeof(char) * (main ? (strlen(main->word) + 1) : (strlen(node->forms->word) + 1)));
+    strcpy(result->base, main ? main->word : node->forms->word);
+    return result;
 }
 
 p_node randomNextLetter(p_child current)

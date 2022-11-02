@@ -152,8 +152,8 @@ p_word getWord(p_tree tree, char *word, bool truesearch)
     if (current == NULL)
         return NULL;
     p_word result = malloc(sizeof(t_word));
-    result->base = malloc(sizeof(char) * (strlen(word) + 1));
     p_form main = getFormByIndex(current, Main_BIT);
+    result->base = malloc(sizeof(char) * (main ? (strlen(main->word) + 1) : (strlen(word) + 1)));
     strcpy(result->base, main ? main->word : word);
     result->forms = current->forms;
     return result;
