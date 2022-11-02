@@ -94,27 +94,61 @@ int checkExtract(t_dictionary dictionary, char *path)
     return 0;
 }
 
-int main()
+int checkRandom(t_dictionary dictionary)
 {
-    clock_t t;
-    t = clock();
-    t_dictionary dictionary = extractFile("data/dictionnaire.txt");
-    printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
-    // if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
-    // {
-    //     printf("Extracted file is correct\n");
-    // }
     buildPonderation(dictionary.verbs);
     for (int i = 0; i < 10000000; i++)
     {
         p_word word = getRandomWord(dictionary.verbs, true);
         if (word == NULL)
         {
-            printf("Error in random\n");
             return 1;
         }
     }
-    printf("No error in random\n");
+    buildPonderation(dictionary.nouns);
+    for (int i = 0; i < 10000000; i++)
+    {
+        p_word word = getRandomWord(dictionary.nouns, true);
+        if (word == NULL)
+        {
+            return 1;
+        }
+    }
+    buildPonderation(dictionary.adjectives);
+    for (int i = 0; i < 10000000; i++)
+    {
+        p_word word = getRandomWord(dictionary.adjectives, true);
+        if (word == NULL)
+        {
+            return 1;
+        }
+    }
+    buildPonderation(dictionary.adverbs);
+    for (int i = 0; i < 10000000; i++)
+    {
+        p_word word = getRandomWord(dictionary.adverbs, true);
+        if (word == NULL)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+int main()
+{
+    clock_t t;
+    t = clock();
+    t_dictionary dictionary = extractFile("data/dictionnaire.txt");
+    printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
+    if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
+    {
+        printf("Extracted file is correct\n");
+    }
+    if (checkRandom(dictionary) == 0)
+    {
+        printf("Random words are correct\n");
+    }
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }
