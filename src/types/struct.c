@@ -56,9 +56,8 @@ int countForms(p_node node)
 {
     int count = 0;
     p_form current = node->forms;
-    while (current != NULL)
+    if (current != NULL)
     {
-        current = current->next;
         count++;
     }
     return count;

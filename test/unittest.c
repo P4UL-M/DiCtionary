@@ -11,6 +11,21 @@ This file contains the main algorithm*/
 #include "../src/functions/random.h"
 #include "../src/menu/menu.h"
 
+char *id[20] = {"vouter", "vouvoyer", "voyager", "vriller", "vrombir", "vulcaniser", "vulgariser", "warranter", "zebrer", "zester", "zezayer", "zieuter", "zigouiller", "zigzaguer", "zinguer", "zinzinuler", "zipper", "zoner", "zozoter", "zyeuter"};
+int occurence[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+void displayTree(p_tree dico)
+{
+    printf("%sNODE '%p' with value %c\n", ANSI_COLOR_RED, dico, dico->value);
+    printf("%s-> ponderation: %d\n", ANSI_COLOR_GREEN, dico->ponderation);
+    printf("%sENUMERATING CHILD%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    for (p_child child = dico->children; child != NULL; child = child->next)
+    {
+        displayTree(child->node);
+    }
+    printf("%sEnd of node '%p'%s\n", ANSI_COLOR_BLUE, dico, ANSI_COLOR_RESET);
+}
+
 int checkExtract(t_dictionary dictionary, char *path)
 {
     FILE *fp;
@@ -97,36 +112,54 @@ int checkExtract(t_dictionary dictionary, char *path)
 int checkRandom(t_dictionary dictionary)
 {
     buildPonderation(dictionary.verbs);
-    for (int i = 0; i < 10000000; i++)
+    srand(time(NULL));
+    for (int i = 0; i < 1000000; i++)
     {
-        p_word word = getRandomWord(dictionary.verbs, true);
+        p_word word = getRandomWord(dictionary.verbs, 2);
         if (word == NULL)
-        {
             return 1;
+        else
+        {
+            // count occurence of word
+            for (int j = 0; j < 20; j++)
+            {
+                if (strcmp(word->base, id[j]) == 0)
+                {
+                    occurence[j]++;
+                    break;
+                }
+            }
         }
+        //  return 0;
+    }
+    int sum = 1000000;
+    printf("%sTotal: %d%s\n", ANSI_COLOR_GREEN, sum, ANSI_COLOR_RESET);
+    for (int i = 0; i < 20; i++)
+    {
+        printf("%d - %s: %s%.2f%%%s\n", i, id[i], ANSI_COLOR_CYAN, ((double)occurence[i] / (double)sum) * 100, ANSI_COLOR_RESET);
     }
     buildPonderation(dictionary.nouns);
-    for (int i = 0; i < 10000000; i++)
+    for (int i = 0; i < 1000000; i++)
     {
-        p_word word = getRandomWord(dictionary.nouns, true);
+        p_word word = getRandomWord(dictionary.nouns, 1);
         if (word == NULL)
         {
             return 1;
         }
     }
     buildPonderation(dictionary.adjectives);
-    for (int i = 0; i < 10000000; i++)
+    for (int i = 0; i < 1000000; i++)
     {
-        p_word word = getRandomWord(dictionary.adjectives, true);
+        p_word word = getRandomWord(dictionary.adjectives, 1);
         if (word == NULL)
         {
             return 1;
         }
     }
     buildPonderation(dictionary.adverbs);
-    for (int i = 0; i < 10000000; i++)
+    for (int i = 0; i < 1000000; i++)
     {
-        p_word word = getRandomWord(dictionary.adverbs, true);
+        p_word word = getRandomWord(dictionary.adverbs, 1);
         if (word == NULL)
         {
             return 1;
