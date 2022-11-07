@@ -7,9 +7,6 @@
 #include "../functions/random.h"
 #include "../functions/search.h"
 #include "random.h"
-#include "../library/pcg_basic.h"
-
-pcg32_random_t seed = (pcg32_random_t)PCG32_INITIALIZER;
 
 int buildPonderation(p_node node)
 {
@@ -29,16 +26,17 @@ int buildPonderation(p_node node)
 p_node trueRandomNextLetter(p_node node)
 {
     int ponderation = node->ponderation;
-    int random = pcg32_boundedrand((int32_t)ponderation + 1);
+    // int random = pcg32_boundedrand((int32_t)ponderation + 1);
+    float random = rand() / (float)RAND_MAX;
     random -= countForms(node);
     if (node->forms != NULL && random <= 0)
     {
         return node;
     }
     p_child nodeChild = node->children;
-    while (random > nodeChild->node->ponderation)
+    while (random > nodeChild->node->ponderation / (float)ponderation)
     {
-        random -= nodeChild->node->ponderation;
+        random -= nodeChild->node->ponderation / (float)ponderation;
         nodeChild = nodeChild->next;
     }
     return trueRandomNextLetter(nodeChild->node);
@@ -76,11 +74,11 @@ p_node experimentalTrueRandom(p_tree tree)
 p_node trueRandom(p_tree dico)
 {
     int ponderation = dico->ponderation;
-    int random = pcg32_boundedrand((int32_t)ponderation + 1);
+    float random = rand() / (float)RAND_MAX;
     p_child nodeChild = dico->children;
-    while (random > nodeChild->node->ponderation)
+    while (random > nodeChild->node->ponderation / (float)ponderation && nodeChild->next != NULL)
     {
-        random -= nodeChild->node->ponderation;
+        random -= nodeChild->node->ponderation / (float)ponderation;
         nodeChild = nodeChild->next;
     }
     return trueRandomNextLetter(nodeChild->node);
