@@ -105,7 +105,6 @@ p_node randomNextLetter(p_child current)
 
 p_node findRandom(p_tree tree)
 {
-    srand(time(NULL));
     p_node returned = NULL;
     while (returned == NULL)
     {

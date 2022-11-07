@@ -10,6 +10,7 @@ This file contains the main algorithm*/
 #include "../src/functions/search.h"
 #include "../src/functions/random.h"
 #include "../src/menu/menu.h"
+#include "../src/library/pcg_basic.h"
 
 char *id[20] = {"vouter", "vouvoyer", "voyager", "vriller", "vrombir", "vulcaniser", "vulgariser", "warranter", "zebrer", "zester", "zezayer", "zieuter", "zigouiller", "zigzaguer", "zinguer", "zinzinuler", "zipper", "zoner", "zozoter", "zyeuter"};
 int occurence[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -174,14 +175,15 @@ int main()
     t = clock();
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
-    if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
-    {
-        printf("Extracted file is correct\n");
-    }
-    if (checkRandom(dictionary) == 0)
-    {
-        printf("Random words are correct\n");
-    }
+    printf("random %f", )
+    // if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
+    // {
+    //     printf("Extracted file is correct\n");
+    // }
+    // if (checkRandom(dictionary) == 0)
+    // {
+    //     printf("Random words are correct\n");
+    // }
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

@@ -7,11 +7,13 @@ This file contains the main menu*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <time.h>
 #include "../functions/search.h"
 #include "../functions/dictionary.h"
 #include "../functions/random.h"
 #include "../types/struct.h"
 #include "../library/cache.h"
+#include "../library/pcg_basic.h"
 #ifdef _WIN32
 #include <windows.h>
 #define CLEAR "cls"
@@ -38,6 +40,8 @@ void title()
 void menu(t_dictionary dico)
 // Function that contains the main menu
 {
+    srand(time(NULL));
+    pcg32_srandom_r(&seed, (uint64_t)time(NULL), (uint64_t)time(NULL));
     bool flag = true;
     printf("NUMBERS OF NOUNS: %d\n", dico.verbs->ponderation);
     buildPonderation(dico.verbs);
