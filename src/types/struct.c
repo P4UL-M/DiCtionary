@@ -12,6 +12,7 @@ p_tree create_tree()
     p_tree tree = malloc(sizeof(t_tree));
     tree->children = NULL;
     tree->ponderation = 0;
+    tree->forms = NULL;
     return tree;
 }
 
