@@ -54,4 +54,3 @@ dkms.conf
 # for not problem windows
 .vscode/*
 build/*
-data/*
