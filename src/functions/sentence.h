@@ -4,5 +4,9 @@
 #include <stdbool.h>
 #include "../types/struct.h"
 #include "../functions/dictionary.h"
-void generateSentence(int,t_dictionary);
+#include "../types/struct.h"
+
+void generateSentence(int, t_dictionary);
+p_form according(p_tree, int);
+
 #endif
