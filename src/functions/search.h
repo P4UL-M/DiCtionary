@@ -10,6 +10,6 @@ This file contains the functions in order to extract text from the dictionary*/
 p_node search(p_tree, char *);
 p_form getForm(p_word, char *);
 p_word getWord(p_tree, char *, bool);
-p_form getFormByIndex(p_node, int);
+p_form getFormByIndex(t_node, int);
 
 #endif

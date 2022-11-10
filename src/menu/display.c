@@ -76,14 +76,13 @@ void displayForms(p_word word, p_form form)
     };
 
 #pragma region Verbs
-    p_form inf = getFormByIndex(&temp, Inf_BIT);
+    p_form inf = getFormByIndex(temp, Inf_BIT);
     if (inf != NULL)
         printf("%s\n>Infinitive:\n\t%s%s%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET, inf->word, ANSI_COLOR_RESET);
-    free(inf);
-    p_form ipre = getFormByIndex(&temp, IPre_BIT);
-    p_form iimp = getFormByIndex(&temp, IImp_BIT);
-    p_form ipas = getFormByIndex(&temp, IPSim_BIT);
-    p_form ifut = getFormByIndex(&temp, IFut_BIT);
+    p_form ipre = getFormByIndex(temp, IPre_BIT);
+    p_form iimp = getFormByIndex(temp, IImp_BIT);
+    p_form ipas = getFormByIndex(temp, IPSim_BIT);
+    p_form ifut = getFormByIndex(temp, IFut_BIT);
     p_form pers;
     if (ipre != NULL || iimp != NULL || ipas != NULL || ifut != NULL)
     {
@@ -93,7 +92,7 @@ void displayForms(p_word word, p_form form)
             printf("\tPresent:\n");
             for (int i = 0; i < 6; i++)
             {
-                pers = getFormByIndex(&temp, perstag[i] + IPre_BIT);
+                pers = getFormByIndex(temp, perstag[i] + IPre_BIT);
                 printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
             }
         }
@@ -102,7 +101,7 @@ void displayForms(p_word word, p_form form)
             printf("\t%sImperfect:\n", ANSI_COLOR_RED);
             for (int i = 0; i < 6; i++)
             {
-                pers = getFormByIndex(&temp, perstag[i] + IImp_BIT);
+                pers = getFormByIndex(temp, perstag[i] + IImp_BIT);
                 printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
             }
         }
@@ -111,7 +110,7 @@ void displayForms(p_word word, p_form form)
             printf("\t%sSimple past:\n", ANSI_COLOR_RED);
             for (int i = 0; i < 6; i++)
             {
-                pers = getFormByIndex(&temp, perstag[i] + IPSim_BIT);
+                pers = getFormByIndex(temp, perstag[i] + IPSim_BIT);
                 printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
             }
         }
@@ -120,17 +119,13 @@ void displayForms(p_word word, p_form form)
             printf("\t%sFuture:\n", ANSI_COLOR_RED);
             for (int i = 0; i < 6; i++)
             {
-                pers = getFormByIndex(&temp, perstag[i] + IFut_BIT);
+                pers = getFormByIndex(temp, perstag[i] + IFut_BIT);
                 printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
             }
         }
     }
-    free(ipre);
-    free(iimp);
-    free(ipas);
-    free(ifut);
-    p_form sPre = getFormByIndex(&temp, SPre_BIT);
-    p_form sImp = getFormByIndex(&temp, SImp_BIT);
+    p_form sPre = getFormByIndex(temp, SPre_BIT);
+    p_form sImp = getFormByIndex(temp, SImp_BIT);
     if (sPre != NULL || sImp != NULL)
     {
         printf("%s>Subjonctive:\n", ANSI_COLOR_RED);
@@ -139,7 +134,7 @@ void displayForms(p_word word, p_form form)
             printf("\tPresent:\n");
             for (int i = 0; i < 6; i++)
             {
-                pers = getFormByIndex(&temp, perstag[i] + SPre_BIT);
+                pers = getFormByIndex(temp, perstag[i] + SPre_BIT);
                 printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
             }
         }
@@ -148,39 +143,36 @@ void displayForms(p_word word, p_form form)
             printf("\t%sImperfect:\n", ANSI_COLOR_RED);
             for (int i = 0; i < 6; i++)
             {
-                pers = getFormByIndex(&temp, perstag[i] + SImp_BIT);
+                pers = getFormByIndex(temp, perstag[i] + SImp_BIT);
                 printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
             }
         }
     }
-    free(sPre);
-    free(sImp);
-    p_form cpre = getFormByIndex(&temp, CPre_BIT);
+    p_form cpre = getFormByIndex(temp, CPre_BIT);
     if (cpre != NULL)
     {
         printf("%s>Conditional:\n", ANSI_COLOR_RED);
         printf("\tPresent:\n");
         for (int i = 0; i < 6; i++)
         {
-            pers = getFormByIndex(&temp, perstag[i] + CPre_BIT);
+            pers = getFormByIndex(temp, perstag[i] + CPre_BIT);
             printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
         }
     }
-    free(cpre);
-    p_form pPre = getFormByIndex(&temp, PPre_BIT);
-    p_form pPas = getFormByIndex(&temp, PPas_BIT);
+    p_form pPre = getFormByIndex(temp, PPre_BIT);
+    p_form pPas = getFormByIndex(temp, PPas_BIT);
     if (pPre != NULL || pPas != NULL)
     {
         printf("%s>Participles:\n", ANSI_COLOR_RED);
         if (pPre != NULL)
         {
             printf("\tPresent:\n");
-            pers = getFormByIndex(&temp, PPre_BIT);
+            pers = getFormByIndex(temp, PPre_BIT);
             if ((pers->tag & Mas_BIT) == Mas_BIT || (pers->tag & Fem_BIT) == Fem_BIT)
             {
                 for (int i = 6; i < 10; i++)
                 {
-                    pers = getFormByIndex(&temp, perstag[i] + PPre_BIT);
+                    pers = getFormByIndex(temp, perstag[i] + PPre_BIT);
                     printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
                 }
             }
@@ -190,12 +182,12 @@ void displayForms(p_word word, p_form form)
         if (pPas != NULL)
         {
             printf("\t%sPast:\n", ANSI_COLOR_RED);
-            pers = getFormByIndex(&temp, PPas_BIT);
+            pers = getFormByIndex(temp, PPas_BIT);
             if ((pers->tag & Mas_BIT) == Mas_BIT || (pers->tag & Fem_BIT) == Fem_BIT)
             {
                 for (int i = 6; i < 10; i++)
                 {
-                    pers = getFormByIndex(&temp, perstag[i] + PPas_BIT);
+                    pers = getFormByIndex(temp, perstag[i] + PPas_BIT);
                     printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
                 }
             }
@@ -203,8 +195,6 @@ void displayForms(p_word word, p_form form)
                 printf("\t\t%s%s\n", ANSI_COLOR_RESET, pers->word);
         }
     }
-    free(pPre);
-    free(pPas);
 #pragma endregion
 
 #pragma region Nouns
@@ -212,7 +202,7 @@ void displayForms(p_word word, p_form form)
     int Nounsaid = 1;
     for (int i = 6; i < 10; i++)
     {
-        declin = getFormByIndex(&temp, perstag[i]);
+        declin = getFormByIndex(temp, perstag[i]);
         if (declin != NULL)
         {
             if (((declin->tag & PPas_BIT) != PPas_BIT) && ((declin->tag & PPre_BIT) != PPre_BIT))
@@ -227,6 +217,5 @@ void displayForms(p_word word, p_form form)
             }
         }
     }
-    free(declin);
 #pragma endregion
 }

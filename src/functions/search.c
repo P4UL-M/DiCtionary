@@ -67,11 +67,9 @@ p_form getForm(p_word node, char *form)
     return NULL;
 }
 
-p_form getFormByIndex(p_node node, int index)
+p_form getFormByIndex(t_node node, int index)
 {
-    if (node == NULL)
-        return NULL;
-    p_form current = node->forms;
+    p_form current = node.forms;
     while (current != NULL)
     {
         if ((current->tag & index) == index)
@@ -151,9 +149,9 @@ p_word getWord(p_tree tree, char *word, bool truesearch)
         current = search(tree, word);
     if (current == NULL)
         return NULL;
-    p_word result = malloc(sizeof(t_word));
+    p_word result = (p_word)malloc(sizeof(t_word));
     result->forms = current->forms;
-    result->base = getFormByIndex(current, Main_BIT);
+    result->base = getFormByIndex(*current, Main_BIT);
     if (result->base == NULL)
     {
         result->base = result->forms;

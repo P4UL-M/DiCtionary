@@ -14,7 +14,7 @@ p_form accords(p_word word, int tag)
     t_node temp = {
         .forms = word->forms,
     };
-    return getFormByIndex(&temp, tag);
+    return getFormByIndex(temp, tag);
 }
 
 void generateSentence(int sentenceType, t_dictionary dico)

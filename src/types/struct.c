@@ -9,7 +9,7 @@ This file contains the functions for the structures*/
 
 p_tree create_tree()
 {
-    p_tree tree = malloc(sizeof(t_tree));
+    p_tree tree = (p_tree)malloc(sizeof(t_tree));
     tree->children = NULL;
     tree->ponderation = 0;
     tree->forms = NULL;
@@ -18,7 +18,7 @@ p_tree create_tree()
 
 p_node add_child(p_node parent, char letter)
 {
-    p_child child = malloc(sizeof(t_child));
+    p_child child = (p_child)malloc(sizeof(t_child));
     if (parent->children == NULL)
     {
         parent->children = child;
@@ -30,7 +30,7 @@ p_node add_child(p_node parent, char letter)
         parent->children = child;
     }
     // attribute of the child struct
-    child->node = malloc(sizeof(t_node));
+    child->node = (p_node)malloc(sizeof(t_node));
     // attribute of the node struct
     child->node->value = letter;
     child->node->ponderation = 0;
@@ -91,7 +91,7 @@ int countChildren(p_node node)
 
 void addForm(p_node node, char *word, int tag)
 {
-    p_form current = malloc(sizeof(t_form));
+    p_form current = (p_form)malloc(sizeof(t_form));
     if (node->forms == NULL)
     {
         node->forms = current;
@@ -102,7 +102,7 @@ void addForm(p_node node, char *word, int tag)
         current->next = node->forms;
         node->forms = current;
     }
-    current->word = malloc(sizeof(char) * (strlen(word) + 1));
+    current->word = (char *)malloc(sizeof(char) * (strlen(word) + 1));
     strcpy(current->word, word);
     current->tag = tag;
     return;

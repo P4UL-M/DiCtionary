@@ -17,7 +17,7 @@ char *strtok_s(char *str, const char *delimiters, char **context);
 char **extractWord(char *source)
 {
     source[strcspn(source, "\n")] = 0;
-    char **output = malloc(sizeof(char *) * 3);
+    char **output = (char **)malloc(sizeof(char *) * 3);
     // separate the word, the base form and the type
     output[0] = strtok(source, "\t");
     output[1] = strtok(NULL, "\t");
@@ -184,7 +184,7 @@ t_dictionary extractFile(char *path)
 
 p_buffer createBuffer()
 {
-    p_buffer buffer = malloc(sizeof(t_buffer));
+    p_buffer buffer = (p_buffer)malloc(sizeof(t_buffer));
     buffer->size = 0;
     buffer->first = NULL;
     buffer->last = NULL;
@@ -193,7 +193,7 @@ p_buffer createBuffer()
 
 void addToBuffer(p_buffer buffer, char *line)
 {
-    p_line entry = malloc(sizeof(t_line));
+    p_line entry = (p_line)malloc(sizeof(t_line));
     strcpy(entry->line, line);
     entry->next = NULL;
     entry->prev = buffer->last;
