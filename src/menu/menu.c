@@ -100,7 +100,7 @@ void searchMenu(t_dictionary dico, bool trueSearch)
     p_form form = getForm(result, target);
     if (result != NULL && form != NULL)
     {
-        printf("%s is an noun that is ", target);
+        printf("%s is a noun that is ", target);
         displayForms(result, form);
         return;
     }
@@ -125,7 +125,7 @@ void searchMenu(t_dictionary dico, bool trueSearch)
     form = getForm(result, target);
     if (result != NULL && form != NULL)
     {
-        printf("%s is an verb that is ", target);
+        printf("%s is a verb that is ", target);
         displayForms(result, form);
         return;
     }

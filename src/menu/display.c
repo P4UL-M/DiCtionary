@@ -63,13 +63,10 @@ void displayForm(p_form form)
 void displayForms(p_word word, p_form form)
 {
     displayForm(form);
-    printf("\n1\n");
-    p_form baseform = word->base;
-    printf("baseform : %s\n", baseform->word);
-    if (baseform != form)
+    if (word->base != form)
     {
-        printf("\nIt comes from %s, that is ", baseform->word);
-        displayForm(baseform);
+        printf("\nIt comes from %s, that is ", word->base->word);
+        displayForm(word->base);
     }
     p_form temp = word->forms->next;
     printf("\nIts alternative forms are :");
