@@ -71,8 +71,8 @@ int countChar(char *word, char c)
 
 int getFlags(char *tag)
 {
-    char *buffer;
-    char *flag = strtok_r(tag, "+", &buffer);
+    char *saveptr1;
+    char *flag = strtok_r(tag, "+", &saveptr1);
     int flags = 0;
     do
     {
@@ -110,7 +110,7 @@ int getFlags(char *tag)
             flags += CPre_BIT;
         else if (strcmp(flag, Inf) == 0)
             flags += Inf_BIT;
-    } while ((flag = strtok_r(NULL, "+", &buffer)));
+    } while ((flag = strtok_r(NULL, "+", &saveptr1)));
     return flags;
 }
 
@@ -136,12 +136,12 @@ t_dictionary extractFile(char *path)
         char **extractedStrings = extractWord(line);
         if (extractedStrings != NULL)
         {
-            char *buffer;
-            char *type = strtok_r(extractedStrings[2], ":", &buffer);
+            char *saveptr;
+            char *type = strtok_r(extractedStrings[2], ":", &saveptr);
             if (strcmp(type, NOUN_TYPE) == 0)
             {
                 char *form = NULL;
-                while ((form = strtok_r(NULL, ":", &buffer)))
+                while ((form = strtok_r(NULL, ":", &saveptr)))
                 {
                     addInTree(dictionary.nouns, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }
@@ -150,7 +150,7 @@ t_dictionary extractFile(char *path)
             {
                 char *form = NULL;
                 int i = 0;
-                while ((form = strtok_r(NULL, ":", &buffer)))
+                while ((form = strtok_r(NULL, ":", &saveptr)))
                 {
                     if (i++ > 0)
                         printf("Multiple forms on the same word : %s\n", extractedStrings[0]);
@@ -160,7 +160,7 @@ t_dictionary extractFile(char *path)
             else if (strcmp(type, ADJECTIVE_TYPE) == 0)
             {
                 char *form = NULL;
-                while ((form = strtok_r(NULL, ":", &buffer)))
+                while ((form = strtok_r(NULL, ":", &saveptr)))
                 {
                     addInTree(dictionary.adjectives, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }

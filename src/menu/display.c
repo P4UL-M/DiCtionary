@@ -222,6 +222,7 @@ void displayForms(p_word word, p_form form)
                     printf("%s\n>Forms:\n", ANSI_COLOR_RED);
                     Nounsaid = 0;
                 }
+                printf("\n%s>Noun:\n", ANSI_COLOR_RED);
                 printf("\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, declin->word);
             }
         }

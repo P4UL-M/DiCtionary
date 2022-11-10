@@ -78,6 +78,8 @@ int hasForms(p_node node)
 
 int countChildren(p_node node)
 {
+    if (node == NULL)
+        return 0;
     int count = 0;
     p_child current = node->children;
     if (current != NULL)
