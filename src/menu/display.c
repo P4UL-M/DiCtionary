@@ -27,7 +27,7 @@ void displayForm(p_form form)
         printf("imperfect of the indicative at the ");
     else if ((form->tag & SPre_BIT) == SPre_BIT)
         printf("present of the subjonctive at the ");
-    else if ((form->tag & IPsimp_BIT) == IPsimp_BIT)
+    else if ((form->tag & IPSim_BIT) == IPSim_BIT)
         printf("simple past of the indicative at the ");
     else if ((form->tag & SImp_BIT) == SImp_BIT)
         printf("imperfect of the subjonctive at the ");
@@ -82,7 +82,7 @@ void displayForms(p_word word, p_form form)
     free(inf);
     p_form ipre = getFormByIndex(&temp, IPre_BIT);
     p_form iimp = getFormByIndex(&temp, IImp_BIT);
-    p_form ipas = getFormByIndex(&temp, IPsimp_BIT);
+    p_form ipas = getFormByIndex(&temp, IPSim_BIT);
     p_form ifut = getFormByIndex(&temp, IFut_BIT);
     p_form pers;
     if (ipre != NULL || iimp != NULL || ipas != NULL || ifut != NULL)
@@ -111,7 +111,7 @@ void displayForms(p_word word, p_form form)
             printf("\t%sSimple past:\n", ANSI_COLOR_RED);
             for (int i = 0; i < 6; i++)
             {
-                pers = getFormByIndex(&temp, perstag[i] + IPsimp_BIT);
+                pers = getFormByIndex(&temp, perstag[i] + IPSim_BIT);
                 printf("\t\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : "undefined");
             }
         }

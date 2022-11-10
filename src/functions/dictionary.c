@@ -96,8 +96,8 @@ int getFlags(char *tag)
             flags += IImp_BIT;
         else if (strcmp(flag, SPre) == 0)
             flags += SPre_BIT;
-        else if (strcmp(flag, IPsimp) == 0)
-            flags += IPsimp_BIT;
+        else if (strcmp(flag, IPSim) == 0)
+            flags += IPSim_BIT;
         else if (strcmp(flag, PPre) == 0)
             flags += PPre_BIT;
         else if (strcmp(flag, SImp) == 0)

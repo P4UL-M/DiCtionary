@@ -20,7 +20,7 @@ This file contains the constants and define*/
 #define IPre "IPre"
 #define IImp "IImp"
 #define SPre "SPre"
-#define IPsimp "IPsimp"
+#define IPSim "IPSim"
 #define PPre "PPre"
 #define SImp "SImp"
 #define PPas "PPas"
@@ -51,7 +51,7 @@ This file contains the constants and define*/
 #define IPre_BIT 32
 #define IImp_BIT 64
 #define SPre_BIT 128
-#define IPsimp_BIT 256
+#define IPSim_BIT 256
 #define PPre_BIT 512
 #define SImp_BIT 1024
 #define PPas_BIT 2048

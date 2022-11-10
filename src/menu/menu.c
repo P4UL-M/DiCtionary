@@ -210,7 +210,7 @@ void addToDico(t_dictionary dico, char *word)
         strcpy(baseForm, word);
     printf("All the possible tags are:\n");
     printf("SG - PL\nMas - Fem\nP1 - P2 - P3\n");
-    printf("IPre - IImp - SPre - SImp - IPsimp - PPre - SImp - PPas - IFut - CPre - Inf\n");
+    printf("IPre - IImp - SPre - SImp - IPSim - PPre - SImp - PPas - IFut - CPre - Inf\n");
     printf("Enter the tags of your word separated by a '+':\n>");
     char tags[50];
     scanf("%50s", tags);
