@@ -52,9 +52,23 @@ void addInTree(p_tree tree, char *word, char *base, int tag)
     addForm(node, word, tag);
 }
 
+int countChar(char *word, char c)
+{
+    int count = 0;
+    for (int i = 0; word[i] != '\0'; i++)
+    {
+        if (word[i] == c)
+        {
+            count++;
+        }
+    }
+    return count;
+}
+
 int getFlags(char *tag)
 {
-    char *flag = strtok(tag, "+");
+    char *buffer;
+    char *flag = strtok_r(tag, "+", &buffer);
     int flags = 0;
     do
     {
@@ -92,7 +106,7 @@ int getFlags(char *tag)
             flags += CPre_BIT;
         else if (strcmp(flag, Inf) == 0)
             flags += Inf_BIT;
-    } while ((flag = strtok(NULL, "+")));
+    } while ((flag = strtok_r(NULL, "+", &buffer)));
     return flags;
 }
 
@@ -118,11 +132,12 @@ t_dictionary extractFile(char *path)
         char **extractedStrings = extractWord(line);
         if (extractedStrings != NULL)
         {
-            char *type = strtok(extractedStrings[2], ":");
+            char *buffer;
+            char *type = strtok_r(extractedStrings[2], ":", &buffer);
             if (strcmp(type, NOUN_TYPE) == 0)
             {
                 char *form = NULL;
-                while ((form = strtok(NULL, ":")))
+                while ((form = strtok_r(NULL, ":", &buffer)))
                 {
                     addInTree(dictionary.nouns, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }
@@ -130,15 +145,18 @@ t_dictionary extractFile(char *path)
             else if (strcmp(type, VERB_TYPE) == 0)
             {
                 char *form = NULL;
-                while ((form = strtok(NULL, ":")))
+                int i = 0;
+                while ((form = strtok_r(NULL, ":", &buffer)))
                 {
+                    if (i++ > 0)
+                        printf("Multiple forms on the same word : %s\n", extractedStrings[0]);
                     addInTree(dictionary.verbs, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }
             }
             else if (strcmp(type, ADJECTIVE_TYPE) == 0)
             {
                 char *form = NULL;
-                while ((form = strtok(NULL, ":")))
+                while ((form = strtok_r(NULL, ":", &buffer)))
                 {
                     addInTree(dictionary.adjectives, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }

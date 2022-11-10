@@ -22,14 +22,13 @@ void generateSentence(int sentenceType, t_dictionary dico)
     if (sentenceType == 1)
     {
         /*noun adj verb noun*/
-
         p_word noun1 = getRandomWord(dico.nouns, 1);
         p_word verb1 = getRandomWord(dico.verbs, 1);
         p_word noun2 = getRandomWord(dico.nouns, 1);
         p_word adj1 = getRandomWord(dico.adjectives, 1);
         p_form verb = accords(verb1, noun1->forms->tag);
         p_form adj = accords(adj1, noun1->forms->tag);
-        printf("%s %s %s %s", noun1->base, verb->word, adj->word, noun2->base);
+        printf("%s %s %s %s", noun1->base->word, verb->word, adj->word, noun2->base->word);
         return;
     }
     if (sentenceType == 2)

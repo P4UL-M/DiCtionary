@@ -176,7 +176,7 @@ void displayForms(p_word word, p_form form)
         {
             printf("\tPresent:\n");
             pers = getFormByIndex(&temp, PPre_BIT);
-            if (pers->tag & Mas_BIT == Mas_BIT || pers->tag & Fem_BIT == Fem_BIT)
+            if ((pers->tag & Mas_BIT) == Mas_BIT || (pers->tag & Fem_BIT) == Fem_BIT)
             {
                 for (int i = 6; i < 10; i++)
                 {
@@ -191,7 +191,7 @@ void displayForms(p_word word, p_form form)
         {
             printf("\t%sPast:\n", ANSI_COLOR_RED);
             pers = getFormByIndex(&temp, PPas_BIT);
-            if (pers->tag & Mas_BIT == Mas_BIT || pers->tag & Fem_BIT == Fem_BIT)
+            if ((pers->tag & Mas_BIT) == Mas_BIT || (pers->tag & Fem_BIT) == Fem_BIT)
             {
                 for (int i = 6; i < 10; i++)
                 {
@@ -217,7 +217,7 @@ void displayForms(p_word word, p_form form)
             if (((declin->tag & PPas_BIT) != PPas_BIT) && ((declin->tag & PPre_BIT) != PPre_BIT))
             {
                 printf("\n%s>Noun:\n", ANSI_COLOR_RED);
-                printf("\t%s%s:%s %s\n", ANSI_COLOR_RED, person[i], ANSI_COLOR_RESET, declin->word);
+                printf("\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, declin->word);
             }
         }
     }

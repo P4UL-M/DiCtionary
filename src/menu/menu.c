@@ -72,10 +72,10 @@ void menu(t_dictionary dico)
             waitKey();
             break;
         case 3:
-            /*randomWord = getRandomWord(dico.verbs, 2);
+            randomWord = getRandomWord(dico.verbs, 2);
             printf("%s", ANSI_COLOR_YELLOW);
-            printf("the word is : %s", randomWord->base);*/
-            generateSentence(1,dico);
+            printf("the word is : %s", randomWord->base->word);
+            // generateSentence(1,dico);
             waitKey();
             break;
         default:

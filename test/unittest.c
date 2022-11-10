@@ -168,6 +168,14 @@ int checkRandom(t_dictionary dictionary)
 
 int main()
 {
+    char test[] = "ABCBDBEBFBGBHBIBJBKBLBMBNBOBP";
+    char *test2 = strtok(test, "B");
+    printf("%s", test2);
+    while (test2 = strtok(NULL, "B"))
+    {
+        printf("%s", test2);
+    }
+    printf("\n");
     srand(time(NULL));
     clock_t t;
     t = clock();
