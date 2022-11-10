@@ -8,7 +8,8 @@ This file contains the main menu*/
 #include "../functions/dictionary.h"
 
 void menu(t_dictionary);
-void searchMenu(t_dictionary, bool);
+void searchMenu(t_dictionary);
+void searchword(t_dictionary dico, char *target, int type, bool trueSearch);
 void generateSentenceMenu(t_dictionary);
 void waitKey();
 void addToDico(t_dictionary, char *);
