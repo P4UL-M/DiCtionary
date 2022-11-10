@@ -20,9 +20,9 @@ void displayForm(p_form form)
         return;
     }
     else if ((form->tag & PPas_BIT) == PPas_BIT)
-        printf("past participe ");
+        printf("past participle ");
     else if ((form->tag & PPre_BIT) == PPre_BIT)
-        printf("present participe");
+        printf("present participle");
     else if ((form->tag & IImp_BIT) == IImp_BIT)
         printf("imperfect of the indicative at the ");
     else if ((form->tag & SPre_BIT) == SPre_BIT)
@@ -61,6 +61,8 @@ void displayForm(p_form form)
 
 void displayForms(p_word word, p_form form)
 {
+    char *person[] = {"Je", "Tu", "Il", "Nous", "Vous", "Ils", "Masculine Singular", "Feminine Singular", "Masculine Plural", "Feminine Plural"};
+    int perstag[] = {P1_BIT + SG_BIT, P2_BIT + SG_BIT, P3_BIT + SG_BIT, P1_BIT + PL_BIT, P2_BIT + PL_BIT, P3_BIT + PL_BIT, Mas_BIT + SG_BIT, Fem_BIT + SG_BIT, Mas_BIT + PL_BIT, Fem_BIT + PL_BIT};
     displayForm(form);
     if (word->base != form)
     {
@@ -69,20 +71,138 @@ void displayForms(p_word word, p_form form)
     }
     else
         printf("\nIt is the base form of the word");
-    p_form temp = word->forms;
-    if (temp == NULL)
+    t_node temp = {
+        .forms = word->forms,
+    };
+    p_form inf = getFormByIndex(&temp, Inf_BIT);
+    if (inf != NULL)
+        printf("%s\n>Infinitive:\n\t%s%s\n", ANSI_COLOR_RED, inf->word, ANSI_COLOR_RESET);
+    free(inf);
+    p_form ipre = getFormByIndex(&temp, IPre_BIT);
+    p_form iimp = getFormByIndex(&temp, IImp_BIT);
+    p_form ipas = getFormByIndex(&temp, IPsimp_BIT);
+    p_form ifut = getFormByIndex(&temp, IFut_BIT);
+    p_form pers;
+    if (ipre != NULL || iimp != NULL || ipas != NULL || ifut != NULL)
     {
-        printf("\nThere is no other form for this word");
-        return;
-    }
-    printf("\n\nIts alternative forms are :");
-    while (temp != NULL)
-    {
-        if (temp != form && temp != word->base)
+        printf("%s>Indicative:\n", ANSI_COLOR_RED);
+        if (ipre != NULL)
         {
-            printf("\n%s%s%s that is ", ANSI_COLOR_MAGENTA, temp->word, ANSI_COLOR_RESET);
-            displayForm(temp);
+            printf("\tPresent:\n");
+            for (int i = 0; i < 6; i++)
+            {
+                pers = getFormByIndex(&temp, perstag[i] + IPre_BIT);
+                printf("\t\t%s: %s\n", person[i], (pers != NULL) ? pers->word : "undefined");
+            }
         }
-        temp = temp->next;
+        if (iimp != NULL)
+        {
+            printf("\tImperfect:\n");
+            for (int i = 0; i < 6; i++)
+            {
+                pers = getFormByIndex(&temp, perstag[i] + IImp_BIT);
+                printf("\t\t%s: %s\n", person[i], (pers != NULL) ? pers->word : "undefined");
+            }
+        }
+        if (ipas != NULL)
+        {
+            printf("\tSimple past:\n");
+            for (int i = 0; i < 6; i++)
+            {
+                pers = getFormByIndex(&temp, perstag[i] + IPsimp_BIT);
+                printf("\t\t%s: %s\n", person[i], (pers != NULL) ? pers->word : "undefined");
+            }
+        }
+        if (ifut != NULL)
+        {
+            printf("\tFuture:\n");
+            for (int i = 0; i < 6; i++)
+            {
+                pers = getFormByIndex(&temp, perstag[i] + IFut_BIT);
+                printf("\t\t%s: %s\n", person[i], (pers != NULL) ? pers->word : "undefined");
+            }
+        }
     }
+    free(ipre);
+    free(iimp);
+    free(ipas);
+    free(ifut);
+    p_form sPre = getFormByIndex(&temp, SPre_BIT);
+    p_form sImp = getFormByIndex(&temp, SImp_BIT);
+    if (sPre != NULL || sImp != NULL)
+    {
+        printf("%s>Subjonctive:\n", ANSI_COLOR_RED);
+        if (sPre != NULL)
+        {
+            printf("\tPresent:\n");
+            for (int i = 0; i < 6; i++)
+            {
+                pers = getFormByIndex(&temp, perstag[i] + SPre_BIT);
+                printf("\t\t%s: %s\n", person[i], (pers != NULL) ? pers->word : "undefined");
+            }
+        }
+        if (sImp != NULL)
+        {
+            printf("\tImperfect:\n");
+            for (int i = 0; i < 6; i++)
+            {
+                pers = getFormByIndex(&temp, perstag[i] + SImp_BIT);
+                printf("\t\t%s: %s\n", person[i], (pers != NULL) ? pers->word : "undefined");
+            }
+        }
+    }
+    free(sPre);
+    free(sImp);
+    p_form cpre = getFormByIndex(&temp, CPre_BIT);
+    if (cpre != NULL)
+    {
+        printf("%s>Conditional:\n", ANSI_COLOR_RED);
+        printf("\tPresent:\n");
+        for (int i = 0; i < 6; i++)
+        {
+            pers = getFormByIndex(&temp, perstag[i] + CPre_BIT);
+            printf("\t\t%s: %s\n", person[i], (pers != NULL) ? pers->word : "undefined");
+        }
+    }
+    free(cpre);
+    p_form pPre = getFormByIndex(&temp, PPre_BIT);
+    p_form pPas = getFormByIndex(&temp, PPas_BIT);
+    if (pPre != NULL || pPas != NULL)
+    {
+        printf("%s>Participles:\n", ANSI_COLOR_RED);
+        if (pPre != NULL)
+        {
+            printf("\tPresent:\n");
+            pers = getFormByIndex(&temp, PPre_BIT);
+            if (pers->tag & Mas_BIT == Mas_BIT || pers->tag & Fem_BIT == Fem_BIT)
+            {
+                for (int i = 6; i < 10; i++)
+                {
+                    pers = getFormByIndex(&temp, perstag[i] + PPre_BIT);
+                    printf("\t\t%s: %s\n", person[i], (pers != NULL) ? pers->word : "undefined");
+                }
+            }
+            else
+                printf("\t\t%s\n", pers->word);
+        }
+        if (pPas != NULL)
+        {
+            printf("\tPast:\n");
+            pers = getFormByIndex(&temp, PPas_BIT);
+            if (pers->tag & Mas_BIT == Mas_BIT || pers->tag & Fem_BIT == Fem_BIT)
+            {
+                for (int i = 6; i < 10; i++)
+                {
+                    pers = getFormByIndex(&temp, perstag[i] + PPas_BIT);
+                    printf("\t\t%s: %s\n", person[i], (pers != NULL) ? pers->word : "undefined");
+                }
+            }
+            else
+                printf("\t\t%s\n", pers->word);
+        }
+    }
+    free(pPre);
+    free(pPas);
+
+    // TODO add more nouns
 }

@@ -96,6 +96,7 @@ int getFlags(char *tag)
     return flags;
 }
 
+// TODO : resolve the bug with multiple forms on the same word
 t_dictionary extractFile(char *path)
 {
     FILE *fp;

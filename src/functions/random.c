@@ -57,7 +57,7 @@ p_node trueRandom(p_tree dico)
 
 p_node randomNextLetter(p_child current)
 {
-    int letter = rand() % countChildren(current->node); // TODO : use nbChild
+    int letter = rand() % countChildren(current->node);
     for (int i = 0; (i < letter) && (current->next != NULL); i++)
     {
         current = current->next;
