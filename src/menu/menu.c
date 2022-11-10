@@ -74,7 +74,7 @@ void menu(t_dictionary dico)
         case 3:
             randomWord = getRandomWord(dico.verbs, 2);
             printf("%s", ANSI_COLOR_YELLOW);
-            printf("the word is : %s", randomWord->base);
+            printf("the word is : %s", randomWord->base->word);
             waitKey();
             // generate_sentence(dico);
             break;

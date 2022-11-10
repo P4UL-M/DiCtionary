@@ -29,7 +29,7 @@ typedef struct s_node t_tree, *p_tree;
 
 typedef struct t_word
 {
-    char *base;
+    struct s_form *base;
     struct s_form *forms;
 } t_word, *p_word;
 

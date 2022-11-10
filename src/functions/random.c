@@ -34,7 +34,7 @@ p_node trueRandomNextLetter(p_node node)
         return node;
     }
     p_child nodeChild = node->children;
-    while (random > nodeChild->node->ponderation / (float)ponderation)
+    while (random > nodeChild->node->ponderation / (float)ponderation && nodeChild->next != NULL)
     {
         random -= nodeChild->node->ponderation / (float)ponderation;
         nodeChild = nodeChild->next;
@@ -142,8 +142,6 @@ p_word getRandomWord(p_tree tree, int randomLevel)
         node = findRandom(tree);
     p_word result = malloc(sizeof(t_word));
     result->forms = node->forms;
-    p_form main = getFormByIndex(node, Main_BIT);
-    result->base = malloc(sizeof(char) * (main ? (strlen(main->word) + 1) : (strlen(node->forms->word) + 1)));
-    strcpy(result->base, main ? main->word : node->forms->word);
+    result->base = getFormByIndex(node, Main_BIT);
     return result;
 }
