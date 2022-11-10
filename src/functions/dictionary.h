@@ -44,5 +44,7 @@ typedef struct s_buffer
 t_dictionary extractFile(char *);
 char **extractWord(char *);
 void updateFile(char *, t_inputWord);
+void addInTree(p_tree tree, char *word, char *base, int tag);
+int getFlags(char *tag);
 
 #endif

@@ -16,7 +16,7 @@ void displayForm(p_form form)
     // Conjugaisons of the verbs:
     if ((form->tag & Inf_BIT) == Inf_BIT)
     {
-        printf("present infinitive\n");
+        printf("present infinitive");
         return;
     }
     else if ((form->tag & PPas_BIT) == PPas_BIT)
@@ -57,27 +57,30 @@ void displayForm(p_form form)
         printf(" masculine");
     else if ((form->tag & Fem_BIT) == Fem_BIT)
         printf(" feminine");
-    printf("\n");
 }
 
 void displayForms(p_word word, p_form form)
 {
     displayForm(form);
-    printf("\n1\n");
-    p_form baseform = word->base;
-    printf("baseform : %s\n", baseform->word);
-    if (baseform != form)
+    if (word->base != form)
     {
-        printf("\nIt comes from %s, that is ", baseform->word);
-        displayForm(baseform);
+        printf("\nIt comes from %s%s%s, that is ", ANSI_COLOR_RED, word->base->word, ANSI_COLOR_RESET);
+        displayForm(word->base);
     }
-    p_form temp = word->forms->next;
-    printf("\nIts alternative forms are :");
+    else
+        printf("\nIt is the base form of the word");
+    p_form temp = word->forms;
+    if (temp == NULL)
+    {
+        printf("\nThere is no other form for this word");
+        return;
+    }
+    printf("\n\nIts alternative forms are :");
     while (temp != NULL)
     {
-        if (temp != form)
+        if (temp != form && temp != word->base)
         {
-            printf("\n%s that is ", temp->word);
+            printf("\n%s%s%s that is ", ANSI_COLOR_MAGENTA, temp->word, ANSI_COLOR_RESET);
             displayForm(temp);
         }
         temp = temp->next;

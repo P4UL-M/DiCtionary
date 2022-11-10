@@ -11,5 +11,6 @@ void menu(t_dictionary);
 void searchMenu(t_dictionary, bool);
 void generateSentenceMenu(t_dictionary);
 void waitKey();
+void addToDico(t_dictionary, char *);
 
 #endif
