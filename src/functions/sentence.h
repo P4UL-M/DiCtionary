@@ -7,6 +7,6 @@
 #include "../types/struct.h"
 
 void generateSentence(int, t_dictionary);
-p_form according(p_tree, int);
+p_form accords(p_word, int);
 
 #endif
