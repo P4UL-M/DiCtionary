@@ -19,64 +19,66 @@ p_form accords(p_word word, int tag)
 
 // TODO faire func smoth sentence which correct problem such has le arrosoir -> l'arrosoir
 
-int randomTime()
+p_form randomFormWithMask(p_word word, int mask, int antimask)
 {
-    int times[] = {IPre_BIT, IImp_BIT, SPre_BIT, IPSim_BIT, SImp_BIT, IFut_BIT, CPre_BIT};
-    int index = rand() / (float)RAND_MAX * 7;
-    return times[index];
-}
+    p_form form = word->forms;
+    int count = 0;
+    p_form *forms = malloc(sizeof(p_form));
+    while (form != NULL)
+    {
+        if ((form->tag & mask) == mask && (antimask == 0 || (form->tag & antimask) == 0))
+        {
 
-int randomPerson()
-{
-    int persons[] = {P1_BIT, P2_BIT, P3_BIT};
-    int index = rand() / (float)RAND_MAX * 3;
-    return persons[index];
-}
-
-int randomGender()
-{
-    int persones[] = {
-        Mas_BIT + PL_BIT,
-        Fem_BIT + PL_BIT,
-        Mas_BIT + SG_BIT,
-        Fem_BIT + SG_BIT,
-    };
-    int index = rand() / (float)RAND_MAX * 4;
-    return persones[index];
+            count++;
+            forms = realloc(forms, count * sizeof(p_form));
+            forms[count - 1] = form;
+        }
+        form = form->next;
+    }
+    if (count == 0)
+    {
+        free(forms);
+        return NULL;
+    }
+    int index = rand() / (float)RAND_MAX * (count - 1);
+    p_form result = forms[index];
+    free(forms);
+    return result;
 }
 
 void generateSentence(int sentenceType, t_dictionary dico)
 {
     if (sentenceType == 1)
     {
-        /*noun adj verb noun*/
-        p_word word1;
-        p_word word2;
-        p_word word3;
-        p_word word4;
+        /*noun adj verb det noun*/
+        p_word temp = getRandomWord(dico.nouns, true);
         p_form sentence[4];
         int subject_flags;
         do
         {
-            subject_flags = randomGender();
-            word1 = getRandomWord(dico.nouns, true);
-            word2 = getRandomWord(dico.adjectives, true);
-            sentence[0] = accords(word1, subject_flags);
-            sentence[1] = accords(word2, subject_flags);
-        } while (sentence[1] == NULL || sentence[0] == NULL);
-        printf("%s %s\n", sentence[0]->word, sentence[1]->word);
-        int nb = subject_flags & PL_BIT + subject_flags & SG_BIT;
+            sentence[0] = randomFormWithMask(temp, 0, 0);
+        } while (sentence[0] == NULL);
+        subject_flags = sentence[0]->tag;
         do
         {
-            sentence[2] = accords(getRandomWord(dico.verbs, true), P3_BIT + nb + randomTime());
+            sentence[1] = accords(getRandomWord(dico.adjectives, true), subject_flags);
+        } while (sentence[1] == NULL);
+        int nb = 0;
+        nb += subject_flags & (SG_BIT);
+        nb += subject_flags & (PL_BIT);
+        nb += subject_flags & (InvPL_BIT) ? (SG_BIT) : 0;
+        do
+        {
+            sentence[2] = randomFormWithMask(getRandomWord(dico.verbs, true), nb + P3_BIT, CPre_BIT);
         } while (sentence[2] == NULL);
         do
         {
-            sentence[3] = accords(getRandomWord(dico.nouns, true), randomGender());
+            temp = getRandomWord(dico.nouns, true);
+            sentence[3] = randomFormWithMask(temp, 0, 0);
         } while (sentence[3] == NULL);
         for (int i = 0; i < 4; i++)
         {
-            printf("word %d :%s\n", i, sentence[i]->word);
+            printf("%s ", sentence[i]->word);
         }
         printf(".\n");
         return;

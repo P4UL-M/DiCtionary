@@ -26,9 +26,8 @@ int buildPonderation(p_node node)
 p_node trueRandomNextLetter(p_node node)
 {
     int ponderation = node->ponderation;
-    // int random = pcg32_boundedrand((int32_t)ponderation + 1);
     float random = rand() / (float)RAND_MAX;
-    random -= hasForms(node);
+    random -= hasForms(node) / (float)ponderation;
     if (node->forms != NULL && random <= 0)
     {
         return node;
