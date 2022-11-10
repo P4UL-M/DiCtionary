@@ -82,26 +82,6 @@ p_node findRandom(p_tree tree)
     return returned;
 }
 
-// TODO : rewrite this function
-p_form according(p_tree tree, int form)
-{
-    p_node current_node = findRandom(tree);
-    p_form current_form = current_node->forms;
-    while (current_form->tag != form)
-    {
-        if (current_form->next == NULL)
-        {
-            current_node = findRandom(tree);
-            current_form = current_node->forms;
-        }
-        else
-        {
-            current_form = current_form->next;
-        }
-    }
-    return current_form;
-}
-
 p_word getRandomWord(p_tree tree, bool trueSearchMode)
 {
     p_node node;
