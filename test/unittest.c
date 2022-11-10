@@ -112,7 +112,7 @@ int checkExtract(t_dictionary dictionary, char *path)
 int checkRandom(t_dictionary dictionary)
 {
     buildPonderation(dictionary.verbs);
-    for (int i = 0; i < 1000000000; i++)
+    for (int i = 0; i < 1000000; i++)
     {
         p_word word = getRandomWord(dictionary.verbs, 1);
         if (word == NULL)
@@ -122,7 +122,7 @@ int checkRandom(t_dictionary dictionary)
             // count occurence of word
             for (int j = 0; j < 20; j++)
             {
-                if (strcmp(word->base, id[j]) == 0)
+                if (strcmp(word->base->word, id[j]) == 0)
                 {
                     occurence[j]++;
                     break;
@@ -130,13 +130,12 @@ int checkRandom(t_dictionary dictionary)
             }
         }
     }
-    int sum = 1000000000;
+    int sum = 1000000;
     printf("%sTotal: %d%s\n", ANSI_COLOR_GREEN, sum, ANSI_COLOR_RESET);
     for (int i = 0; i < 20; i++)
     {
         printf("%d - %s: %s%.2f%%%s\n", i, id[i], ANSI_COLOR_CYAN, ((double)occurence[i] / (double)sum) * 100, ANSI_COLOR_RESET);
     }
-    return 0;
     buildPonderation(dictionary.nouns);
     for (int i = 0; i < 1000000; i++)
     {
@@ -175,23 +174,27 @@ int main()
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
     t_inputWord wordInput = {
-        .word = "zigoullator",
-        .base = "zigouiller",
-        .flags = "SG",
-        .type = VERB_TYPE,
+        .word = "diCtionary",
+        .base = "diCtionary",
+        .flags = "SG+Mas",
+        .type = NOUN_TYPE,
     };
     updateFile("data/dictionnaire.txt", wordInput);
     dictionary = extractFile("data/dictionnaire.txt");
-    p_word word = getWord(dictionary.nouns, "zigoullator", true);
+    p_word word = getWord(dictionary.nouns, "diCtionary", true);
     if (word == NULL)
     {
         printf("Error in noun\n");
         return 1;
     }
-    // if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
-    // {
-    //     printf("Extracted file is correct\n");
-    // }
+    else
+    {
+        printf("%s%s%s\n", ANSI_COLOR_GREEN, word->base->word, ANSI_COLOR_RESET);
+    }
+    if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
+    {
+        printf("Extracted file is correct\n");
+    }
     if (checkRandom(dictionary) == 0)
     {
         printf("Random words are correct\n");

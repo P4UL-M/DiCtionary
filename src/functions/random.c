@@ -112,6 +112,10 @@ p_word getRandomWord(p_tree tree, bool trueSearchMode)
     p_word result = malloc(sizeof(t_word));
     result->forms = node->forms;
     result->base = getFormByIndex(node, Main_BIT);
+    if (result->base == NULL)
+    {
+        result->base = result->forms;
+    }
     return result;
 }
 

@@ -230,5 +230,6 @@ void updateFile(char *path, t_inputWord word)
         fprintf(fp, "%s\t%s\t%s\n", extractedStrings[0], extractedStrings[1], extractedStrings[2]);
         entry = entry->next;
     }
+    fclose(fp);
     return;
 }
