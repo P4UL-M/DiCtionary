@@ -18,7 +18,31 @@ typedef struct dictionary
     p_tree verbs;
 } t_dictionary, *p_dictionary;
 
+typedef struct s_inputWord
+{
+    char *word;
+    char *base;
+    char *flags;
+    char *type;
+} t_inputWord, *p_inputWord;
+
+typedef struct s_line
+{
+    char line[MAX_SIZE_LINE];
+    struct s_line *next;
+    struct s_line *prev;
+
+} t_line, *p_line;
+
+typedef struct s_buffer
+{
+    p_line first;
+    p_line last;
+    int size;
+} t_buffer, *p_buffer;
+
 t_dictionary extractFile(char *);
 char **extractWord(char *);
+void updateFile(char *, t_inputWord);
 
 #endif

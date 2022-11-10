@@ -174,6 +174,20 @@ int main()
     t = clock();
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
+    t_inputWord wordInput = {
+        .word = "zigoullator",
+        .base = "zigouiller",
+        .flags = "SG",
+        .type = VERB_TYPE,
+    };
+    updateFile("data/dictionnaire.txt", wordInput);
+    dictionary = extractFile("data/dictionnaire.txt");
+    p_word word = getWord(dictionary.nouns, "zigoullator", true);
+    if (word == NULL)
+    {
+        printf("Error in noun\n");
+        return 1;
+    }
     // if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
     // {
     //     printf("Extracted file is correct\n");

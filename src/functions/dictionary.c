@@ -158,3 +158,77 @@ t_dictionary extractFile(char *path)
     fclose(fp);
     return dictionary;
 }
+
+p_buffer createBuffer()
+{
+    p_buffer buffer = malloc(sizeof(t_buffer));
+    buffer->size = 0;
+    buffer->first = NULL;
+    buffer->last = NULL;
+    return buffer;
+}
+
+void addToBuffer(p_buffer buffer, char *line)
+{
+    p_line entry = malloc(sizeof(t_line));
+    strcpy(entry->line, line);
+    entry->next = NULL;
+    entry->prev = buffer->last;
+    if (buffer->size == 0)
+    {
+        buffer->first = entry;
+        buffer->last = entry;
+    }
+    else
+    {
+        buffer->last->next = entry;
+        buffer->last = entry;
+    }
+    buffer->size++;
+}
+
+void updateFile(char *path, t_inputWord word)
+{
+    FILE *fp = fopen(path, "r");
+    if (fp == NULL)
+    {
+        printf("Error opening file");
+        exit(1);
+    }
+    char line[MAX_SIZE_LINE];
+    p_buffer buffer = createBuffer();
+    while (fgets(line, MAX_SIZE_LINE, fp))
+    {
+        addToBuffer(buffer, line);
+    }
+    fclose(fp);
+    fp = fopen(path, "w");
+    if (fp == NULL)
+    {
+        printf("Error opening file");
+        exit(1);
+    }
+    p_line entry = buffer->first;
+    int i = 0;
+    bool inserted = false;
+    while (entry != NULL && i < 300000)
+    {
+        i++;
+        char **extractedStrings = extractWord(entry->line);
+        if (strcmp(extractedStrings[0], word.word) == 0 && !inserted)
+        {
+            fprintf(fp, "%s\t%s\t%s:%s\n", extractedStrings[0], extractedStrings[1], extractedStrings[2], word.flags);
+            entry = entry->next;
+            inserted = true;
+            continue;
+        }
+        else if (strcmp(extractedStrings[0], word.word) > 0 && !inserted)
+        {
+            fprintf(fp, "%s\t%s\t%s:%s\n", word.word, word.base, word.type, word.flags);
+            inserted = true;
+        }
+        fprintf(fp, "%s\t%s\t%s\n", extractedStrings[0], extractedStrings[1], extractedStrings[2]);
+        entry = entry->next;
+    }
+    return;
+}
