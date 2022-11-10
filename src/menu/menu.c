@@ -9,6 +9,7 @@ This file contains the main menu*/
 #include <time.h>
 #include "../functions/search.h"
 #include "../functions/dictionary.h"
+#include "../functions/sentence.h"
 #include "../functions/random.h"
 #include "../types/struct.h"
 #include "../library/cache.h"
@@ -71,11 +72,11 @@ void menu(t_dictionary dico)
             waitKey();
             break;
         case 3:
-            randomWord = getRandomWord(dico.verbs, 2);
+            /*randomWord = getRandomWord(dico.verbs, 2);
             printf("%s", ANSI_COLOR_YELLOW);
-            printf("the word is : %s", randomWord->base->word);
+            printf("the word is : %s", randomWord->base);*/
+            generateSentence(1,dico);
             waitKey();
-            // generate_sentence(dico);
             break;
         default:
             flag = false;
