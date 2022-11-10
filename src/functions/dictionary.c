@@ -149,11 +149,8 @@ t_dictionary extractFile(char *path)
             else if (strcmp(type, VERB_TYPE) == 0)
             {
                 char *form = NULL;
-                int i = 0;
                 while ((form = strtok_r(NULL, ":", &saveptr)))
                 {
-                    if (i++ > 0)
-                        printf("Multiple forms on the same word : %s\n", extractedStrings[0]);
                     addInTree(dictionary.verbs, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }
             }
