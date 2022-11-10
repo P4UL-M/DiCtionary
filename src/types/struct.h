@@ -34,9 +34,11 @@ typedef struct t_word
 } t_word, *p_word;
 
 p_tree create_tree();
-p_node add_child(p_node parent, char letter);
+p_node add_child(p_node, char);
 int countForms(p_node);
-void addForm(p_node node, char *word, int tag);
-p_node get_child(p_node parent, char letter);
+int hasForms(p_node);
+int countChildren(p_node);
+void addForm(p_node, char *, int);
+p_node get_child(p_node, char);
 
 #endif

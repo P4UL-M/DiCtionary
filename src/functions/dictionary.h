@@ -18,7 +18,7 @@ typedef struct dictionary
     p_tree verbs;
 } t_dictionary, *p_dictionary;
 
-t_dictionary extractFile(char *path);
-char **extractWord(char *source);
+t_dictionary extractFile(char *);
+char **extractWord(char *);
 
 #endif

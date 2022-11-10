@@ -57,6 +57,29 @@ int countForms(p_node node)
 {
     int count = 0;
     p_form current = node->forms;
+    while (current != NULL)
+    {
+        count++;
+        current = current->next;
+    }
+    return count;
+}
+
+int hasForms(p_node node)
+{
+    int count = 0;
+    p_form current = node->forms;
+    if (current != NULL)
+    {
+        count++;
+    }
+    return count;
+}
+
+int countChildren(p_node node)
+{
+    int count = 0;
+    p_child current = node->children;
     if (current != NULL)
     {
         count++;

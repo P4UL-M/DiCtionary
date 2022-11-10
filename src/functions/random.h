@@ -6,6 +6,6 @@
 
 p_form according(p_tree, int);
 int buildPonderation(p_node);
-p_word getRandomWord(p_tree, int);
+p_word getRandomWord(p_tree, bool);
 
 #endif

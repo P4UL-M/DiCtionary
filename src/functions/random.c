@@ -19,7 +19,7 @@ int buildPonderation(p_node node)
     {
         nbWord += buildPonderation(childNode->node);
     }
-    node->ponderation = nbWord + countForms(node);
+    node->ponderation = nbWord + hasForms(node);
     return node->ponderation;
 }
 
@@ -28,7 +28,7 @@ p_node trueRandomNextLetter(p_node node)
     int ponderation = node->ponderation;
     // int random = pcg32_boundedrand((int32_t)ponderation + 1);
     float random = rand() / (float)RAND_MAX;
-    random -= countForms(node);
+    random -= hasForms(node);
     if (node->forms != NULL && random <= 0)
     {
         return node;
@@ -40,35 +40,6 @@ p_node trueRandomNextLetter(p_node node)
         nodeChild = nodeChild->next;
     }
     return trueRandomNextLetter(nodeChild->node);
-}
-
-p_node prefix_traversal(p_node node, int *stop)
-{
-    if (countForms(node) > 0)
-    {
-        (*stop)--;
-        if (*stop < 0)
-        {
-            return node;
-        }
-    }
-
-    p_node result = NULL;
-    p_child child = node->children;
-    while (result == NULL && child != NULL)
-    {
-        result = prefix_traversal(child->node, stop);
-        child = child->next;
-    }
-    return result;
-}
-
-p_node experimentalTrueRandom(p_tree tree)
-{
-    int ponderation = tree->ponderation;
-    int random = rand() % ponderation;
-    // prefix traversal
-    return prefix_traversal(tree, &random);
 }
 
 p_node trueRandom(p_tree dico)
@@ -86,7 +57,7 @@ p_node trueRandom(p_tree dico)
 
 p_node randomNextLetter(p_child current)
 {
-    int letter = rand() % 26; // TODO : use nbChild
+    int letter = rand() % countChildren(current->node); // TODO : use nbChild
     for (int i = 0; (i < letter) && (current->next != NULL); i++)
     {
         current = current->next;
@@ -131,13 +102,11 @@ p_form according(p_tree tree, int form)
     return current_form;
 }
 
-p_word getRandomWord(p_tree tree, int randomLevel)
+p_word getRandomWord(p_tree tree, bool trueSearchMode)
 {
     p_node node;
-    if (randomLevel == 1)
+    if (trueSearchMode)
         node = trueRandom(tree);
-    else if (randomLevel == 2)
-        node = experimentalTrueRandom(tree);
     else
         node = findRandom(tree);
     p_word result = malloc(sizeof(t_word));
@@ -145,3 +114,33 @@ p_word getRandomWord(p_tree tree, int randomLevel)
     result->base = getFormByIndex(node, Main_BIT);
     return result;
 }
+
+// Here is another algorithm to generate random words
+// This one isn't used in the program because it has very bad performances but has the advantage of being very simple and perfectly uniform
+// p_node prefix_traversal(p_node node, int *stop)
+// {
+//     if (hasForms(node) > 0)
+//     {
+//         (*stop)--;
+//         if (*stop < 0)
+//         {
+//             return node;
+//         }
+//     }
+
+//     p_node result = NULL;
+//     p_child child = node->children;
+//     while (result == NULL && child != NULL)
+//     {
+//         result = prefix_traversal(child->node, stop);
+//         child = child->next;
+//     }
+//     return result;
+// }
+
+// p_node experimentalTrueRandom(p_tree tree)
+// {
+//     int ponderation = tree->ponderation;
+//     int random = rand() % ponderation;
+//     return prefix_traversal(tree, &random);
+// }
