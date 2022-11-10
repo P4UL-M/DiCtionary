@@ -133,7 +133,8 @@ void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
     if (type == 1 || type == 5)
     {
         result = getWord(dico.nouns, target, trueSearch);
-        form = getForm(*result, target);
+        if (result != NULL)
+            form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
             printf("%s is a noun that is ", target);
@@ -144,7 +145,8 @@ void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
     if (type == 2 || type == 5)
     {
         result = getWord(dico.adjectives, target, trueSearch);
-        form = getForm(*result, target);
+        if (result != NULL)
+            form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
             printf("%s is an adjective that is ", target);
@@ -155,7 +157,8 @@ void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
     if (type == 3 || type == 5)
     {
         result = getWord(dico.adverbs, target, trueSearch);
-        form = getForm(*result, target);
+        if (result != NULL)
+            form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
             printf("%s is an adverb that is ", target);
@@ -166,7 +169,8 @@ void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
     if (type == 4 || type == 5)
     {
         result = getWord(dico.verbs, target, trueSearch);
-        form = getForm(*result, target);
+        if (result != NULL)
+            form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
             printf("%s is a verb that is ", target);
