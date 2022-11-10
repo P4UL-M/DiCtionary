@@ -47,12 +47,13 @@ void menu(t_dictionary dico)
             printf("%s1.%s Search for a basic word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
             printf("%s2.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
             printf("%s3.%s Generate a random sentence?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-            printf("%s4.%s Exit?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf("%s4.%s Add a word in the dictionary?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf("%s5.%s Exit?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
             printf(ANSI_COLOR_RESET);
             printf("\n>");
             scanf("%d", &action);
             fflush(stdin);
-        } while (action < 1 || action > 4);
+        } while (action < 1 || action > 5);
         switch (action)
         {
         case 1:
@@ -69,6 +70,32 @@ void menu(t_dictionary dico)
             printf("the word is : %s", randomWord->base->word);
             // generateSentence(1,dico);
             waitKey();
+            break;
+        case 4:
+            title();
+            printf("%sEnter the word you want to add:\n", ANSI_COLOR_GREEN);
+            printf(ANSI_COLOR_RESET);
+            printf("\n>");
+            char target[50];
+            scanf("%50s", target);
+            p_word word = getWord(dico.nouns, target, true);
+            if (word == NULL)
+            {
+                word = getWord(dico.adjectives, target, true);
+                if (word == NULL)
+                {
+                    word = getWord(dico.verbs, target, true);
+                    if (word == NULL)
+                    {
+                        addToDico(dico, target);
+                    }
+                }
+            }
+            if (word != NULL)
+            {
+                printf("%sThe word already exists in the dictionary\n", ANSI_COLOR_RED);
+                waitKey();
+            }
             break;
         default:
             flag = false;
@@ -121,20 +148,23 @@ void searchMenu(t_dictionary dico, bool trueSearch)
         displayForms(result, form);
         return;
     }
-    int adding;
-    do
+    if (trueSearch)
     {
-        printf("%sDo you want to add this word to the dictionnary?\n", ANSI_COLOR_GREEN);
-        printf("%s1.%s Yes\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf("%s2.%s No", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf(ANSI_COLOR_RESET);
-        printf("\n>");
-        scanf("%d", &adding);
-        fflush(stdin);
-    } while (adding < 1 || adding > 2);
-    if (adding - 1)
-        return;
-    addToDico(dico, target);
+        int adding;
+        do
+        {
+            printf("%sDo you want to add this word to the dictionnary?\n", ANSI_COLOR_GREEN);
+            printf("%s1.%s Yes\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf("%s2.%s No", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            printf(ANSI_COLOR_RESET);
+            printf("\n>");
+            scanf("%d", &adding);
+            fflush(stdin);
+        } while (adding < 1 || adding > 2);
+        if (adding - 1)
+            return;
+        addToDico(dico, target);
+    }
 }
 
 void generateSentenceMenu(t_dictionary dico)
@@ -215,19 +245,31 @@ void addToDico(t_dictionary dico, char *word)
     char tags[50];
     scanf("%50s", tags);
     fflush(stdin);
+    t_inputWord inputWord = {
+        .word = word,
+        .base = baseForm,
+        .flags = tags};
     switch (type)
     {
     case 1:
+        inputWord.type = NOUN_TYPE;
         addInTree(dico.nouns, word, baseForm, getFlags(tags));
+        updateFile("data/dictionnaire.txt", inputWord);
         break;
     case 2:
+        inputWord.type = ADJECTIVE_TYPE;
         addInTree(dico.adjectives, word, baseForm, getFlags(tags));
+        updateFile("data/dictionnaire.txt", inputWord);
         break;
     case 3:
+        inputWord.type = ADVERB_TYPE;
         addInTree(dico.adverbs, word, baseForm, getFlags(tags));
+        updateFile("ata/dictionnaire.txt", inputWord);
         break;
     case 4:
+        inputWord.type = VERB_TYPE;
         addInTree(dico.verbs, word, baseForm, getFlags(tags));
+        updateFile("data/dictionnaire.txt", inputWord);
         break;
     }
 }
