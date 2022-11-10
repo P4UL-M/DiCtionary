@@ -33,9 +33,6 @@ void menu(t_dictionary dico)
 {
     srand(time(NULL));
     bool flag = true;
-    printf("NUMBERS OF NOUNS: %d\n", dico.verbs->ponderation);
-    buildPonderation(dico.verbs);
-    printf("NUMBERS OF NOUNS: %d\n", dico.verbs->ponderation);
     p_word randomWord;
     while (flag)
     {
@@ -136,44 +133,44 @@ void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
     if (type == 1 || type == 5)
     {
         result = getWord(dico.nouns, target, trueSearch);
-        form = getForm(result, target);
+        form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
             printf("%s is a noun that is ", target);
-            displayForms(result, form);
+            displayForms(*result, *form);
             return;
         }
     }
     if (type == 2 || type == 5)
     {
         result = getWord(dico.adjectives, target, trueSearch);
-        form = getForm(result, target);
+        form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
             printf("%s is an adjective that is ", target);
-            displayForms(result, form);
+            displayForms(*result, *form);
             return;
         }
     }
     if (type == 3 || type == 5)
     {
         result = getWord(dico.adverbs, target, trueSearch);
-        form = getForm(result, target);
+        form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
             printf("%s is an adverb that is ", target);
-            displayForms(result, form);
+            displayForms(*result, *form);
             return;
         }
     }
     if (type == 4 || type == 5)
     {
         result = getWord(dico.verbs, target, trueSearch);
-        form = getForm(result, target);
+        form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
             printf("%s is a verb that is ", target);
-            displayForms(result, form);
+            displayForms(*result, *form);
             return;
         }
     }
@@ -221,9 +218,7 @@ void generateSentenceMenu(t_dictionary dico)
         scanf("%d", &generation_mode);
         fflush(stdin);
     } while (generation_mode < 1 || generation_mode > 3); // Ne pas oublier l'easter egg
-    p_word randomWord = getRandomWord(dico.verbs, 2);
-    printf("%s", ANSI_COLOR_YELLOW);
-    printf("the word is : %s", randomWord->base->word);
+    generateSentence(generation_mode, dico);
     // generate_sentence(generation_mode, random_type, dico);
 }
 

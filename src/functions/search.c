@@ -51,11 +51,9 @@ p_node search(p_tree tree, char *word)
     return current;
 }
 
-p_form getForm(p_word node, char *form)
+p_form getForm(t_word word, char *form)
 {
-    if (node == NULL)
-        return NULL;
-    p_form current = node->forms;
+    p_form current = word.forms;
     while (current != NULL)
     {
         if (strcmp(current->word, form) == 0)

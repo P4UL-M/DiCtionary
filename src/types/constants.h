@@ -9,6 +9,8 @@ This file contains the constants and define*/
 #define NOUN_TYPE "Nom"
 #define ADJECTIVE_TYPE "Adj"
 #define ADVERB_TYPE "Adv"
+#define PRONOUN_TYPE "Pro"
+#define DETERMINANTS_TYPE "Det"
 
 #define SG "SG"
 #define PL "PL"
@@ -30,6 +32,8 @@ This file contains the constants and define*/
 
 #define Mas "Mas"
 #define Fem "Fem"
+#define InvGen "InvGen"
+#define InvPL "InvPL"
 
 #define ANSI_COLOR_RED "\x1b[0m\x1b[31;4m"
 #define ANSI_COLOR_GREEN "\x1b[0m\x1b[32;1;3m"
@@ -61,8 +65,10 @@ This file contains the constants and define*/
 
 #define Mas_BIT 32768
 #define Fem_BIT 65536
+#define InvGen_BIT 131072
+#define InvPL_BIT 262144
 
-#define Main_BIT 131072
+#define Main_BIT 524288
 
 unsigned int get_bit(char *str);
 

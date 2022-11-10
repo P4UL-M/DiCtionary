@@ -10,7 +10,7 @@ This file contains the functions to adapt the search in the menu*/
 #include <stdbool.h>
 #include "../types/struct.h"
 
-void displayForm(p_form);
-void displayForms(p_word, p_form);
+void displayForm(t_form);
+void displayForms(t_word, t_form);
 
 #endif

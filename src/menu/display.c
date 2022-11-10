@@ -10,69 +10,73 @@ This file contains the functions to adapt the search in the menu*/
 #include "../functions/search.h"
 #include "display.h"
 
-void displayForm(p_form form)
+void displayForm(t_form form)
 // To print all declinaisons for the noun
 {
     // Conjugaisons of the verbs:
-    if ((form->tag & Inf_BIT) == Inf_BIT)
+    if ((form.tag & Inf_BIT) == Inf_BIT)
     {
         printf("present infinitive");
         return;
     }
-    else if ((form->tag & PPas_BIT) == PPas_BIT)
+    else if ((form.tag & PPas_BIT) == PPas_BIT)
         printf("past participle ");
-    else if ((form->tag & PPre_BIT) == PPre_BIT)
+    else if ((form.tag & PPre_BIT) == PPre_BIT)
         printf("present participle");
-    else if ((form->tag & IImp_BIT) == IImp_BIT)
+    else if ((form.tag & IImp_BIT) == IImp_BIT)
         printf("imperfect of the indicative at the ");
-    else if ((form->tag & SPre_BIT) == SPre_BIT)
+    else if ((form.tag & SPre_BIT) == SPre_BIT)
         printf("present of the subjonctive at the ");
-    else if ((form->tag & IPSim_BIT) == IPSim_BIT)
+    else if ((form.tag & IPSim_BIT) == IPSim_BIT)
         printf("simple past of the indicative at the ");
-    else if ((form->tag & SImp_BIT) == SImp_BIT)
+    else if ((form.tag & SImp_BIT) == SImp_BIT)
         printf("imperfect of the subjonctive at the ");
-    else if ((form->tag & IFut_BIT) == IFut_BIT)
+    else if ((form.tag & IFut_BIT) == IFut_BIT)
         printf("future of the indicative at the ");
-    else if ((form->tag & CPre_BIT) == CPre_BIT)
+    else if ((form.tag & CPre_BIT) == CPre_BIT)
         printf("present of the conditional at the ");
-    else if ((form->tag & IPre_BIT) == IPre_BIT)
+    else if ((form.tag & IPre_BIT) == IPre_BIT)
         printf("present of the indicative at the ");
 
     // Person for the verbs:
-    if ((form->tag & P1_BIT) == P1_BIT)
+    if ((form.tag & P1_BIT) == P1_BIT)
         printf("first person ");
-    else if ((form->tag & P2_BIT) == P2_BIT)
+    else if ((form.tag & P2_BIT) == P2_BIT)
         printf("second person ");
-    else if ((form->tag & P3_BIT) == P3_BIT)
+    else if ((form.tag & P3_BIT) == P3_BIT)
         printf("third person ");
 
     // Plural/Singular:
-    if ((form->tag & PL_BIT) == PL_BIT)
+    if ((form.tag & PL_BIT) == PL_BIT)
         printf("plural");
-    else if ((form->tag & SG_BIT) == SG_BIT)
+    else if ((form.tag & SG_BIT) == SG_BIT)
         printf("singular");
+    else if ((form.tag & InvPL_BIT) == InvPL_BIT)
+        printf(" invariable in number");
 
     // Masculine/Feminine
-    if ((form->tag & Mas_BIT) == Mas_BIT)
+    if ((form.tag & Mas_BIT) == Mas_BIT)
         printf(" masculine");
-    else if ((form->tag & Fem_BIT) == Fem_BIT)
+    else if ((form.tag & Fem_BIT) == Fem_BIT)
         printf(" feminine");
+    else if ((form.tag & InvGen_BIT) == InvGen_BIT)
+        printf(" invariable in gender");
 }
 
-void displayForms(p_word word, p_form form)
+void displayForms(t_word word, t_form form)
 {
     char *person[] = {"Je", "Tu", "Il", "Nous", "Vous", "Ils", "Masculine Singular", "Feminine Singular", "Masculine Plural", "Feminine Plural"};
     int perstag[] = {P1_BIT + SG_BIT, P2_BIT + SG_BIT, P3_BIT + SG_BIT, P1_BIT + PL_BIT, P2_BIT + PL_BIT, P3_BIT + PL_BIT, Mas_BIT + SG_BIT, Fem_BIT + SG_BIT, Mas_BIT + PL_BIT, Fem_BIT + PL_BIT};
     displayForm(form);
-    if (word->base != form)
+    if (form.word != word.base->word || form.tag != word.base->tag)
     {
-        printf("\nIt comes from %s%s%s, that is ", ANSI_COLOR_MAGENTA, word->base->word, ANSI_COLOR_RESET);
-        displayForm(word->base);
+        printf("\nIt comes from %s%s%s, that is ", ANSI_COLOR_MAGENTA, word.base->word, ANSI_COLOR_RESET);
+        displayForm(*word.base);
     }
     else
         printf("\nIt is the base form of the word");
     t_node temp = {
-        .forms = word->forms,
+        .forms = word.forms,
     };
 
 #pragma region Verbs

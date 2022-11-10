@@ -51,7 +51,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
                 p_word base = getWord(dictionary.nouns, extractedStrings[1], false);
-                if (base == NULL)
+                if (base->base->word == word)
                 {
                     printf("Error in noun %s\n", extractedStrings[1]);
                     return 1;
@@ -66,7 +66,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
                 p_word base = getWord(dictionary.verbs, extractedStrings[1], false);
-                if (base == NULL)
+                if (base->base->word == word)
                 {
                     printf("Error in verb %s\n", extractedStrings[1]);
                     return 1;
@@ -81,7 +81,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
                 p_word base = getWord(dictionary.adjectives, extractedStrings[1], false);
-                if (base == NULL)
+                if (base->base->word == word)
                 {
                     printf("Error in adjective %s\n", extractedStrings[1]);
                     return 1;
@@ -96,7 +96,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
                 p_word base = getWord(dictionary.adverbs, extractedStrings[1], false);
-                if (base == NULL)
+                if (base->base->word == word)
                 {
                     printf("Error in adverb %s", extractedStrings[1]);
                     return 1;
@@ -181,31 +181,13 @@ int main()
     t = clock();
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
-    t_inputWord wordInput = {
-        .word = "diCtionary",
-        .base = "diCtionary",
-        .flags = "SG+Mas",
-        .type = NOUN_TYPE,
-    };
-    updateFile("data/dictionnaire.txt", wordInput);
-    dictionary = extractFile("data/dictionnaire.txt");
-    p_word word = getWord(dictionary.nouns, "diCtionary", true);
-    if (word == NULL)
+    if (checkRandom(dictionary) == 0)
     {
-        printf("Error in noun\n");
-        return 1;
-    }
-    else
-    {
-        printf("%s%s%s\n", ANSI_COLOR_GREEN, word->base->word, ANSI_COLOR_RESET);
+        printf("Random words are correct\n");
     }
     if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
     {
         printf("Extracted file is correct\n");
-    }
-    if (checkRandom(dictionary) == 0)
-    {
-        printf("Random words are correct\n");
     }
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;

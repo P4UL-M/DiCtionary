@@ -16,6 +16,8 @@ typedef struct dictionary
     p_tree adjectives;
     p_tree adverbs;
     p_tree verbs;
+    p_tree pronouns;
+    p_tree determinants;
 } t_dictionary, *p_dictionary;
 
 typedef struct s_inputWord

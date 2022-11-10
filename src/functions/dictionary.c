@@ -110,6 +110,10 @@ int getFlags(char *tag)
             flags += CPre_BIT;
         else if (strcmp(flag, Inf) == 0)
             flags += Inf_BIT;
+        else if (strcmp(flag, InvGen) == 0)
+            flags += InvGen_BIT;
+        else if (strcmp(flag, InvPL) == 0)
+            flags += InvPL_BIT;
     } while ((flag = strtok_r(NULL, "+", &saveptr1)));
     return flags;
 }
@@ -131,6 +135,8 @@ t_dictionary extractFile(char *path)
     dictionary.adjectives = create_tree();
     dictionary.adverbs = create_tree();
     dictionary.verbs = create_tree();
+    dictionary.pronouns = create_tree();
+    dictionary.determinants = create_tree();
     while (fgets(line, MAX_SIZE_LINE, fp))
     {
         char **extractedStrings = extractWord(line);
@@ -166,9 +172,21 @@ t_dictionary extractFile(char *path)
             {
                 addInTree(dictionary.adverbs, extractedStrings[0], extractedStrings[1], 0);
             }
-            else
+            else if (strcmp(type, PRONOUN_TYPE) == 0)
             {
-                // printf("Unknown type : %s, [%d,%d,%d,%d]\n", type, strcmp(type, NOUN_TYPE), strcmp(type, VERB_TYPE), strcmp(type, ADJECTIVE_TYPE), strcmp(type, ADVERB_TYPE));
+                char *form = NULL;
+                while ((form = strtok_r(NULL, ":", &saveptr)))
+                {
+                    addInTree(dictionary.pronouns, extractedStrings[0], extractedStrings[1], getFlags(form));
+                }
+            }
+            else if (strcmp(type, DETERMINANTS_TYPE) == 0)
+            {
+                char *form = NULL;
+                while ((form = strtok_r(NULL, ":", &saveptr)))
+                {
+                    addInTree(dictionary.determinants, extractedStrings[0], extractedStrings[1], getFlags(form));
+                }
             }
         }
         free(extractedStrings);
