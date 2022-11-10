@@ -209,6 +209,7 @@ void displayForms(p_word word, p_form form)
 
 #pragma region Nouns
     p_form declin;
+    int Nounsaid = 1;
     for (int i = 6; i < 10; i++)
     {
         declin = getFormByIndex(&temp, perstag[i]);
@@ -216,7 +217,11 @@ void displayForms(p_word word, p_form form)
         {
             if (((declin->tag & PPas_BIT) != PPas_BIT) && ((declin->tag & PPre_BIT) != PPre_BIT))
             {
-                printf("\n%s>Noun:\n", ANSI_COLOR_RED);
+                if (Nounsaid)
+                {
+                    printf("%s\n>Forms:\n", ANSI_COLOR_RED);
+                    Nounsaid = 0;
+                }
                 printf("\t%s%s:%s %s\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, declin->word);
             }
         }

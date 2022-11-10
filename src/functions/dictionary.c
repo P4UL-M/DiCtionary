@@ -3,8 +3,12 @@ Quentin Cardona, Axel Loones and Paul Mairesse
 This file contains the functions in order to extract text from the dictionary*/
 #include <stdio.h>
 #include <stdlib.h>
+#define _GNU_SOURCE
 #include <string.h>
-
+#ifdef _WIN32
+#define strtok_r(s, d, c) strtok_s(s, d, c)
+char *strtok_s(char *str, const char *delimiters, char **context);
+#endif
 #include "dictionary.h"
 #include "search.h"
 #include "../types/struct.h"
