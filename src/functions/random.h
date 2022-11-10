@@ -4,7 +4,6 @@
 #include "../types/struct.h"
 #include "../types/constants.h"
 
-p_form according(p_tree, int);
 int buildPonderation(p_node);
 p_word getRandomWord(p_tree, bool);
 
