@@ -20,5 +20,7 @@ typedef struct dictionary
 
 t_dictionary extractFile(char *path);
 char **extractWord(char *source);
+void addInTree(p_tree tree, char *word, char *base, int tag);
+int getFlags(char *tag);
 
 #endif
