@@ -180,7 +180,7 @@ int main()
     //     printf("Extracted file is correct\n");
     // }
     for (int i = 0; i < 1000000; i++)
-        generateSentence(dictionary, 1, true);
+        generateSentence(dictionary, 2, true);
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

@@ -136,6 +136,64 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
     if (sentenceType == 2)
     {
         /*noun 'qui' verb verb noun adj*/
+        p_word temp = getRandomWord(dico.nouns, trueRandom);
+        p_form sentence[8];
+        int subject_flags;
+        do
+        {
+            sentence[1] = randomFormWithMask(temp, 0, 0);
+        } while (sentence[1] == NULL);
+        subject_flags = sentence[1]->tag & ~Main_BIT;
+        if ((subject_flags & InvPL_BIT) == InvPL_BIT)
+            subject_flags -= rand() % 2 ? PL_BIT : SG_BIT;
+        if ((subject_flags & InvGen_BIT) == InvGen_BIT)
+            subject_flags -= rand() % 2 ? Mas_BIT : Fem_BIT;
+        t_form qui = {
+            .word = "qui",
+            .tag = 0,
+            .next = NULL,
+        };
+        sentence[2] = &qui;
+        p_word mydet = getWord(dico.determinants, "le", false);
+        do
+        {
+            sentence[0] = accords(mydet, subject_flags);
+        } while (sentence[0] == NULL);
+        int nb = (subject_flags & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
+        do
+        {
+            sentence[3] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), nb + P3_BIT, CPre_BIT + SImp_BIT + SPre_BIT);
+        } while (sentence[3] == NULL);
+        do
+        {
+            sentence[4] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), nb + P3_BIT, CPre_BIT + SImp_BIT + SPre_BIT);
+        } while (sentence[4] == NULL);
+        do
+        {
+            sentence[6] = randomFormWithMask(getRandomWord(dico.nouns, trueRandom), 0, 0);
+        } while (sentence[6] == NULL);
+        int object_flags = sentence[6]->tag & ~Main_BIT;
+        if ((object_flags & InvPL_BIT) == InvPL_BIT)
+            object_flags -= rand() % 2 ? PL_BIT : SG_BIT;
+        if ((object_flags & InvGen_BIT) == InvGen_BIT)
+            object_flags -= rand() % 2 ? Mas_BIT : Fem_BIT;
+        do
+        {
+            sentence[5] = accords(mydet, object_flags);
+        } while (sentence[4] == NULL);
+        do
+        {
+            sentence[7] = randomFormWithMask(getRandomWord(dico.adjectives, trueRandom), object_flags, 0);
+        } while (sentence[7] == NULL);
+        char *output = malloc(sizeof(char) * 100);
+        for (int i = 0; i < 8; i++)
+        {
+            output = strcat(output, sentence[i]->word);
+            output = strcat(output, " ");
+        }
+        output = strcat(output, ".");
+        printf("%s\n", smoothSentence(output));
+        free(output);
         return;
     }
     if (sentenceType == 3)
