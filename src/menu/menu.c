@@ -33,7 +33,6 @@ void menu(t_dictionary dico)
 {
     srand(time(NULL));
     bool flag = true;
-    p_word randomWord;
     while (flag)
     {
         int action;

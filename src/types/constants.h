@@ -65,11 +65,9 @@ This file contains the constants and define*/
 
 #define Mas_BIT 32768
 #define Fem_BIT 65536
-#define InvGen_BIT 131072
-#define InvPL_BIT 262144
+#define InvGen_BIT Mas_BIT + Fem_BIT
+#define InvPL_BIT PL_BIT + SG_BIT
 
 #define Main_BIT 524288
-
-unsigned int get_bit(char *str);
 
 #endif

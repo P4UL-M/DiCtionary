@@ -69,11 +69,11 @@ int countChar(char *word, char c)
     return count;
 }
 
-int getFlags(char *tag)
+unsigned int getFlags(char *tag)
 {
     char *saveptr1;
     char *flag = strtok_r(tag, "+", &saveptr1);
-    int flags = 0;
+    unsigned int flags = 0;
     do
     {
         if (strcmp(flag, P1) == 0)

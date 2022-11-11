@@ -47,20 +47,20 @@ void displayForm(t_form form)
         printf("third person ");
 
     // Plural/Singular:
-    if ((form.tag & PL_BIT) == PL_BIT)
+    if ((form.tag & InvPL_BIT) == InvPL_BIT)
+        printf(" invariable in number");
+    else if ((form.tag & PL_BIT) == PL_BIT)
         printf("plural");
     else if ((form.tag & SG_BIT) == SG_BIT)
         printf("singular");
-    else if ((form.tag & InvPL_BIT) == InvPL_BIT)
-        printf(" invariable in number");
 
     // Masculine/Feminine
-    if ((form.tag & Mas_BIT) == Mas_BIT)
+    if ((form.tag & InvGen_BIT) == InvGen_BIT)
+        printf(" invariable in gender");
+    else if ((form.tag & Mas_BIT) == Mas_BIT)
         printf(" masculine");
     else if ((form.tag & Fem_BIT) == Fem_BIT)
         printf(" feminine");
-    else if ((form.tag & InvGen_BIT) == InvGen_BIT)
-        printf(" invariable in gender");
 }
 
 void displayForms(t_word word, t_form form)
