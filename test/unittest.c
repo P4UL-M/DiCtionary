@@ -9,6 +9,7 @@ This file contains the main algorithm*/
 #include "../src/functions/dictionary.h"
 #include "../src/functions/search.h"
 #include "../src/functions/random.h"
+#include "../src/functions/sentence.h"
 #include "../src/menu/menu.h"
 
 char *id[20] = {"vouter", "vouvoyer", "voyager", "vriller", "vrombir", "vulcaniser", "vulgariser", "warranter", "zebrer", "zester", "zezayer", "zieuter", "zigouiller", "zigzaguer", "zinguer", "zinzinuler", "zipper", "zoner", "zozoter", "zyeuter"};
@@ -50,8 +51,8 @@ int checkExtract(t_dictionary dictionary, char *path)
                     printf("Error in noun %s\n", extractedStrings[0]);
                     return 1;
                 }
-                p_word base = getWord(dictionary.nouns, extractedStrings[1], false);
-                if (base->base->word == word)
+                p_word baseWord = getWord(dictionary.nouns, extractedStrings[1], false);
+                if (baseWord->base == word->base)
                 {
                     printf("Error in noun %s\n", extractedStrings[1]);
                     return 1;
@@ -66,7 +67,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
                 p_word base = getWord(dictionary.verbs, extractedStrings[1], false);
-                if (base->base->word == word)
+                if (base->base == word->base)
                 {
                     printf("Error in verb %s\n", extractedStrings[1]);
                     return 1;
@@ -81,7 +82,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
                 p_word base = getWord(dictionary.adjectives, extractedStrings[1], false);
-                if (base->base->word == word)
+                if (base->base == word->base)
                 {
                     printf("Error in adjective %s\n", extractedStrings[1]);
                     return 1;
@@ -96,7 +97,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
                 p_word base = getWord(dictionary.adverbs, extractedStrings[1], false);
-                if (base->base->word == word)
+                if (base->base == word->base)
                 {
                     printf("Error in adverb %s", extractedStrings[1]);
                     return 1;
@@ -111,7 +112,6 @@ int checkExtract(t_dictionary dictionary, char *path)
 
 int checkRandom(t_dictionary dictionary)
 {
-    buildPonderation(dictionary.verbs);
     for (int i = 0; i < 1000000; i++)
     {
         p_word word = getRandomWord(dictionary.verbs, 1);
@@ -136,7 +136,6 @@ int checkRandom(t_dictionary dictionary)
     {
         printf("%d - %s: %s%.2f%%%s\n", i, id[i], ANSI_COLOR_CYAN, ((double)occurence[i] / (double)sum) * 100, ANSI_COLOR_RESET);
     }
-    buildPonderation(dictionary.nouns);
     for (int i = 0; i < 1000000; i++)
     {
         p_word word = getRandomWord(dictionary.nouns, 1);
@@ -145,7 +144,6 @@ int checkRandom(t_dictionary dictionary)
             return 1;
         }
     }
-    buildPonderation(dictionary.adjectives);
     for (int i = 0; i < 1000000; i++)
     {
         p_word word = getRandomWord(dictionary.adjectives, 1);
@@ -154,7 +152,6 @@ int checkRandom(t_dictionary dictionary)
             return 1;
         }
     }
-    buildPonderation(dictionary.adverbs);
     for (int i = 0; i < 1000000; i++)
     {
         p_word word = getRandomWord(dictionary.adverbs, 1);
@@ -168,27 +165,22 @@ int checkRandom(t_dictionary dictionary)
 
 int main()
 {
-    char test[] = "ABCBDBEBFBGBHBIBJBKBLBMBNBOBP";
-    char *test2 = strtok(test, "B");
-    printf("%s", test2);
-    while (test2 = strtok(NULL, "B"))
-    {
-        printf("%s", test2);
-    }
-    printf("\n");
     srand(time(NULL));
     clock_t t;
     t = clock();
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
+    buildPonderations(dictionary);
     printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
-    if (checkRandom(dictionary) == 0)
-    {
-        printf("Random words are correct\n");
-    }
-    if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
-    {
-        printf("Extracted file is correct\n");
-    }
+    // if (checkRandom(dictionary) == 0)
+    // {
+    //     printf("Random words are correct\n");
+    // }
+    // if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
+    // {
+    //     printf("Extracted file is correct\n");
+    // }
+    for (int i = 0; i < 1000000; i++)
+        generateSentence(dictionary, 1, true);
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

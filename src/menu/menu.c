@@ -221,7 +221,7 @@ void generateSentenceMenu(t_dictionary dico)
         scanf("%d", &generation_mode);
         fflush(stdin);
     } while (generation_mode < 1 || generation_mode > 3); // Ne pas oublier l'easter egg
-    generateSentence(generation_mode, dico);
+    generateSentence(dico, generation_mode, random_type);
     // generate_sentence(generation_mode, random_type, dico);
 }
 

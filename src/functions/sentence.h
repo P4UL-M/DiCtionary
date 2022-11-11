@@ -6,7 +6,7 @@
 #include "../functions/dictionary.h"
 #include "../types/struct.h"
 
-void generateSentence(int, t_dictionary);
+void generateSentence(t_dictionary, int, bool);
 p_form accords(p_word, unsigned int);
 
 #endif

@@ -6,6 +6,7 @@
 #include "../types/constants.h"
 #include "../functions/random.h"
 #include "../functions/search.h"
+#include "../functions/dictionary.h"
 #include "random.h"
 
 int buildPonderation(p_node node)
@@ -21,6 +22,16 @@ int buildPonderation(p_node node)
     }
     node->ponderation = nbWord + hasForms(node);
     return node->ponderation;
+}
+
+void buildPonderations(t_dictionary dictionary)
+{
+    buildPonderation(dictionary.nouns);
+    buildPonderation(dictionary.adjectives);
+    buildPonderation(dictionary.verbs);
+    buildPonderation(dictionary.adverbs);
+    buildPonderation(dictionary.pronouns);
+    buildPonderation(dictionary.determinants);
 }
 
 p_node trueRandomNextLetter(p_node node)

@@ -18,12 +18,7 @@ int main()
     printf("Hello world\n");
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     printf("time of execution: %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
-    buildPonderation(dictionary.nouns);
-    buildPonderation(dictionary.adjectives);
-    buildPonderation(dictionary.verbs);
-    buildPonderation(dictionary.adverbs);
-    buildPonderation(dictionary.pronouns);
-    buildPonderation(dictionary.determinants);
+    buildPonderations(dictionary);
     menu(dictionary);
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;

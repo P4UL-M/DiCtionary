@@ -18,11 +18,9 @@ p_form accords(p_word word, unsigned int tag)
     return getFormByIndex(temp, tag);
 }
 
-// TODO faire func smoth sentence which correct problem such has le arrosoir -> l'arrosoir
 char *smoothSentence(char *sentence)
 {
-    char *output = (char *)malloc(sizeof(char) * strlen(sentence));
-    strcpy(output, sentence);
+    char *output = sentence;
     // detect le, la, les, l' and l
     char *index = output;
     while ((index = strchr(index, 'l')))
@@ -80,12 +78,12 @@ p_form randomFormWithMask(p_word word, unsigned int mask, unsigned int antimask)
     return result;
 }
 
-void generateSentence(int sentenceType, t_dictionary dico)
+void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
 {
     if (sentenceType == 1)
     {
         /*noun adj verb det noun*/
-        p_word temp = getRandomWord(dico.nouns, true);
+        p_word temp = getRandomWord(dico.nouns, trueRandom);
         p_form sentence[6];
         int subject_flags;
         do
@@ -93,9 +91,13 @@ void generateSentence(int sentenceType, t_dictionary dico)
             sentence[1] = randomFormWithMask(temp, 0, 0);
         } while (sentence[1] == NULL);
         subject_flags = sentence[1]->tag & ~Main_BIT;
+        if ((subject_flags & InvPL_BIT) == InvPL_BIT)
+            subject_flags -= rand() % 2 ? PL_BIT : SG_BIT;
+        if ((subject_flags & InvGen_BIT) == InvGen_BIT)
+            subject_flags -= rand() % 2 ? Mas_BIT : Fem_BIT;
         do
         {
-            sentence[2] = accords(getRandomWord(dico.adjectives, true), subject_flags);
+            sentence[2] = accords(getRandomWord(dico.adjectives, trueRandom), subject_flags);
         } while (sentence[2] == NULL);
         p_word mydet = getWord(dico.determinants, "le", false);
         do
@@ -105,14 +107,17 @@ void generateSentence(int sentenceType, t_dictionary dico)
         int nb = (subject_flags & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
         do
         {
-            sentence[3] = randomFormWithMask(getRandomWord(dico.verbs, true), nb + P3_BIT, CPre_BIT);
+            sentence[3] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), nb + P3_BIT, CPre_BIT);
         } while (sentence[3] == NULL);
         do
         {
-            temp = getRandomWord(dico.nouns, true);
-            sentence[5] = randomFormWithMask(temp, 0, 0);
+            sentence[5] = randomFormWithMask(getRandomWord(dico.nouns, trueRandom), 0, 0);
         } while (sentence[5] == NULL);
         int object_flags = sentence[5]->tag & ~Main_BIT;
+        if ((object_flags & InvPL_BIT) == InvPL_BIT)
+            object_flags -= rand() % 2 ? PL_BIT : SG_BIT;
+        if ((object_flags & InvGen_BIT) == InvGen_BIT)
+            object_flags -= rand() % 2 ? Mas_BIT : Fem_BIT;
         do
         {
             sentence[4] = accords(mydet, object_flags);
@@ -125,6 +130,7 @@ void generateSentence(int sentenceType, t_dictionary dico)
         }
         output = strcat(output, ".");
         printf("%s\n", smoothSentence(output));
+        free(output);
         return;
     }
     if (sentenceType == 2)

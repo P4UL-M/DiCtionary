@@ -3,8 +3,9 @@
 #include <stdbool.h>
 #include "../types/struct.h"
 #include "../types/constants.h"
+#include "../functions/dictionary.h"
 
-int buildPonderation(p_node);
+void buildPonderations(t_dictionary);
 p_word getRandomWord(p_tree, bool);
 
 #endif
