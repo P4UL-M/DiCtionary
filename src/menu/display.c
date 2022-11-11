@@ -6,6 +6,7 @@ This file contains the functions to adapt the search in the menu*/
 #include <string.h>
 #include <stdbool.h>
 #include "../types/struct.h"
+#include "../types/pile.h"
 #include "../types/constants.h"
 #include "../functions/search.h"
 #include "display.h"
@@ -222,4 +223,42 @@ void displayForms(t_word word, t_form form)
         }
     }
 #pragma endregion
+}
+
+char *autocompletion(p_tree tree)
+{
+    char *word = (char *)malloc(sizeof(char) * 100);
+    int i = 0, continuing = 1;
+    char c;
+    while ((c = getchar()) != '\n' && continuing)
+    {
+        if (c == '\t')
+        {
+            continuing = 0;
+            word[i] = '\0';
+        }
+        else
+        {
+            word[i] = c;
+            i++;
+        }
+    }
+    if (c == '\t')
+    {
+        printf("%s\n", word);
+    }
+    p_fpile pile = completion(tree, word);
+    if (pile != NULL)
+    {
+        p_form temp = pile->head;
+        while (temp != NULL)
+        {
+            printf("%s", temp->word);
+            displayFPile(pile);
+            temp = depileForm(pile);
+        }
+        return word;
+    }
+    else
+        printf("Autocompletion impossible\n");
 }

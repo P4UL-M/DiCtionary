@@ -12,5 +12,6 @@ This file contains the functions to adapt the search in the menu*/
 
 void displayForm(t_form);
 void displayForms(t_word, t_form);
+char *autocompletion();
 
 #endif

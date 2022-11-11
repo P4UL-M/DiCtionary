@@ -156,3 +156,69 @@ p_word getWord(p_tree tree, char *word, bool truesearch)
     }
     return result;
 }
+
+p_fpile depileCompletion(p_pile pile, p_fpile result, p_node node, char *word, int max)
+{
+    if (node == NULL)
+        node = depile(pile);
+    if (find_entry(node)) // if already check
+        return result;
+    p_form curr_form = node->forms;
+    while (curr_form != NULL)
+    {
+        if (strcmp(curr_form->word, word) == 0)
+        {
+            if (countFPile(result) < max)
+            {
+                enpileForm(result, curr_form);
+            }
+            else
+            {
+                return NULL;
+            }
+        }
+        curr_form = curr_form->next;
+    }
+    if (node->children != NULL)
+    {
+        for (p_child child = node->children; child != NULL; child = child->next)
+        {
+            result = depileCompletion(pile, result, child->node, word, max);
+        }
+    }
+    add_entry(node);
+    if (isEmpty(pile))
+        return result;
+    else
+    {
+        if (countFPile(result) < max)
+            return depileCompletion(pile, result, NULL, word, max);
+        else
+            return NULL;
+    }
+}
+
+p_fpile completion(p_tree tree, char *word)
+{
+    int max = 0;
+    clear_cache();
+    if (tree == NULL)
+        return NULL;
+    p_node current = tree;
+    p_pile pile = createEmptyPile();
+    p_fpile result = createEmptyFPile();
+    enpile(pile, current);
+    for (int i = 0; word[i] != '\0' && current != NULL; i++)
+    {
+        current = searchInChild(current, word[i]);
+        if (current != NULL)
+        {
+            enpile(pile, current);
+        }
+    }
+    if (countForms(current) > max)
+        return NULL;
+    result = depileCompletion(pile, result, NULL, word, max);
+    printf("nb forms : %d\n", countFPile(result));
+    return result;
+}

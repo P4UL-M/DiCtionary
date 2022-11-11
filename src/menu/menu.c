@@ -52,10 +52,12 @@ void menu(t_dictionary dico)
         switch (action)
         {
         case 1:
+            title();
             searchMenu(dico);
             waitKey();
             break;
         case 2:
+            title();
             generateSentenceMenu(dico);
             waitKey();
             break;
