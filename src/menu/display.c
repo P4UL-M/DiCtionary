@@ -70,19 +70,20 @@ void displayForms(t_word word, t_form form)
     displayForm(form);
     if (form.word != word.base->word || form.tag != word.base->tag)
     {
-        printf("\nIt comes from %s%s%s, that is ", ANSI_COLOR_MAGENTA, word.base->word, ANSI_COLOR_RESET);
+        printf(".\nIt comes from %s%s%s, that is ", ANSI_COLOR_MAGENTA, word.base->word, ANSI_COLOR_RESET);
         displayForm(*word.base);
     }
     else
-        printf("\nIt is the base form of the word");
+        printf(".\nIt is the base form of the word");
     t_node temp = {
         .forms = word.forms,
     };
+    printf(".\nOther forms of the word are :\n");
 
 #pragma region Verbs
     p_form inf = getFormByIndex(temp, Inf_BIT);
     if (inf != NULL)
-        printf("%s\n>Infinitive:\n\t%s%s%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET, inf->word, ANSI_COLOR_RESET);
+        printf("%s>Infinitive:\n\t%s%s%s\n", ANSI_COLOR_RED, ANSI_COLOR_RESET, inf->word, ANSI_COLOR_RESET);
     p_form ipre = getFormByIndex(temp, IPre_BIT);
     p_form iimp = getFormByIndex(temp, IImp_BIT);
     p_form ipas = getFormByIndex(temp, IPSim_BIT);

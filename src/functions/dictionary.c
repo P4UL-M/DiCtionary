@@ -191,7 +191,6 @@ t_dictionary extractFile(char *path)
         free(extractedStrings);
         i++;
     }
-    printf("number of lines : %d\n", i);
     fclose(fp);
     return dictionary;
 }

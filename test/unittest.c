@@ -112,33 +112,9 @@ int checkExtract(t_dictionary dictionary, char *path)
 
 int checkRandom(t_dictionary dictionary)
 {
-    for (int i = 0; i < 1000000; i++)
+    for (int i = 0; i < 10000; i++)
     {
-        p_word word = getRandomWord(dictionary.verbs, 1);
-        if (word == NULL)
-            return 1;
-        else
-        {
-            // count occurence of word
-            for (int j = 0; j < 20; j++)
-            {
-                if (strcmp(word->base->word, id[j]) == 0)
-                {
-                    occurence[j]++;
-                    break;
-                }
-            }
-        }
-    }
-    int sum = 1000000;
-    printf("%sTotal: %d%s\n", ANSI_COLOR_GREEN, sum, ANSI_COLOR_RESET);
-    for (int i = 0; i < 20; i++)
-    {
-        printf("%d - %s: %s%.2f%%%s\n", i, id[i], ANSI_COLOR_CYAN, ((double)occurence[i] / (double)sum) * 100, ANSI_COLOR_RESET);
-    }
-    for (int i = 0; i < 1000000; i++)
-    {
-        p_word word = getRandomWord(dictionary.nouns, 1);
+        p_word word = getRandomWord(dictionary.nouns, true);
         if (word == NULL)
         {
             return 1;
@@ -146,7 +122,7 @@ int checkRandom(t_dictionary dictionary)
     }
     for (int i = 0; i < 1000000; i++)
     {
-        p_word word = getRandomWord(dictionary.adjectives, 1);
+        p_word word = getRandomWord(dictionary.verbs, true);
         if (word == NULL)
         {
             return 1;
@@ -154,7 +130,15 @@ int checkRandom(t_dictionary dictionary)
     }
     for (int i = 0; i < 1000000; i++)
     {
-        p_word word = getRandomWord(dictionary.adverbs, 1);
+        p_word word = getRandomWord(dictionary.adjectives, true);
+        if (word == NULL)
+        {
+            return 1;
+        }
+    }
+    for (int i = 0; i < 1000000; i++)
+    {
+        p_word word = getRandomWord(dictionary.adverbs, true);
         if (word == NULL)
         {
             return 1;
@@ -170,17 +154,20 @@ int main()
     t = clock();
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     buildPonderations(dictionary);
+    printf("number of words: %d", dictionary.nouns->ponderation + dictionary.verbs->ponderation + dictionary.adjectives->ponderation + dictionary.adverbs->ponderation);
     printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
-    // if (checkRandom(dictionary) == 0)
-    // {
-    //     printf("Random words are correct\n");
-    // }
-    // if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
-    // {
-    //     printf("Extracted file is correct\n");
-    // }
-    for (int i = 0; i < 1000000; i++)
-        generateSentence(dictionary, 2, true);
+    for (int i = 0; i < 1000; i++)
+    {
+        generateSentence(dictionary, 3, true);
+    }
+    if (checkRandom(dictionary) == 0)
+    {
+        printf("Random words are correct\n");
+    }
+    if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
+    {
+        printf("Extracted file is correct\n");
+    }
     printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

@@ -23,7 +23,7 @@ char *smoothSentence(char *sentence)
     char *output = sentence;
     // detect le, la, les, l' and l
     char *index = output;
-    while ((index = strchr(index, 'l')))
+    while ((index = strchr(index, 'l')) && (index == output || *(index - 1) == ' '))
     {
         if (strpbrk(index, "ae") == index + 1 && strchr(index, ' ') == index + 2)
         {
@@ -198,7 +198,71 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
     }
     if (sentenceType == 3)
     {
-        /* pro noun adj verb det noun adj*/
+        /* pro verb det noun past participe "que" subjonctif det noun*/
+        p_form sentence[9];
+        do
+        {
+            sentence[1] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), 0, CPre_BIT + SImp_BIT + SPre_BIT + Inf_BIT + PPas_BIT + PPre_BIT);
+        } while (sentence[1] == NULL);
+        int nb = (sentence[1]->tag & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
+        int person = (sentence[1]->tag & P1_BIT) == P1_BIT ? P1_BIT : (sentence[1]->tag & P2_BIT) == P2_BIT ? P2_BIT
+                                                                                                            : P3_BIT;
+        do
+        {
+            sentence[0] = randomFormWithMask(getRandomWord(dico.pronouns, trueRandom), nb + person, 0);
+        } while (sentence[0] == NULL);
+        do
+        {
+            sentence[3] = randomFormWithMask(getRandomWord(dico.nouns, trueRandom), 0, 0);
+        } while (sentence[3] == NULL);
+        int object_flags = sentence[3]->tag & ~Main_BIT;
+        if ((object_flags & InvPL_BIT) == InvPL_BIT)
+            object_flags -= rand() % 2 ? PL_BIT : SG_BIT;
+        if ((object_flags & InvGen_BIT) == InvGen_BIT)
+            object_flags -= rand() % 2 ? Mas_BIT : Fem_BIT;
+        p_word mydet = getWord(dico.determinants, "le", false);
+        do
+        {
+            sentence[2] = accords(mydet, object_flags);
+        } while (sentence[2] == NULL);
+        do
+        {
+            sentence[4] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), object_flags, 0);
+        } while (sentence[4] == NULL);
+        t_form que = {
+            .word = "que",
+            .tag = 0,
+            .next = NULL,
+        };
+        sentence[5] = &que;
+        do
+        {
+            sentence[6] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), P3_BIT, IPre_BIT + IFut_BIT + IImp_BIT + CPre_BIT + IPSim_BIT);
+        } while (sentence[6] == NULL);
+        nb = (sentence[6]->tag & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
+        do
+        {
+            sentence[8] = randomFormWithMask(getRandomWord(dico.nouns, trueRandom), 0, 0);
+        } while (sentence[8] == NULL);
+        object_flags = sentence[8]->tag & ~Main_BIT;
+        if ((object_flags & InvPL_BIT) == InvPL_BIT)
+            object_flags -= rand() % 2 ? PL_BIT : SG_BIT;
+        if ((object_flags & InvGen_BIT) == InvGen_BIT)
+            object_flags -= rand() % 2 ? Mas_BIT : Fem_BIT;
+        do
+        {
+            sentence[7] = accords(mydet, object_flags);
+        } while (sentence[7] == NULL);
+        char *output = malloc(sizeof(char) * 100);
+        for (int i = 0; i < 9; i++)
+        {
+            output = strcat(output, sentence[i]->word);
+            output = strcat(output, " ");
+        }
+        output = strcat(output, ".");
+        printf("%s\n", smoothSentence(output));
+        free(output);
         return;
     }
+    return;
 }

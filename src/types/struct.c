@@ -82,9 +82,10 @@ int countChildren(p_node node)
         return 0;
     int count = 0;
     p_child current = node->children;
-    if (current != NULL)
+    while (current != NULL)
     {
         count++;
+        current = current->next;
     }
     return count;
 }

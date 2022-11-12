@@ -65,21 +65,24 @@ p_node trueRandom(p_tree dico)
     return trueRandomNextLetter(nodeChild->node);
 }
 
-p_node randomNextLetter(p_child current)
+p_node randomNextLetter(p_node current)
 {
-    int letter = rand() % countChildren(current->node);
-    for (int i = 0; (i < letter) && (current->next != NULL); i++)
+    int nbChild = countChildren(current);
+    float random = rand() / (float)RAND_MAX;
+    if (current->forms != NULL)
     {
-        current = current->next;
-    }
-    if (current->node->forms != NULL)
-    {
-        if ((current->node->children == NULL) || (rand() % 7 == 1))
+        if ((current->children == NULL) || (rand() % 7 == 1))
         {
-            return current->node;
+            return current;
         }
     }
-    return randomNextLetter(current->node->children);
+    p_child nodeChild = current->children;
+    while (random > (1 / (float)nbChild) && nodeChild->next != NULL)
+    {
+        random -= 1 / (float)nbChild;
+        nodeChild = nodeChild->next;
+    }
+    return randomNextLetter(nodeChild->node);
 }
 
 p_node findRandom(p_tree tree)
@@ -87,7 +90,7 @@ p_node findRandom(p_tree tree)
     p_node returned = NULL;
     while (returned == NULL)
     {
-        returned = randomNextLetter(tree->children);
+        returned = randomNextLetter(tree);
     }
     return returned;
 }
