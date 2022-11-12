@@ -157,68 +157,40 @@ p_word getWord(p_tree tree, char *word, bool truesearch)
     return result;
 }
 
-p_fpile depileCompletion(p_pile pile, p_fpile result, p_node node, char *word, int max)
+void autocompletionAtNode(p_node node, p_fpile results, char *word)
 {
     if (node == NULL)
-        node = depile(pile);
-    if (find_entry(node)) // if already check
-        return result;
-    p_form curr_form = node->forms;
-    while (curr_form != NULL)
+        return;
+    if (results->size > 10)
+        return;
+    p_form main = getFormByIndex(*node, Main_BIT);
+    if (main != NULL)
     {
-        if (strcmp(curr_form->word, word) == 0)
+        if (strcmp(main->word, word) != 0)
         {
-            if (countFPile(result) < max)
-            {
-                enpileForm(result, curr_form);
-            }
-            else
-            {
-                return NULL;
-            }
+            enpileForm(results, main);
         }
-        curr_form = curr_form->next;
     }
     if (node->children != NULL)
     {
         for (p_child child = node->children; child != NULL; child = child->next)
         {
-            result = depileCompletion(pile, result, child->node, word, max);
+            autocompletionAtNode(child->node, results, word);
         }
-    }
-    add_entry(node);
-    if (isEmpty(pile))
-        return result;
-    else
-    {
-        if (countFPile(result) < max)
-            return depileCompletion(pile, result, NULL, word, max);
-        else
-            return NULL;
     }
 }
 
-p_fpile completion(p_tree tree, char *word)
+void autocompletion(p_tree tree, char *word, p_fpile result)
 {
-    int max = 0;
-    clear_cache();
     if (tree == NULL)
-        return NULL;
+        return;
     p_node current = tree;
-    p_pile pile = createEmptyPile();
-    p_fpile result = createEmptyFPile();
-    enpile(pile, current);
     for (int i = 0; word[i] != '\0' && current != NULL; i++)
     {
-        current = searchInChild(current, word[i]);
-        if (current != NULL)
-        {
-            enpile(pile, current);
-        }
+        p_node currentChild = searchInChild(current, word[i]);
+        if (currentChild == NULL)
+            return;
+        current = currentChild;
     }
-    if (countForms(current) > max)
-        return NULL;
-    result = depileCompletion(pile, result, NULL, word, max);
-    printf("nb forms : %d\n", countFPile(result));
-    return result;
+    autocompletionAtNode(current, result, word);
 }

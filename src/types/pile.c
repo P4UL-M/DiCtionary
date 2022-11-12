@@ -57,18 +57,6 @@ void displayPile(p_pile pile)
     printf("'\n");
 }
 
-int countFPile(p_fpile pile)
-{
-    int count = 0;
-    p_form current = pile->head;
-    while (current != NULL)
-    {
-        count++;
-        current = current->next;
-    }
-    return count;
-}
-
 void enpileForm(p_fpile pile, p_form value)
 {
     p_form form = (p_form)malloc(sizeof(t_form));
@@ -76,6 +64,7 @@ void enpileForm(p_fpile pile, p_form value)
     form->word = value->word;
     form->tag = value->tag;
     pile->head = form;
+    pile->size++;
     return;
 }
 
@@ -83,16 +72,8 @@ p_fpile createEmptyFPile()
 {
     p_fpile pile = (p_fpile)malloc(sizeof(t_fpile));
     pile->head = NULL;
+    pile->size = 0;
     return pile;
-}
-
-void displayPForm(p_form form)
-{
-    if (form->next != NULL)
-    {
-        displayPForm(form->next);
-    }
-    printf("%s", form->word);
 }
 
 void displayFPile(p_fpile pile)
@@ -102,9 +83,16 @@ void displayFPile(p_fpile pile)
         printf("Empty pile\n");
         return;
     }
-    printf("current word is : '");
-    displayPForm(pile->head);
-    printf("'\n");
+    else
+    {
+        p_form temp = pile->head;
+        while (temp != NULL)
+        {
+            printf("%s, ", temp->word);
+            temp = temp->next;
+        }
+    }
+    printf("\b\b  \b\b\n");
 }
 
 p_form depileForm(p_fpile pile)
@@ -114,4 +102,14 @@ p_form depileForm(p_fpile pile)
     p_form form = pile->head;
     pile->head = pile->head->next;
     return form;
+}
+
+void freeFPile(p_fpile pile)
+{
+    p_form form = NULL;
+    while ((form = depileForm(pile)) != NULL)
+    {
+        free(form);
+    }
+    free(pile);
 }

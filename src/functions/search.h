@@ -12,7 +12,7 @@ p_node search(p_tree, char *);
 p_form getForm(t_word, char *);
 p_word getWord(p_tree, char *, bool);
 p_form getFormByIndex(t_node, int);
-p_fpile completion(p_tree, char *);
+void autocompletion(p_tree, char *, p_fpile);
 p_fpile depileCompletion(p_pile, p_fpile, p_node, char *, int);
 
 #endif

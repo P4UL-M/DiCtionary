@@ -1,16 +1,17 @@
 /*DiCtionary
 Quentin Cardona, Axel Loones and Paul Mairesse
 This file contains the functions to adapt the search in the menu*/
-#ifndef DISPLAY_H
-#define DISPLAY_H
+#ifndef INPUT_H
+#define INPUT_H
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "../types/struct.h"
 
-void displayForm(t_form);
-void displayForms(t_word, t_form);
+#include "../functions/dictionary.h"
+
+char getKey();
+char *scanAutoCompletion(t_dictionary, char *, int);
 
 #endif

@@ -16,6 +16,7 @@ typedef struct s_pile
 typedef struct s_fpile
 {
     struct s_form *head;
+    int size;
 } t_fpile, *p_fpile;
 
 p_pile createEmptyPile();
@@ -28,5 +29,6 @@ void enpileForm(p_fpile, p_form);
 p_fpile createEmptyFPile();
 void displayFPile(p_fpile);
 p_form depileForm(p_fpile);
+void freeFPile(p_fpile);
 
 #endif
