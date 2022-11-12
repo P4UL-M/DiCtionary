@@ -157,7 +157,7 @@ p_word getWord(p_tree tree, char *word, bool truesearch)
     return result;
 }
 
-void autocompletionAtNode(p_node node, p_fpile results, char *word)
+void autocompletionAtNode(p_node node, p_fpile results)
 {
     if (node == NULL)
         return;
@@ -166,16 +166,13 @@ void autocompletionAtNode(p_node node, p_fpile results, char *word)
     p_form main = getFormByIndex(*node, Main_BIT);
     if (main != NULL)
     {
-        if (strcmp(main->word, word) != 0)
-        {
-            enpileForm(results, main);
-        }
+        enpileForm(results, main);
     }
     if (node->children != NULL)
     {
         for (p_child child = node->children; child != NULL; child = child->next)
         {
-            autocompletionAtNode(child->node, results, word);
+            autocompletionAtNode(child->node, results);
         }
     }
 }
@@ -192,5 +189,5 @@ void autocompletion(p_tree tree, char *word, p_fpile result)
             return;
         current = currentChild;
     }
-    autocompletionAtNode(current, result, word);
+    autocompletionAtNode(current, result);
 }
