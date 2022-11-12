@@ -72,9 +72,32 @@ p_form randomFormWithMask(p_word word, unsigned int mask, unsigned int antimask)
         free(forms);
         return NULL;
     }
-    int index = rand() / (float)RAND_MAX * (count - 1);
+    unsigned int index = rand() % count;
     p_form result = forms[index];
     free(forms);
+    return result;
+}
+
+t_word getPersonnelPronoun(t_dictionary dico)
+{
+    char *pronouns[9] = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+    int tags[9] = {};
+    for (int i = 0; i < 9; i++)
+    {
+        p_word word = getWord(dico.pronouns, pronouns[i], false);
+        if (word != NULL)
+        {
+            tags[i] = word->forms->tag;
+        }
+    }
+    t_node node = {};
+    for (int i = 0; i < 9; i++)
+    {
+        addForm(&node, pronouns[i], tags[i]);
+    }
+    t_word result = {
+        .forms = node.forms,
+    };
     return result;
 }
 
@@ -207,9 +230,10 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         int nb = (sentence[1]->tag & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
         int person = (sentence[1]->tag & P1_BIT) == P1_BIT ? P1_BIT : (sentence[1]->tag & P2_BIT) == P2_BIT ? P2_BIT
                                                                                                             : P3_BIT;
+        t_word pro = getPersonnelPronoun(dico);
         do
         {
-            sentence[0] = randomFormWithMask(getRandomWord(dico.pronouns, trueRandom), nb + person, 0);
+            sentence[0] = randomFormWithMask(&pro, nb + person, 0);
         } while (sentence[0] == NULL);
         do
         {

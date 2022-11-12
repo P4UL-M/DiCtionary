@@ -12,9 +12,6 @@ This file contains the main algorithm*/
 #include "../src/functions/sentence.h"
 #include "../src/menu/menu.h"
 
-char *id[20] = {"vouter", "vouvoyer", "voyager", "vriller", "vrombir", "vulcaniser", "vulgariser", "warranter", "zebrer", "zester", "zezayer", "zieuter", "zigouiller", "zigzaguer", "zinguer", "zinzinuler", "zipper", "zoner", "zozoter", "zyeuter"};
-int occurence[20] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-
 void displayTree(p_tree dico)
 {
     printf("%sNODE '%p' with value %c\n", ANSI_COLOR_RED, dico, dico->value);
@@ -52,7 +49,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
                 p_word baseWord = getWord(dictionary.nouns, extractedStrings[1], false);
-                if (baseWord->base == word->base)
+                if (baseWord == NULL)
                 {
                     printf("Error in noun %s\n", extractedStrings[1]);
                     return 1;
@@ -67,7 +64,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
                 p_word base = getWord(dictionary.verbs, extractedStrings[1], false);
-                if (base->base == word->base)
+                if (base == NULL)
                 {
                     printf("Error in verb %s\n", extractedStrings[1]);
                     return 1;
@@ -78,13 +75,13 @@ int checkExtract(t_dictionary dictionary, char *path)
                 p_word word = getWord(dictionary.adjectives, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in adjective %s\n", extractedStrings[0]);
+                    printf("Error in adjective base %s\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word base = getWord(dictionary.adjectives, extractedStrings[1], false);
-                if (base->base == word->base)
+                if (base == NULL)
                 {
-                    printf("Error in adjective %s\n", extractedStrings[1]);
+                    printf("Error in adjective base %s\n", extractedStrings[1]);
                     return 1;
                 }
             }
@@ -93,13 +90,13 @@ int checkExtract(t_dictionary dictionary, char *path)
                 p_word word = getWord(dictionary.adverbs, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in adverb %s\n", extractedStrings[0]);
+                    printf("Error in adverb base %s\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word base = getWord(dictionary.adverbs, extractedStrings[1], false);
-                if (base->base == word->base)
+                if (base->base != word->base)
                 {
-                    printf("Error in adverb %s", extractedStrings[1]);
+                    printf("Error in adverb base %s\n", extractedStrings[1]);
                     return 1;
                 }
             }
