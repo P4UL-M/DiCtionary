@@ -6,6 +6,7 @@ This file contains the functions to adapt the search in the menu*/
 #include <wchar.h>
 #include <stdbool.h>
 #include "../types/struct.h"
+#include "../types/pile.h"
 #include "../types/constants.h"
 #include "../functions/search.h"
 #include "display.h"

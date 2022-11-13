@@ -3,6 +3,7 @@ Quentin Cardona, Axel Loones and Paul Mairesse
 This file contains the main menu*/
 #include "menu.h"
 #include "display.h"
+#include "input.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -52,10 +53,12 @@ void menu(t_dictionary dico)
         switch (action)
         {
         case 1:
+            title();
             searchMenu(dico);
             waitKey();
             break;
         case 2:
+            title();
             generateSentenceMenu(dico);
             waitKey();
             break;
@@ -120,7 +123,7 @@ void searchMenu(t_dictionary dico)
     printf(ANSI_COLOR_RESET);
     printf("\n>");
     wchar_t target[50];
-    scanf("%50ls", target);
+    scanAutoCompletion(dico, target, type);
     fflush(stdin);
     searchword(dico, target, type, trueSearch);
 }

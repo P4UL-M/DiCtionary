@@ -156,3 +156,38 @@ p_word getWord(p_tree tree, wchar_t *word, bool truesearch)
     }
     return result;
 }
+
+void autocompletionAtNode(p_node node, p_fpile results)
+{
+    if (node == NULL)
+        return;
+    if (results->size > 10)
+        return;
+    p_form main = getFormByIndex(*node, Main_BIT);
+    if (main != NULL)
+    {
+        enpileForm(results, main);
+    }
+    if (node->children != NULL)
+    {
+        for (p_child child = node->children; child != NULL; child = child->next)
+        {
+            autocompletionAtNode(child->node, results);
+        }
+    }
+}
+
+void autocompletion(p_tree tree, char *word, p_fpile result)
+{
+    if (tree == NULL)
+        return;
+    p_node current = tree;
+    for (int i = 0; word[i] != '\0' && current != NULL; i++)
+    {
+        p_node currentChild = searchInChild(current, word[i]);
+        if (currentChild == NULL)
+            return;
+        current = currentChild;
+    }
+    autocompletionAtNode(current, result);
+}
