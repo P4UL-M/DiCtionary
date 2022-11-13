@@ -24,7 +24,7 @@ void displayTree(p_tree dico)
     printf("%sEnd of node '%p'%s\n", ANSI_COLOR_BLUE, dico, ANSI_COLOR_RESET);
 }
 
-int checkExtract(t_dictionary dictionary, wchar_t *path)
+int checkExtract(t_dictionary dictionary, char *path)
 {
     FILE *fp;
     fp = fopen(path, "r");
@@ -34,7 +34,7 @@ int checkExtract(t_dictionary dictionary, wchar_t *path)
         exit(1);
     }
     wchar_t line[MAX_SIZE_LINE];
-    while (fgets(line, MAX_SIZE_LINE, fp))
+    while (fgetws(line, MAX_SIZE_LINE, fp))
     {
         wchar_t **extractedStrings = extractWord(line);
         if (extractedStrings != NULL)
@@ -46,13 +46,13 @@ int checkExtract(t_dictionary dictionary, wchar_t *path)
                 p_word word = getWord(dictionary.nouns, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in noun %s\n", extractedStrings[0]);
+                    printf("Error in noun %ls\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word baseWord = getWord(dictionary.nouns, extractedStrings[1], false);
                 if (baseWord == NULL)
                 {
-                    printf("Error in noun %s\n", extractedStrings[1]);
+                    printf("Error in noun %ls\n", extractedStrings[1]);
                     return 1;
                 }
             }
@@ -61,13 +61,13 @@ int checkExtract(t_dictionary dictionary, wchar_t *path)
                 p_word word = getWord(dictionary.verbs, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in verb %s\n", extractedStrings[0]);
+                    printf("Error in verb %ls\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word base = getWord(dictionary.verbs, extractedStrings[1], false);
                 if (base == NULL)
                 {
-                    printf("Error in verb %s\n", extractedStrings[1]);
+                    printf("Error in verb %ls\n", extractedStrings[1]);
                     return 1;
                 }
             }
@@ -76,13 +76,13 @@ int checkExtract(t_dictionary dictionary, wchar_t *path)
                 p_word word = getWord(dictionary.adjectives, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in adjective base %s\n", extractedStrings[0]);
+                    printf("Error in adjective base %ls\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word base = getWord(dictionary.adjectives, extractedStrings[1], false);
                 if (base == NULL)
                 {
-                    printf("Error in adjective base %s\n", extractedStrings[1]);
+                    printf("Error in adjective base %ls\n", extractedStrings[1]);
                     return 1;
                 }
             }
@@ -91,13 +91,13 @@ int checkExtract(t_dictionary dictionary, wchar_t *path)
                 p_word word = getWord(dictionary.adverbs, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in adverb base %s\n", extractedStrings[0]);
+                    printf("Error in adverb base %ls\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word base = getWord(dictionary.adverbs, extractedStrings[1], false);
                 if (base->base != word->base)
                 {
-                    printf("Error in adverb base %s\n", extractedStrings[1]);
+                    printf("Error in adverb base %ls\n", extractedStrings[1]);
                     return 1;
                 }
             }
