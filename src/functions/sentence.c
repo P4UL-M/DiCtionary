@@ -47,7 +47,7 @@ wchar_t *smoothSentence(wchar_t *sentence)
         index++;
     }
     // make first letter uppercase
-    *output = *output - 32;
+    *output = towupper(*output);
     return output;
 }
 

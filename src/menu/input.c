@@ -8,32 +8,45 @@
 #include "../types/struct.h"
 #ifdef _WIN32
 #include <conio.h>
-#define getKey()        \
-    ({                  \
-        return getch(); \
+#define getKey()                                             \
+    ({                                                       \
+        wchar_t *c = (wchar_t *)malloc(sizeof(wchar_t) * 3); \
+        c[0] = (wchar_t)getwchar();                          \
+        if (c[0] == 195)                                     \
+            c[1] = (wchar_t)getwchar();                      \
+        else                                                 \
+            c[1] = '\0';                                     \
+        c[2] = '\0';                                         \
+        fflush(stdin);                                       \
+        return c;                                            \
     })
 #else
 #include <termios.h>
 #include <unistd.h>
-#define getKey()                                       \
-    ({                                                 \
-        wchar_t c = 0;                                 \
-        static struct termios oldTermios, newTermios;  \
-        tcgetattr(STDIN_FILENO, &oldTermios);          \
-        newTermios = oldTermios;                       \
-        cfmakeraw(&newTermios);                        \
-        tcsetattr(STDIN_FILENO, TCSANOW, &newTermios); \
-        c = getchar();                                 \
-        tcsetattr(STDIN_FILENO, TCSANOW, &oldTermios); \
-        fflush(stdin);                                 \
-        return c;                                      \
+#define getKey()                                             \
+    ({                                                       \
+        wchar_t *c = (wchar_t *)malloc(sizeof(wchar_t) * 3); \
+        static struct termios oldTermios, newTermios;        \
+        tcgetattr(STDIN_FILENO, &oldTermios);                \
+        newTermios = oldTermios;                             \
+        cfmakeraw(&newTermios);                              \
+        tcsetattr(STDIN_FILENO, TCSANOW, &newTermios);       \
+        c[0] = (wchar_t)getwchar();                          \
+        if (c[0] == 195)                                     \
+            c[1] = (wchar_t)getwchar();                      \
+        else                                                 \
+            c[1] = '\0';                                     \
+        c[2] = '\0';                                         \
+        tcsetattr(STDIN_FILENO, TCSANOW, &oldTermios);       \
+        fflush(stdin);                                       \
+        return c;                                            \
     })
 #endif
 #define AUTOCOMPLETION 0
 #define STOP 1
 #define CONTINUE 2
 
-wchar_t getKeyFunc()
+wchar_t *getKeyFunc()
 {
     getKey();
 }
@@ -45,18 +58,18 @@ wchar_t *scanAutoCompletion(t_dictionary dictionnary, wchar_t *target, int type)
     {
         while (state == CONTINUE)
         {
-            wchar_t c = getKeyFunc();
-            if (c == '\t')
+            wchar_t *c = getKeyFunc();
+            if (c[0] == '\t')
             {
                 printf("\n");
                 state = AUTOCOMPLETION;
             }
-            else if (c == '\n' || c == 13)
+            else if (c[0] == '\n' || c[0] == 13)
             {
                 printf("\n");
                 state = STOP;
             }
-            else if (c == 127)
+            else if (c[0] == 127)
             {
                 if (i > 0)
                 {
@@ -66,9 +79,11 @@ wchar_t *scanAutoCompletion(t_dictionary dictionnary, wchar_t *target, int type)
             }
             else
             {
-                target[i] = c;
-                printf("%lc", c);
-                i++;
+                printf("%ls", c);
+                for (int j = 0; j < wcslen(c); j++)
+                {
+                    target[i++] = c[j];
+                }
             }
         }
         target[i] = L'\0';

@@ -39,7 +39,8 @@ int checkExtract(t_dictionary dictionary, wchar_t *path)
         wchar_t **extractedStrings = extractWord(line);
         if (extractedStrings != NULL)
         {
-            wchar_t *type = wcstod(extractedStrings[2], ":");
+            wchar_t *saveptr;
+            wchar_t *type = wcstok(extractedStrings[2], L":", &saveptr);
             if (wcscmp(type, NOUN_TYPE) == 0)
             {
                 p_word word = getWord(dictionary.nouns, extractedStrings[0], true);
@@ -149,6 +150,14 @@ int main()
     srand(time(NULL));
     clock_t t;
     t = clock();
+
+    wchar_t str[3];
+    str[0] = 195;
+    str[1] = 169;
+    str[2] = '\0';
+
+    printf("%ls %d\n", str, wcslen(str));
+    return 0;
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     buildPonderations(dictionary);
     printf("number of words: %d", dictionary.nouns->ponderation + dictionary.verbs->ponderation + dictionary.adjectives->ponderation + dictionary.adverbs->ponderation);
