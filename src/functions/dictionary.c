@@ -5,10 +5,6 @@ This file contains the functions in order to extract text from the dictionary*/
 #include <stdlib.h>
 #define _GNU_SOURCE
 #include <wchar.h>
-#ifdef _WIN32
-#define wcstok(s, d, c) wcstok_s(s, d, c)
-wchar_t *wcstok_s(wchar_t *str, const wchar_t *delimiters, wchar_t **context);
-#endif
 #include "dictionary.h"
 #include "search.h"
 #include "../types/struct.h"
@@ -16,12 +12,13 @@ wchar_t *wcstok_s(wchar_t *str, const wchar_t *delimiters, wchar_t **context);
 
 wchar_t **extractWord(wchar_t *source)
 {
-    source[wcsspn(source, L"\n")] = 0;
+    source[wcscspn(source, L"\n")] = 0;
+    wchar_t **saveptr = malloc(sizeof(wchar_t *));
     wchar_t **output = (wchar_t **)malloc(sizeof(wchar_t *) * 3);
     // separate the word, the base form and the type
-    output[0] = wcstok(source, L"\t", &source);
-    output[1] = wcstok(NULL, L"\t", &source);
-    output[2] = wcstok(NULL, L"\t", &source);
+    output[0] = wcstok(source, L"\t", saveptr);
+    output[1] = wcstok(NULL, L"\t", saveptr);
+    output[2] = wcstok(NULL, L"\t", saveptr);
     return output;
 }
 

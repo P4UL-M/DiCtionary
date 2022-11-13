@@ -18,14 +18,6 @@ int main()
 {
     clock_t t;
     t = clock();
-    setlocale(LC_ALL, "");
-    wchar_t test[5];
-    scanf("%5ls", test);
-    wchar_t test2[5];
-    scanf("%5ls", test2);
-    wchar_t *test3;
-    test3 = wcscat(test, test2);
-    printf("%ls\n", test3);
     t_dictionary dictionary = extractFile("data/sorted_dictionnaire.txt");
     printf("time of execution: %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
     buildPonderations(dictionary);
