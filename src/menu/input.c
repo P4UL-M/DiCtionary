@@ -12,6 +12,7 @@
     ({                                                       \
         wchar_t *c = (wchar_t *)malloc(sizeof(wchar_t) * 3); \
         c[0] = (wchar_t)getwchar();                          \
+        c[1] = '\0';                                         \
         if (c[0] == 195)                                     \
             c[1] = (wchar_t)getwchar();                      \
         else                                                 \
@@ -32,6 +33,7 @@
         cfmakeraw(&newTermios);                              \
         tcsetattr(STDIN_FILENO, TCSANOW, &newTermios);       \
         c[0] = (wchar_t)getwchar();                          \
+        c[1] = '\0';                                         \
         if (c[0] == 195)                                     \
             c[1] = (wchar_t)getwchar();                      \
         else                                                 \
