@@ -12,7 +12,6 @@ p_node search(p_tree, wchar_t *);
 p_form getForm(t_word, wchar_t *);
 p_word getWord(p_tree, wchar_t *, bool);
 p_form getFormByIndex(t_node, int);
-void autocompletion(p_tree, char *, p_fpile);
-p_fpile depileCompletion(p_pile, p_fpile, p_node, char *, int);
+void autocompletion(p_tree, wchar_t *, p_fpile);
 
 #endif

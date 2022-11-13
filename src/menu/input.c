@@ -17,7 +17,7 @@
 #include <unistd.h>
 #define getKey()                                       \
     ({                                                 \
-        char c = 0;                                    \
+        wchar_t c = 0;                                 \
         static struct termios oldTermios, newTermios;  \
         tcgetattr(STDIN_FILENO, &oldTermios);          \
         newTermios = oldTermios;                       \
@@ -33,19 +33,19 @@
 #define STOP 1
 #define CONTINUE 2
 
-char getKeyFunc()
+wchar_t getKeyFunc()
 {
     getKey();
 }
 
-char *scanAutoCompletion(t_dictionary dictionnary, char *target, int type)
+wchar_t *scanAutoCompletion(t_dictionary dictionnary, wchar_t *target, int type)
 {
     int i = 0, state = CONTINUE;
     while (state != STOP)
     {
         while (state == CONTINUE)
         {
-            char c = getKeyFunc();
+            wchar_t c = getKeyFunc();
             if (c == '\t')
             {
                 printf("\n");
@@ -67,11 +67,11 @@ char *scanAutoCompletion(t_dictionary dictionnary, char *target, int type)
             else
             {
                 target[i] = c;
-                printf("%c", c);
+                printf("%lc", c);
                 i++;
             }
         }
-        target[i] = '\0';
+        target[i] = L'\0';
         if (state == AUTOCOMPLETION)
         {
             p_fpile pile = createEmptyFPile();
@@ -111,47 +111,8 @@ char *scanAutoCompletion(t_dictionary dictionnary, char *target, int type)
             }
             freeFPile(pile);
             state = CONTINUE;
-            printf(">%s", target);
+            printf(">%ls", target);
         }
     }
-    printf("the word is : %s\n", target);
     return target;
 }
-
-// char *autocompletion(p_tree tree)
-// {
-//     char *word = (char *)malloc(sizeof(char) * 100);
-//     int i = 0, continuing = 1;
-//     char c;
-//     while ((c = getchar()) != '\n' && continuing)
-//     {
-//         if (c == '\t')
-//         {
-//             continuing = 0;
-//             word[i] = '\0';
-//         }
-//         else
-//         {
-//             word[i] = c;
-//             i++;
-//         }
-//     }
-//     if (c == '\t')
-//     {
-//         printf("%s\n", word);
-//     }
-//     p_fpile pile = completion(tree, word);
-//     if (pile != NULL)
-//     {
-//         p_form temp = pile->head;
-//         while (temp != NULL)
-//         {
-//             printf("%s", temp->word);
-//             displayFPile(pile);
-//             temp = depileForm(pile);
-//         }
-//         return word;
-//     }
-//     else
-//         printf("Autocompletion impossible\n");
-// }

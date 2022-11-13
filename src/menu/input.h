@@ -11,7 +11,7 @@ This file contains the functions to adapt the search in the menu*/
 
 #include "../functions/dictionary.h"
 
-char getKey();
-char *scanAutoCompletion(t_dictionary, char *, int);
+wchar_t getKey();
+wchar_t *scanAutoCompletion(t_dictionary, wchar_t *, int);
 
 #endif

@@ -177,12 +177,12 @@ void autocompletionAtNode(p_node node, p_fpile results)
     }
 }
 
-void autocompletion(p_tree tree, char *word, p_fpile result)
+void autocompletion(p_tree tree, wchar_t *word, p_fpile result)
 {
     if (tree == NULL)
         return;
     p_node current = tree;
-    for (int i = 0; word[i] != '\0' && current != NULL; i++)
+    for (int i = 0; word[i] != L'\0' && current != NULL; i++)
     {
         p_node currentChild = searchInChild(current, word[i]);
         if (currentChild == NULL)

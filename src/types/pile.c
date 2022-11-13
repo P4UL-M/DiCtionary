@@ -88,7 +88,7 @@ void displayFPile(p_fpile pile)
         p_form temp = pile->head;
         while (temp != NULL)
         {
-            printf("%s, ", temp->word);
+            printf("%ls, ", temp->word);
             temp = temp->next;
         }
     }
