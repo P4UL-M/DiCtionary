@@ -26,7 +26,7 @@ This file contains the main menu*/
 void title()
 {
     system(CLEAR);
-    printf("%s\tWelcome in the DiCtionary\t\n\n", ANSI_BACKGROUND_WHITE);
+    printf("%s\tWelcome in the DiCtionary%s\t\n\n", ANSI_BACKGROUND_WHITE, ANSI_COLOR_RESET);
 }
 
 void menu(t_dictionary dico)
@@ -110,6 +110,7 @@ void searchMenu(t_dictionary dico)
     } while (trueSearch < 1 || trueSearch > 2);
     trueSearch--;
     int type;
+    title();
     printf("%sWhat type of word do you want to search?\n%s1.%s Noun\n%s2.%s Adjective\n%s3.%s Adverb\n%s4.%s Verb\n%s5.%s Any", ANSI_COLOR_GREEN, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE);
     do
     {
@@ -125,6 +126,7 @@ void searchMenu(t_dictionary dico)
     wchar_t target[50];
     scanAutoCompletion(dico, target, type);
     fflush(stdin);
+    title();
     searchword(dico, target, type, trueSearch);
 }
 
@@ -213,19 +215,21 @@ void generateSentenceMenu(t_dictionary dico)
         scanf("%d", &random_type);
         fflush(stdin);
     } while (random_type < 1 || random_type > 2);
+    title();
     printf("%sWhich form of sentence do you want to generate?\n", ANSI_COLOR_GREEN);
     printf("%s1.%s Noun - Adjective - Verb - Noun\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
     printf("%s2.%s Noun - \"qui\" - Verb - Verb - Noun - Adjective\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-    printf("%s3.%s Case 3 not yet incorporated...\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+    printf("%s3.%s Verb - Noun - Past Participe - \"que\" - Subjonctif - Noun\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
     do
     {
         printf(ANSI_COLOR_RESET);
-        printf(">");
+        printf("\n>");
         scanf("%d", &generation_mode);
         fflush(stdin);
     } while (generation_mode < 1 || generation_mode > 3); // Ne pas oublier l'easter egg
+    title();
+    printf("%sSentence :%s\n\n> ", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     generateSentence(dico, generation_mode, random_type);
-    // generate_sentence(generation_mode, random_type, dico);
 }
 
 void waitKey()
@@ -247,6 +251,7 @@ void waitKey()
 void addToDico(t_dictionary dico, wchar_t *word)
 {
     int type;
+    title();
     do
     {
         printf("%sWhat is the type of the word?\n", ANSI_COLOR_GREEN);
@@ -259,31 +264,34 @@ void addToDico(t_dictionary dico, wchar_t *word)
         scanf("%d", &type);
         fflush(stdin);
     } while (type < 1 || type > 4);
-    printf("Is your word the base form of the word? (1 for yes, 2 for no)\n");
+    title();
+    printf("%sIs your word the base form of the word? (1 for yes, 2 for no)%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
     int base;
     do
     {
-        printf(">");
+        printf("\n>");
         scanf("%d", &base);
         fflush(stdin);
     } while (base < 1 || base > 2);
     wchar_t baseForm[50];
     if (base - 1)
     {
-        printf("What is the base form of the word?\n");
+        title();
+        printf("%sWhat is the base form of the word?%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
         do
         {
-            printf(">");
+            printf("\n>");
             scanf("%50ls", baseForm);
             fflush(stdin);
         } while (wcslen(baseForm) < 1);
     }
     else
         wcscpy(baseForm, word);
-    printf("All the possible tags are:\n");
-    printf("SG - PL\nMas - Fem\nP1 - P2 - P3\n");
-    printf("IPre - IImp - SPre - SImp - IPSim - PPre - SImp - PPas - IFut - CPre - Inf\n");
-    printf("Enter the tags of your word separated by a '+':\n>");
+    title();
+    printf("%sEnter the tags of your word separated by a '+' :\n\n", ANSI_COLOR_GREEN);
+    printf("%sAll the possible tags are :\n", ANSI_COLOR_RED);
+    printf("%s> SG - PL\n> Mas - Fem\n> P1 - P2 - P3\n", ANSI_COLOR_CYAN);
+    printf("> IPre - IImp - SPre - SImp - IPSim - PPre - SImp - PPas - IFut - CPre - Inf\n\n%s>", ANSI_COLOR_RESET);
     wchar_t tags[50];
     scanf("%50ls", tags);
     fflush(stdin);

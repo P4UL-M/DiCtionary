@@ -150,14 +150,6 @@ int main()
     srand(time(NULL));
     clock_t t;
     t = clock();
-
-    wchar_t str[3];
-    str[0] = 195;
-    str[1] = 169;
-    str[2] = '\0';
-
-    printf("%ls %d\n", str, wcslen(str));
-    return 0;
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     buildPonderations(dictionary);
     printf("number of words: %d", dictionary.nouns->ponderation + dictionary.verbs->ponderation + dictionary.adjectives->ponderation + dictionary.adverbs->ponderation);
