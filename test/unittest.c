@@ -4,7 +4,7 @@ This file contains the main algorithm*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "string.h"
+#include "wchar.h"
 #include "../src/types/struct.h"
 #include "../src/functions/dictionary.h"
 #include "../src/functions/search.h"
@@ -24,7 +24,7 @@ void displayTree(p_tree dico)
     printf("%sEnd of node '%p'%s\n", ANSI_COLOR_BLUE, dico, ANSI_COLOR_RESET);
 }
 
-int checkExtract(t_dictionary dictionary, char *path)
+int checkExtract(t_dictionary dictionary, wchar_t *path)
 {
     FILE *fp;
     fp = fopen(path, "r");
@@ -33,14 +33,14 @@ int checkExtract(t_dictionary dictionary, char *path)
         printf("Error opening file");
         exit(1);
     }
-    char line[MAX_SIZE_LINE];
+    wchar_t line[MAX_SIZE_LINE];
     while (fgets(line, MAX_SIZE_LINE, fp))
     {
-        char **extractedStrings = extractWord(line);
+        wchar_t **extractedStrings = extractWord(line);
         if (extractedStrings != NULL)
         {
-            char *type = strtok(extractedStrings[2], ":");
-            if (strcmp(type, NOUN_TYPE) == 0)
+            wchar_t *type = wcstod(extractedStrings[2], ":");
+            if (wcscmp(type, NOUN_TYPE) == 0)
             {
                 p_word word = getWord(dictionary.nouns, extractedStrings[0], true);
                 if (word == NULL)
@@ -55,7 +55,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
             }
-            else if (strcmp(type, VERB_TYPE) == 0)
+            else if (wcscmp(type, VERB_TYPE) == 0)
             {
                 p_word word = getWord(dictionary.verbs, extractedStrings[0], true);
                 if (word == NULL)
@@ -70,7 +70,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
             }
-            else if (strcmp(type, ADJECTIVE_TYPE) == 0)
+            else if (wcscmp(type, ADJECTIVE_TYPE) == 0)
             {
                 p_word word = getWord(dictionary.adjectives, extractedStrings[0], true);
                 if (word == NULL)
@@ -85,7 +85,7 @@ int checkExtract(t_dictionary dictionary, char *path)
                     return 1;
                 }
             }
-            else if (strcmp(type, ADVERB_TYPE) == 0)
+            else if (wcscmp(type, ADVERB_TYPE) == 0)
             {
                 p_word word = getWord(dictionary.adverbs, extractedStrings[0], true);
                 if (word == NULL)

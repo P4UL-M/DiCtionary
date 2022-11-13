@@ -6,7 +6,7 @@ This file contains the functions to adapt the search in the menu*/
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <wchar.h>
 #include <stdbool.h>
 #include "../types/struct.h"
 

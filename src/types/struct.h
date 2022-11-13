@@ -4,16 +4,18 @@ This file contains the functions for the structures*/
 #ifndef struct_h
 #define struct_h
 
+#include <wchar.h>
+
 typedef struct s_form
 {
-    char *word;
+    wchar_t *word;
     unsigned int tag;
     struct s_form *next;
 } t_form, *p_form;
 
 typedef struct s_node
 {
-    char value;
+    wchar_t value;
     int ponderation;
     struct s_form *forms;
     struct s_child *children;
@@ -34,11 +36,11 @@ typedef struct t_word
 } t_word, *p_word;
 
 p_tree create_tree();
-p_node add_child(p_node, char);
+p_node add_child(p_node, wchar_t);
 int countForms(p_node);
 int hasForms(p_node);
 int countChildren(p_node);
-void addForm(p_node, char *, int);
-p_node get_child(p_node, char);
+void addForm(p_node, wchar_t *, int);
+p_node get_child(p_node, wchar_t);
 
 #endif

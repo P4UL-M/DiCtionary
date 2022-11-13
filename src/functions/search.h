@@ -7,9 +7,9 @@ This file contains the functions in order to extract text from the dictionary*/
 #include <stdbool.h>
 #include "../types/struct.h"
 
-p_node search(p_tree, char *);
-p_form getForm(t_word, char *);
-p_word getWord(p_tree, char *, bool);
+p_node search(p_tree, wchar_t *);
+p_form getForm(t_word, wchar_t *);
+p_word getWord(p_tree, wchar_t *, bool);
 p_form getFormByIndex(t_node, int);
 
 #endif

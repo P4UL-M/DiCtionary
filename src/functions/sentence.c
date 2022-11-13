@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <string.h>
+#include <wchar.h>
 #include <time.h>
 #include "../types/struct.h"
 #include "../types/constants.h"
@@ -18,31 +18,31 @@ p_form accords(p_word word, unsigned int tag)
     return getFormByIndex(temp, tag);
 }
 
-char *smoothSentence(char *sentence)
+wchar_t *smoothSentence(wchar_t *sentence)
 {
-    char *output = sentence;
+    wchar_t *output = sentence;
     // detect le, la, les, l' and l
-    char *index = output;
-    while ((index = strchr(index, 'l')) && (index == output || *(index - 1) == ' '))
+    wchar_t *index = output;
+    while ((index = wcschr(index, L'l')) && (index == output || *(index - 1) == L' '))
     {
-        if (strpbrk(index, "ae") == index + 1 && strchr(index, ' ') == index + 2)
+        if (wcspbrk(index, L"ae") == index + 1 && wcschr(index, L' ') == index + 2)
         {
-            char *next = index + 3;
-            if (strpbrk(next, "aeiouy") == next)
+            wchar_t *next = index + 3;
+            if (wcspbrk(next, L"aeiouy") == next)
             {
                 *(index + 1) = '\'';
-                memmove(index + 2, index + 3, strlen(index + 3) + 1);
+                wmemmove(index + 2, index + 3, wcslen(index + 3) + 1);
             }
         }
         index += 3;
     }
     // remove space before ponctuation
     index = output;
-    while ((index = strchr(index, ' ')))
+    while ((index = wcschr(index, L' ')))
     {
-        if (strchr(index, '.') == index + 1)
+        if (wcschr(index, L'.') == index + 1)
         {
-            memmove(index, index + 1, strlen(index));
+            wmemmove(index, index + 1, wcslen(index));
         }
         index++;
     }
@@ -80,7 +80,7 @@ p_form randomFormWithMask(p_word word, unsigned int mask, unsigned int antimask)
 
 t_word getPersonnelPronoun(t_dictionary dico)
 {
-    char *pronouns[9] = {"je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles"};
+    wchar_t *pronouns[9] = {L"je", L"tu", L"il", L"elle", L"on", L"nous", L"vous", L"ils", L"elles"};
     int tags[9] = {};
     for (int i = 0; i < 9; i++)
     {
@@ -122,7 +122,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             sentence[2] = accords(getRandomWord(dico.adjectives, trueRandom), subject_flags);
         } while (sentence[2] == NULL);
-        p_word mydet = getWord(dico.determinants, "le", false);
+        p_word mydet = getWord(dico.determinants, L"le", false);
         do
         {
             sentence[0] = accords(mydet, subject_flags);
@@ -145,14 +145,14 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             sentence[4] = accords(mydet, object_flags);
         } while (sentence[4] == NULL);
-        char *output = malloc(sizeof(char) * 100);
+        wchar_t *output = malloc(sizeof(wchar_t) * 100);
         for (int i = 0; i < 6; i++)
         {
-            output = strcat(output, sentence[i]->word);
-            output = strcat(output, " ");
+            output = wcscat(output, sentence[i]->word);
+            output = wcscat(output, L" ");
         }
-        output = strcat(output, ".");
-        printf("%s\n", smoothSentence(output));
+        output = wcscat(output, L".");
+        printf("%ls\n", smoothSentence(output));
         free(output);
         return;
     }
@@ -172,12 +172,12 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         if ((subject_flags & InvGen_BIT) == InvGen_BIT)
             subject_flags -= rand() % 2 ? Mas_BIT : Fem_BIT;
         t_form qui = {
-            .word = "qui",
+            .word = L"qui",
             .tag = 0,
             .next = NULL,
         };
         sentence[2] = &qui;
-        p_word mydet = getWord(dico.determinants, "le", false);
+        p_word mydet = getWord(dico.determinants, L"le", false);
         do
         {
             sentence[0] = accords(mydet, subject_flags);
@@ -208,14 +208,14 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             sentence[7] = randomFormWithMask(getRandomWord(dico.adjectives, trueRandom), object_flags, 0);
         } while (sentence[7] == NULL);
-        char *output = malloc(sizeof(char) * 100);
+        wchar_t *output = malloc(sizeof(wchar_t) * 100);
         for (int i = 0; i < 8; i++)
         {
-            output = strcat(output, sentence[i]->word);
-            output = strcat(output, " ");
+            output = wcscat(output, sentence[i]->word);
+            output = wcscat(output, L" ");
         }
-        output = strcat(output, ".");
-        printf("%s\n", smoothSentence(output));
+        output = wcscat(output, L".");
+        printf("%ls\n", smoothSentence(output));
         free(output);
         return;
     }
@@ -244,7 +244,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
             object_flags -= rand() % 2 ? PL_BIT : SG_BIT;
         if ((object_flags & InvGen_BIT) == InvGen_BIT)
             object_flags -= rand() % 2 ? Mas_BIT : Fem_BIT;
-        p_word mydet = getWord(dico.determinants, "le", false);
+        p_word mydet = getWord(dico.determinants, L"le", false);
         do
         {
             sentence[2] = accords(mydet, object_flags);
@@ -254,7 +254,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
             sentence[4] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), object_flags, 0);
         } while (sentence[4] == NULL);
         t_form que = {
-            .word = "que",
+            .word = L"que",
             .tag = 0,
             .next = NULL,
         };
@@ -277,14 +277,14 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             sentence[7] = accords(mydet, object_flags);
         } while (sentence[7] == NULL);
-        char *output = malloc(sizeof(char) * 100);
+        wchar_t *output = malloc(sizeof(wchar_t) * 100);
         for (int i = 0; i < 9; i++)
         {
-            output = strcat(output, sentence[i]->word);
-            output = strcat(output, " ");
+            output = wcscat(output, sentence[i]->word);
+            output = wcscat(output, L" ");
         }
-        output = strcat(output, ".");
-        printf("%s\n", smoothSentence(output));
+        output = wcscat(output, L".");
+        printf("%ls\n", smoothSentence(output));
         free(output);
         return;
     }

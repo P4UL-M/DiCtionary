@@ -4,30 +4,30 @@ This file contains the functions in order to extract text from the dictionary*/
 #include <stdio.h>
 #include <stdlib.h>
 #define _GNU_SOURCE
-#include <string.h>
+#include <wchar.h>
 #ifdef _WIN32
-#define strtok_r(s, d, c) strtok_s(s, d, c)
-char *strtok_s(char *str, const char *delimiters, char **context);
+#define wcstok(s, d, c) wcstok_s(s, d, c)
+wchar_t *wcstok_s(wchar_t *str, const wchar_t *delimiters, wchar_t **context);
 #endif
 #include "dictionary.h"
 #include "search.h"
 #include "../types/struct.h"
 #include "../types/constants.h"
 
-char **extractWord(char *source)
+wchar_t **extractWord(wchar_t *source)
 {
-    source[strcspn(source, "\n")] = 0;
-    char **output = (char **)malloc(sizeof(char *) * 3);
+    source[wcsspn(source, L"\n")] = 0;
+    wchar_t **output = (wchar_t **)malloc(sizeof(wchar_t *) * 3);
     // separate the word, the base form and the type
-    output[0] = strtok(source, "\t");
-    output[1] = strtok(NULL, "\t");
-    output[2] = strtok(NULL, "\t");
+    output[0] = wcstok(source, L"\t", &source);
+    output[1] = wcstok(NULL, L"\t", &source);
+    output[2] = wcstok(NULL, L"\t", &source);
     return output;
 }
 
-p_node addBaseInTree(p_tree node, char *word)
+p_node addBaseInTree(p_tree node, wchar_t *word)
 {
-    for (int i = 0; i < strlen(word); i++)
+    for (int i = 0; i < wcslen(word); i++)
     {
         p_node child = get_child(node, word[i]);
         if (child == NULL)
@@ -42,21 +42,21 @@ p_node addBaseInTree(p_tree node, char *word)
     return node;
 }
 
-void addInTree(p_tree tree, char *word, char *base, int tag)
+void addInTree(p_tree tree, wchar_t *word, wchar_t *base, int tag)
 {
     p_node node = search(tree, base);
     if (node == NULL)
     {
         node = addBaseInTree(tree, base);
     }
-    if (strcmp(word, base) == 0)
+    if (wcscmp(word, base) == 0)
     {
         tag += Main_BIT;
     }
     addForm(node, word, tag);
 }
 
-int countChar(char *word, char c)
+int countChar(wchar_t *word, wchar_t c)
 {
     int count = 0;
     for (int i = 0; word[i] != '\0'; i++)
@@ -69,52 +69,52 @@ int countChar(char *word, char c)
     return count;
 }
 
-unsigned int getFlags(char *tag)
+unsigned int getFlags(wchar_t *tag)
 {
-    char *saveptr1;
-    char *flag = strtok_r(tag, "+", &saveptr1);
+    wchar_t *saveptr1;
+    wchar_t *flag = wcstok(tag, L"+", &saveptr1);
     unsigned int flags = 0;
     do
     {
-        if (strcmp(flag, P1) == 0)
+        if (wcscmp(flag, P1) == 0)
             flags += P1_BIT;
-        else if (strcmp(flag, P2) == 0)
+        else if (wcscmp(flag, P2) == 0)
             flags += P2_BIT;
-        else if (strcmp(flag, P3) == 0)
+        else if (wcscmp(flag, P3) == 0)
             flags += P3_BIT;
-        else if (strcmp(flag, Mas) == 0)
+        else if (wcscmp(flag, Mas) == 0)
             flags += Mas_BIT;
-        else if (strcmp(flag, Fem) == 0)
+        else if (wcscmp(flag, Fem) == 0)
             flags += Fem_BIT;
-        else if (strcmp(flag, PL) == 0)
+        else if (wcscmp(flag, PL) == 0)
             flags += PL_BIT;
-        else if (strcmp(flag, SG) == 0)
+        else if (wcscmp(flag, SG) == 0)
             flags += SG_BIT;
-        else if (strcmp(flag, IPre) == 0)
+        else if (wcscmp(flag, IPre) == 0)
             flags += IPre_BIT;
-        else if (strcmp(flag, IImp) == 0)
+        else if (wcscmp(flag, IImp) == 0)
             flags += IImp_BIT;
-        else if (strcmp(flag, SPre) == 0)
+        else if (wcscmp(flag, SPre) == 0)
             flags += SPre_BIT;
-        else if (strcmp(flag, IPSim) == 0)
+        else if (wcscmp(flag, IPSim) == 0)
             flags += IPSim_BIT;
-        else if (strcmp(flag, PPre) == 0)
+        else if (wcscmp(flag, PPre) == 0)
             flags += PPre_BIT;
-        else if (strcmp(flag, SImp) == 0)
+        else if (wcscmp(flag, SImp) == 0)
             flags += SImp_BIT;
-        else if (strcmp(flag, PPas) == 0)
+        else if (wcscmp(flag, PPas) == 0)
             flags += PPas_BIT;
-        else if (strcmp(flag, IFut) == 0)
+        else if (wcscmp(flag, IFut) == 0)
             flags += IFut_BIT;
-        else if (strcmp(flag, CPre) == 0)
+        else if (wcscmp(flag, CPre) == 0)
             flags += CPre_BIT;
-        else if (strcmp(flag, Inf) == 0)
+        else if (wcscmp(flag, Inf) == 0)
             flags += Inf_BIT;
-        else if (strcmp(flag, InvGen) == 0)
+        else if (wcscmp(flag, InvGen) == 0)
             flags += InvGen_BIT;
-        else if (strcmp(flag, InvPL) == 0)
+        else if (wcscmp(flag, InvPL) == 0)
             flags += InvPL_BIT;
-    } while ((flag = strtok_r(NULL, "+", &saveptr1)));
+    } while ((flag = wcstok(NULL, L"+", &saveptr1)));
     return flags;
 }
 
@@ -127,7 +127,7 @@ t_dictionary extractFile(char *path)
         printf("Error opening file");
         exit(1);
     }
-    char line[MAX_SIZE_LINE];
+    wchar_t line[MAX_SIZE_LINE];
     int i = 0;
     t_dictionary dictionary;
     dictionary.nouns = create_tree();
@@ -136,53 +136,53 @@ t_dictionary extractFile(char *path)
     dictionary.verbs = create_tree();
     dictionary.pronouns = create_tree();
     dictionary.determinants = create_tree();
-    while (fgets(line, MAX_SIZE_LINE, fp))
+    while (fgetws(line, MAX_SIZE_LINE, fp))
     {
-        char **extractedStrings = extractWord(line);
+        wchar_t **extractedStrings = extractWord(line);
         if (extractedStrings != NULL)
         {
-            char *saveptr;
-            char *type = strtok_r(extractedStrings[2], ":", &saveptr);
-            if (strcmp(type, NOUN_TYPE) == 0)
+            wchar_t *saveptr;
+            wchar_t *type = wcstok(extractedStrings[2], L":", &saveptr);
+            if (wcscmp(type, NOUN_TYPE) == 0)
             {
-                char *form = NULL;
-                while ((form = strtok_r(NULL, ":", &saveptr)))
+                wchar_t *form = NULL;
+                while ((form = wcstok(NULL, L":", &saveptr)))
                 {
                     addInTree(dictionary.nouns, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }
             }
-            else if (strcmp(type, VERB_TYPE) == 0)
+            else if (wcscmp(type, VERB_TYPE) == 0)
             {
-                char *form = NULL;
-                while ((form = strtok_r(NULL, ":", &saveptr)))
+                wchar_t *form = NULL;
+                while ((form = wcstok(NULL, L":", &saveptr)))
                 {
                     addInTree(dictionary.verbs, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }
             }
-            else if (strcmp(type, ADJECTIVE_TYPE) == 0)
+            else if (wcscmp(type, ADJECTIVE_TYPE) == 0)
             {
-                char *form = NULL;
-                while ((form = strtok_r(NULL, ":", &saveptr)))
+                wchar_t *form = NULL;
+                while ((form = wcstok(NULL, L":", &saveptr)))
                 {
                     addInTree(dictionary.adjectives, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }
             }
-            else if (strcmp(type, ADVERB_TYPE) == 0)
+            else if (wcscmp(type, ADVERB_TYPE) == 0)
             {
                 addInTree(dictionary.adverbs, extractedStrings[0], extractedStrings[1], 0);
             }
-            else if (strcmp(type, PRONOUN_TYPE) == 0)
+            else if (wcscmp(type, PRONOUN_TYPE) == 0)
             {
-                char *form = NULL;
-                while ((form = strtok_r(NULL, ":", &saveptr)))
+                wchar_t *form = NULL;
+                while ((form = wcstok(NULL, L":", &saveptr)))
                 {
                     addInTree(dictionary.pronouns, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }
             }
-            else if (strcmp(type, DETERMINANTS_TYPE) == 0)
+            else if (wcscmp(type, DETERMINANTS_TYPE) == 0)
             {
-                char *form = NULL;
-                while ((form = strtok_r(NULL, ":", &saveptr)))
+                wchar_t *form = NULL;
+                while ((form = wcstok(NULL, L":", &saveptr)))
                 {
                     addInTree(dictionary.determinants, extractedStrings[0], extractedStrings[1], getFlags(form));
                 }
@@ -204,10 +204,10 @@ p_buffer createBuffer()
     return buffer;
 }
 
-void addToBuffer(p_buffer buffer, char *line)
+void addToBuffer(p_buffer buffer, wchar_t *line)
 {
     p_line entry = (p_line)malloc(sizeof(t_line));
-    strcpy(entry->line, line);
+    wcscpy(entry->line, line);
     entry->next = NULL;
     entry->prev = buffer->last;
     if (buffer->size == 0)
@@ -231,9 +231,9 @@ void updateFile(char *path, t_inputWord word)
         printf("Error opening file");
         exit(1);
     }
-    char line[MAX_SIZE_LINE];
+    wchar_t line[MAX_SIZE_LINE];
     p_buffer buffer = createBuffer();
-    while (fgets(line, MAX_SIZE_LINE, fp))
+    while (fgetws(line, MAX_SIZE_LINE, fp))
     {
         addToBuffer(buffer, line);
     }
@@ -250,20 +250,20 @@ void updateFile(char *path, t_inputWord word)
     while (entry != NULL && i < 300000)
     {
         i++;
-        char **extractedStrings = extractWord(entry->line);
-        if (strcmp(extractedStrings[0], word.word) == 0 && !inserted)
+        wchar_t **extractedStrings = extractWord(entry->line);
+        if (wcscmp(extractedStrings[0], word.word) == 0 && !inserted)
         {
-            fprintf(fp, "%s\t%s\t%s:%s\n", extractedStrings[0], extractedStrings[1], extractedStrings[2], word.flags);
+            fprintf(fp, "%ls\t%ls\t%ls:%ls\n", extractedStrings[0], extractedStrings[1], extractedStrings[2], word.flags);
             entry = entry->next;
             inserted = true;
             continue;
         }
-        else if (strcmp(extractedStrings[0], word.word) > 0 && !inserted)
+        else if (wcscmp(extractedStrings[0], word.word) > 0 && !inserted)
         {
-            fprintf(fp, "%s\t%s\t%s:%s\n", word.word, word.base, word.type, word.flags);
+            fprintf(fp, "%ls\t%ls\t%ls:%ls\n", word.word, word.base, word.type, word.flags);
             inserted = true;
         }
-        fprintf(fp, "%s\t%s\t%s\n", extractedStrings[0], extractedStrings[1], extractedStrings[2]);
+        fprintf(fp, "%ls\t%ls\t%ls\n", extractedStrings[0], extractedStrings[1], extractedStrings[2]);
         entry = entry->next;
     }
     fclose(fp);

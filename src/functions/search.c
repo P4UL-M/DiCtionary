@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <string.h>
+#include <wchar.h>
 #include <time.h>
 #include "../types/struct.h"
 #include "../types/constants.h"
 #include "../types/pile.h"
 #include "../library/cache.h" // TODO : give credit for library (uhash owner and us in last project)
 
-p_node searchInChild(p_node parent, char myChar)
+p_node searchInChild(p_node parent, wchar_t myChar)
 {
     if (parent == NULL)
         return NULL;
@@ -26,7 +26,7 @@ p_node searchInChild(p_node parent, char myChar)
 }
 
 // useless with true search which found the word with the same perfomance even with base form
-p_node search(p_tree tree, char *word)
+p_node search(p_tree tree, wchar_t *word)
 {
     if (tree == NULL)
         return NULL;
@@ -51,12 +51,12 @@ p_node search(p_tree tree, char *word)
     return current;
 }
 
-p_form getForm(t_word word, char *form)
+p_form getForm(t_word word, wchar_t *form)
 {
     p_form current = word.forms;
     while (current != NULL)
     {
-        if (strcmp(current->word, form) == 0)
+        if (wcscmp(current->word, form) == 0)
         {
             return current;
         }
@@ -79,7 +79,7 @@ p_form getFormByIndex(t_node node, int index)
     return NULL;
 }
 
-p_node depileSearch(p_pile pile, p_node node, char *word)
+p_node depileSearch(p_pile pile, p_node node, wchar_t *word)
 {
     if (node == NULL)
     {
@@ -92,7 +92,7 @@ p_node depileSearch(p_pile pile, p_node node, char *word)
     p_form curr_form = node->forms;
     while (curr_form != NULL)
     {
-        if (strcmp(curr_form->word, word) == 0)
+        if (wcscmp(curr_form->word, word) == 0)
         {
             return node;
         }
@@ -116,7 +116,7 @@ p_node depileSearch(p_pile pile, p_node node, char *word)
         return depileSearch(pile, NULL, word);
 }
 
-p_node trueSearch(p_tree tree, char *word)
+p_node trueSearch(p_tree tree, wchar_t *word)
 {
     clear_cache();
     if (tree == NULL)
@@ -136,7 +136,7 @@ p_node trueSearch(p_tree tree, char *word)
     return node;
 }
 
-p_word getWord(p_tree tree, char *word, bool truesearch)
+p_word getWord(p_tree tree, wchar_t *word, bool truesearch)
 {
     if (tree == NULL)
         return NULL;

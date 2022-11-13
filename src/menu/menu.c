@@ -64,8 +64,8 @@ void menu(t_dictionary dico)
             printf("%sEnter the word you want to add:\n", ANSI_COLOR_GREEN);
             printf(ANSI_COLOR_RESET);
             printf("\n>");
-            char target[50];
-            scanf("%50s", target);
+            wchar_t target[50];
+            scanf("%50ls", target);
             p_word word = getWord(dico.nouns, target, true);
             if (word == NULL)
             {
@@ -119,13 +119,13 @@ void searchMenu(t_dictionary dico)
     printf("%sEnter the word you want to search:\n", ANSI_COLOR_GREEN);
     printf(ANSI_COLOR_RESET);
     printf("\n>");
-    char target[50];
-    scanf("%50s", target);
+    wchar_t target[50];
+    scanf("%50ls", target);
     fflush(stdin);
     searchword(dico, target, type, trueSearch);
 }
 
-void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
+void searchword(t_dictionary dico, wchar_t *target, int type, bool trueSearch)
 {
     p_word result = NULL;
     p_form form = NULL;
@@ -136,7 +136,7 @@ void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
             form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
-            printf("%s is a noun that is ", target);
+            printf("%ls is a noun that is ", target);
             displayForms(*result, *form);
             return;
         }
@@ -148,7 +148,7 @@ void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
             form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
-            printf("%s is an adjective that is ", target);
+            printf("%ls is an adjective that is ", target);
             displayForms(*result, *form);
             return;
         }
@@ -160,7 +160,7 @@ void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
             form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
-            printf("%s is an adverb that is ", target);
+            printf("%ls is an adverb that is ", target);
             displayForms(*result, *form);
             return;
         }
@@ -172,7 +172,7 @@ void searchword(t_dictionary dico, char *target, int type, bool trueSearch)
             form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
-            printf("%s is a verb that is ", target);
+            printf("%ls is a verb that is ", target);
             displayForms(*result, *form);
             return;
         }
@@ -241,7 +241,7 @@ void waitKey()
     }
 }
 
-void addToDico(t_dictionary dico, char *word)
+void addToDico(t_dictionary dico, wchar_t *word)
 {
     int type;
     do
@@ -264,25 +264,25 @@ void addToDico(t_dictionary dico, char *word)
         scanf("%d", &base);
         fflush(stdin);
     } while (base < 1 || base > 2);
-    char baseForm[50];
+    wchar_t baseForm[50];
     if (base - 1)
     {
         printf("What is the base form of the word?\n");
         do
         {
             printf(">");
-            scanf("%50s", baseForm);
+            scanf("%50ls", baseForm);
             fflush(stdin);
-        } while (strlen(baseForm) < 1);
+        } while (wcslen(baseForm) < 1);
     }
     else
-        strcpy(baseForm, word);
+        wcscpy(baseForm, word);
     printf("All the possible tags are:\n");
     printf("SG - PL\nMas - Fem\nP1 - P2 - P3\n");
     printf("IPre - IImp - SPre - SImp - IPSim - PPre - SImp - PPas - IFut - CPre - Inf\n");
     printf("Enter the tags of your word separated by a '+':\n>");
-    char tags[50];
-    scanf("%50s", tags);
+    wchar_t tags[50];
+    scanf("%50ls", tags);
     fflush(stdin);
     t_inputWord inputWord = {
         .word = word,
