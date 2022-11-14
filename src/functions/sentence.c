@@ -147,7 +147,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             sentence[4] = accords(mydet, object_flags);
         } while (sentence[4] == NULL);
-        wchar_t *output = malloc(sizeof(wchar_t) * 100);
+        wchar_t *output = calloc(100, sizeof(wchar_t));
         for (int i = 0; i < 6; i++)
         {
             output = wcscat(output, sentence[i]->word);
@@ -210,7 +210,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             sentence[7] = randomFormWithMask(getRandomWord(dico.adjectives, trueRandom), object_flags, 0);
         } while (sentence[7] == NULL);
-        wchar_t *output = malloc(sizeof(wchar_t) * 100);
+        wchar_t *output = calloc(100, sizeof(wchar_t));
         for (int i = 0; i < 8; i++)
         {
             output = wcscat(output, sentence[i]->word);
@@ -279,7 +279,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             sentence[7] = accords(mydet, object_flags);
         } while (sentence[7] == NULL);
-        wchar_t *output = malloc(sizeof(wchar_t) * 100);
+        wchar_t *output = calloc(100, sizeof(wchar_t));
         for (int i = 0; i < 9; i++)
         {
             output = wcscat(output, sentence[i]->word);
