@@ -23,9 +23,9 @@ wchar_t *smoothSentence(wchar_t *sentence)
     wchar_t *output = sentence;
     // detect le, la, les, l' and l
     wchar_t *index = output;
-    while ((index = wcschr(index, L'l')) && (index == output || *(index - 1) == L' '))
+    while ((index = wcschr(index, L'l')) != NULL)
     {
-        if (wcspbrk(index, L"ae") == index + 1 && wcschr(index, L' ') == index + 2)
+        if (wcspbrk(index, L"ae") == index + 1 && wcschr(index, L' ') == index + 2 && (index == output || *(index - 1) == L' '))
         {
             wchar_t *next = index + 3;
             if (wcspbrk(next, L"aeiouy") == next)
