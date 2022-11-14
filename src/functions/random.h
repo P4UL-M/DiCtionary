@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains all random functions*/
 #ifndef RANDOM_H
 #define RANDOM_H
 #include <stdbool.h>

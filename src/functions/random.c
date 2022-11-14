@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains all random functions*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <wchar.h>
@@ -10,6 +13,7 @@
 #include "random.h"
 
 int buildPonderation(p_node node)
+// Calculate recursively the ponderation of the tree based on children nodes
 {
     if (node == NULL)
     {
@@ -25,6 +29,7 @@ int buildPonderation(p_node node)
 }
 
 void buildPonderations(t_dictionary dictionary)
+// Calculate all ponderations of all trees
 {
     buildPonderation(dictionary.nouns);
     buildPonderation(dictionary.adjectives);
@@ -35,6 +40,7 @@ void buildPonderations(t_dictionary dictionary)
 }
 
 p_node trueRandomNextLetter(p_node node)
+// go recursively for the uniform random
 {
     int ponderation = node->ponderation;
     float random = rand() / (float)RAND_MAX;
@@ -53,6 +59,7 @@ p_node trueRandomNextLetter(p_node node)
 }
 
 p_node trueRandom(p_tree dico)
+// Efficient random
 {
     int ponderation = dico->ponderation;
     float random = rand() / (float)RAND_MAX;
@@ -66,6 +73,7 @@ p_node trueRandom(p_tree dico)
 }
 
 p_node randomNextLetter(p_node current)
+// go recursively for the fast random
 {
     int nbChild = countChildren(current);
     float random = rand() / (float)RAND_MAX;
@@ -86,6 +94,7 @@ p_node randomNextLetter(p_node current)
 }
 
 p_node findRandom(p_tree tree)
+// Find a random word with fast but not uniform way
 {
     p_node returned = NULL;
     while (returned == NULL)
@@ -96,6 +105,7 @@ p_node findRandom(p_tree tree)
 }
 
 p_word getRandomWord(p_tree tree, bool trueSearchMode)
+// call the random functions
 {
     p_node node;
     if (trueSearchMode)

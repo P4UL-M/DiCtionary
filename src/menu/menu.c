@@ -24,6 +24,7 @@ This file contains the main menu*/
 #endif
 
 void title()
+// To print the title of the project and clear console before
 {
     system(CLEAR);
     wprintf(L"%ls\tWelcome in the DiCtionary%ls\t\n\n", ANSI_BACKGROUND_WHITE, ANSI_COLOR_RESET);
@@ -131,6 +132,7 @@ void searchMenu(t_dictionary dico)
 }
 
 void searchword(t_dictionary dico, wchar_t *target, int type, bool trueSearch)
+// Print the results of the search
 {
     p_word result = NULL;
     p_form form = NULL;
@@ -203,7 +205,7 @@ void searchword(t_dictionary dico, wchar_t *target, int type, bool trueSearch)
 }
 
 void generateSentenceMenu(t_dictionary dico)
-// Function to generate a random sentence
+// Function for the menu of the generation a random sentence
 {
     title();
     int generation_mode = 0, random_type = 0;
@@ -249,6 +251,7 @@ void waitKey()
 }
 
 void addToDico(t_dictionary dico, wchar_t *word)
+// Menu for adding a word in the dictionary
 {
     int type;
     title();

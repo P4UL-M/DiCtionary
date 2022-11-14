@@ -1,6 +1,6 @@
 /*DiCtionary
 Quentin Cardona, Axel Loones and Paul Mairesse
-This file contains the functions in order to extract text from the dictionary*/
+This file contains all searching functions*/
 #ifndef SEARCH_H
 #define SEARCH_H
 

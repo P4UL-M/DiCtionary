@@ -16,6 +16,7 @@ This file contains the main algorithm*/
 #include "menu/menu.h"
 
 int main()
+// Main algorithm
 {
     clock_t t;
     t = clock();

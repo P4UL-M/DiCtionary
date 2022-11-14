@@ -67,6 +67,7 @@ void displayForm(t_form form)
 }
 
 void displayForms(t_word word, t_form form)
+// To display all alternative forms for the word
 {
     wchar_t *person[] = {L"Je", L"Tu", L"Il", L"Nous", L"Vous", L"Ils", L"Masculine Singular", L"Feminine Singular", L"Masculine Plural", L"Feminine Plural"};
     int perstag[] = {P1_BIT + SG_BIT, P2_BIT + SG_BIT, P3_BIT + SG_BIT, P1_BIT + PL_BIT, P2_BIT + PL_BIT, P3_BIT + PL_BIT, Mas_BIT + SG_BIT, Fem_BIT + SG_BIT, Mas_BIT + PL_BIT, Fem_BIT + PL_BIT};
@@ -164,6 +165,19 @@ void displayForms(t_word word, t_form form)
         for (int i = 0; i < 6; i++)
         {
             pers = getFormByIndex(temp, perstag[i] + CPre_BIT);
+            wprintf(L"\t\t%ls%ls:%ls %ls\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : L"undefined");
+        }
+    }
+    p_form imp = getFormByIndex(temp, ImPre_BIT);
+    if (imp != NULL)
+    {
+        wprintf(L"%ls>Imperative:\n", ANSI_COLOR_RED);
+        wprintf(L"\tPresent:\n");
+        for (int i = 0; i < 6; i++)
+        {
+            if ((i == 0) || (i == 2) || (i == 5))
+                continue;
+            pers = getFormByIndex(temp, perstag[i] + ImPre_BIT);
             wprintf(L"\t\t%ls%ls:%ls %ls\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, (pers != NULL) ? pers->word : L"undefined");
         }
     }

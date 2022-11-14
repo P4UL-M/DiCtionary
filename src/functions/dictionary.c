@@ -15,6 +15,7 @@ wchar_t *wcstok_s(wchar_t *str, const wchar_t *delim, wchar_t **ptr);
 #include "../types/constants.h"
 
 wchar_t **extractWord(wchar_t *source)
+// Extract the different words from the line in the dico
 {
     source[wcscspn(source, L"\n")] = 0;
     wchar_t **saveptr = malloc(sizeof(wchar_t *));
@@ -27,6 +28,7 @@ wchar_t **extractWord(wchar_t *source)
 }
 
 p_node addBaseInTree(p_tree node, wchar_t *word)
+// Add the base form of the word in the corresponding tree
 {
     for (int i = 0; i < wcslen(word); i++)
     {
@@ -44,6 +46,7 @@ p_node addBaseInTree(p_tree node, wchar_t *word)
 }
 
 void addInTree(p_tree tree, wchar_t *word, wchar_t *base, int tag)
+// Add the word to the tree if not already existant
 {
     p_node node = search(tree, base);
     if (node == NULL)
@@ -71,6 +74,7 @@ int countChar(wchar_t *word, wchar_t c)
 }
 
 unsigned int getFlags(wchar_t *tag)
+// Return the int tags corresponding to char* input
 {
     wchar_t *saveptr1;
     wchar_t *flag = wcstok(tag, L"+", &saveptr1);
@@ -122,6 +126,7 @@ unsigned int getFlags(wchar_t *tag)
 }
 
 t_dictionary extractFile(char *path)
+// Extract all datas form the file with the path
 {
     FILE *fp;
     fp = fopen(path, "r,ccs=UNICODE");

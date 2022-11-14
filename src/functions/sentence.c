@@ -11,6 +11,7 @@
 #include "../menu/display.h"
 
 p_form accords(p_word word, unsigned int tag)
+// Find the form we want in the word
 {
     t_node temp = {
         .forms = word->forms,
@@ -19,6 +20,7 @@ p_form accords(p_word word, unsigned int tag)
 }
 
 wchar_t *smoothSentence(wchar_t *sentence)
+// Make the sentence more beautiful
 {
     wchar_t *output = sentence;
     // detect le, la, les, l' and l
@@ -84,6 +86,7 @@ wchar_t *smoothSentence(wchar_t *sentence)
 }
 
 p_form randomFormWithMask(p_word word, unsigned int mask, unsigned int antimask)
+// Find a random word with specifications : mask is what we want as tag, antimask what we don't want
 {
     p_form form = word->forms;
     int count = 0;
@@ -111,6 +114,7 @@ p_form randomFormWithMask(p_word word, unsigned int mask, unsigned int antimask)
 }
 
 t_word getPersonnelPronoun(t_dictionary dico)
+// Get a personal pronoun
 {
     wchar_t *pronouns[9] = {L"je", L"tu", L"il", L"elle", L"on", L"nous", L"vous", L"ils", L"elles"};
     int tags[9] = {};
@@ -134,6 +138,7 @@ t_word getPersonnelPronoun(t_dictionary dico)
 }
 
 void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
+// generate the random sentence following the required type
 {
     if (sentenceType == 1)
     {
@@ -145,7 +150,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             sentence[1] = randomFormWithMask(temp, 0, 0);
         } while (sentence[1] == NULL);
-        subject_flags = sentence[1]->tag & ~Main_BIT;
+        subject_flags = sentence[1]->tag & ~Main_BIT; // remove inv or main bit because will polute the mask
         if ((subject_flags & InvPL_BIT) == InvPL_BIT)
             subject_flags -= rand() % 2 ? PL_BIT : SG_BIT;
         if ((subject_flags & InvGen_BIT) == InvGen_BIT)
@@ -153,11 +158,11 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         do
         {
             sentence[2] = accords(getRandomWord(dico.adjectives, trueRandom), subject_flags);
-        } while (sentence[2] == NULL);
+        } while (sentence[2] == NULL); // returns null if couldn't accord
         p_word mydet = getWord(dico.determinants, L"le", false);
         do
         {
-            sentence[0] = accords(mydet, subject_flags);
+            sentence[0] = accords(mydet, subject_flags); // TODO : refactor while
         } while (sentence[0] == NULL);
         int nb = (subject_flags & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
         do
@@ -182,7 +187,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             output = wcscat(output, sentence[i]->word);
             output = wcscat(output, L" ");
-        }
+        } // TODO : refactor with array and strcpy
         output = wcscat(output, L".");
         wprintf(L"%ls\n", smoothSentence(output));
         free(output);

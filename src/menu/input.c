@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains the functions to adapt the search in the menu*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -44,11 +47,13 @@
 #define CONTINUE 2
 
 wchar_t *getKeyFunc()
+// To get the char entered by the user
 {
     getKey();
 }
 
 wchar_t *scanAutoCompletion(t_dictionary dictionnary, wchar_t *target, int type)
+// To get input from user and offer the possibility to autocomplete
 {
     int i = 0, state = CONTINUE;
     while (state != STOP)

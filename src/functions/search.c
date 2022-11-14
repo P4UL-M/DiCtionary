@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains all searching functions*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -27,6 +30,7 @@ p_node searchInChild(p_node parent, wchar_t myChar)
 
 // useless with true search which found the word with the same perfomance even with base form
 p_node search(p_tree tree, wchar_t *word)
+// Search in only base forms
 {
     if (tree == NULL)
         return NULL;
@@ -42,7 +46,7 @@ p_node search(p_tree tree, wchar_t *word)
     };
     if (current == NULL)
         return NULL;
-    for (int i = 1; word[i] != '\0'; i++)
+    for (int i = 1; word[i] != L'\0'; i++)
     {
         current = searchInChild(current, word[i]);
         if (current == NULL)
@@ -80,6 +84,7 @@ p_form getFormByIndex(t_node node, int index)
 }
 
 p_node depileSearch(p_pile pile, p_node node, wchar_t *word)
+// Come back the nodes to find last occurrence
 {
     if (node == NULL)
     {
@@ -117,6 +122,7 @@ p_node depileSearch(p_pile pile, p_node node, wchar_t *word)
 }
 
 p_node trueSearch(p_tree tree, wchar_t *word)
+// Search for the word recursively in the tree
 {
     clear_cache();
     if (tree == NULL)
@@ -137,6 +143,7 @@ p_node trueSearch(p_tree tree, wchar_t *word)
 }
 
 p_word getWord(p_tree tree, wchar_t *word, bool truesearch)
+// To get the word in tree with the word
 {
     if (tree == NULL)
         return NULL;
