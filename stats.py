@@ -1,6 +1,6 @@
 import matplotlib.pylab as plt
 
-file = open("trueRandom.out", "r")
+file = open("experimentalRandom.out", "r")
 lines = file.readlines()
 file.close()
 
@@ -36,3 +36,9 @@ for i in range(0, len(sorted_words), 100):
 
 plt.stairs([x for x in mean_words.values()], range(len(mean_words)+1) , fill=True)
 plt.show()
+
+import statistics
+
+print("Mean: ", statistics.mean([x[1] for x in sorted_words]))
+print("Median: ", statistics.median([x[1] for x in sorted_words]))
+print("Standard deviation: ", statistics.stdev([x[1] for x in sorted_words]))
