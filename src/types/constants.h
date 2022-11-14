@@ -28,6 +28,7 @@ This file contains the constants and define*/
 #define PPas L"PPas"
 #define IFut L"IFut"
 #define CPre L"CPre"
+#define ImPre L"ImPre"
 #define Inf L"Inf"
 
 #define Mas L"Mas"

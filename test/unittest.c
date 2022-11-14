@@ -19,14 +19,14 @@ wchar_t *wcstok_s(wchar_t *str, const wchar_t *delim, wchar_t **ptr);
 
 void displayTree(p_tree dico)
 {
-    wprintf(L"%sNODE '%p' with value %c\n", ANSI_COLOR_RED, dico, dico->value);
-    wprintf(L"%s-> ponderation: %d\n", ANSI_COLOR_GREEN, dico->ponderation);
-    wprintf(L"%sENUMERATING CHILD%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    wprintf(L"%lsNODE '%p' with value %c\n", ANSI_COLOR_RED, dico, dico->value);
+    wprintf(L"%ls-> ponderation: %d\n", ANSI_COLOR_GREEN, dico->ponderation);
+    wprintf(L"%lsENUMERATING CHILD%ls\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     for (p_child child = dico->children; child != NULL; child = child->next)
     {
         displayTree(child->node);
     }
-    wprintf(L"%sEnd of node '%p'%s\n", ANSI_COLOR_BLUE, dico, ANSI_COLOR_RESET);
+    wprintf(L"%lsEnd of node '%p'%ls\n", ANSI_COLOR_BLUE, dico, ANSI_COLOR_RESET);
 }
 
 int checkExtract(t_dictionary dictionary, char *path)
