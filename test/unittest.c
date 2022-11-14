@@ -32,7 +32,7 @@ void displayTree(p_tree dico)
 int checkExtract(t_dictionary dictionary, char *path)
 {
     FILE *fp;
-    fp = fopen(path, "r");
+    fp = fopen(path, "r,ccs=UNICODE");
     if (fp == NULL)
     {
         wprintf(L"Error opening file");
@@ -153,40 +153,17 @@ int checkRandom(t_dictionary dictionary)
 int main()
 {
     srand(time(NULL));
-    char *locale = setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "");
     clock_t t;
     t = clock();
-    wchar_t texte[50] = L"Salut Gérard !";
-    wprintf(L"%ls\n", texte);
-    for (int i = 0; texte[i] != '\0'; i++)
-    {
-        wprintf(L"%d - ", texte[i]);
-    }
-    wscanf(L"%ls", texte);
-    wprintf(L"%ls\n", texte);
-    for (int i = 0; texte[i] != '\0'; i++)
-    {
-        wprintf(L"%d - ", texte[i]);
-    }
-    wprintf(L"\n");
     FILE *fp;
-    fp = fopen("data/test.txt", "r,ccs=UNICODE");
+    fp = fopen("data/sorted_dictionnaire.txt", "r,ccs=UNICODE");
     if (fp == NULL)
     {
         wprintf(L"Error opening file");
         exit(1);
     }
     wchar_t line[MAX_SIZE_LINE];
-    while (fgetws(line, MAX_SIZE_LINE, fp))
-    {
-        wprintf(L"%ls\n", line);
-        for (int i = 0; line[i] != '\0'; i++)
-        {
-            wprintf(L"%d - ", line[i]);
-        }
-    }
-
-    return 0;
     t_dictionary dictionary = extractFile("data/dictionnaire.txt");
     buildPonderations(dictionary);
     wprintf(L"number of words: %d", dictionary.nouns->ponderation + dictionary.verbs->ponderation + dictionary.adjectives->ponderation + dictionary.adverbs->ponderation);

@@ -132,7 +132,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         int nb = (subject_flags & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
         do
         {
-            sentence[3] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), nb + P3_BIT, CPre_BIT);
+            sentence[3] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), nb + P3_BIT, CPre_BIT + ImPre_BIT);
         } while (sentence[3] == NULL);
         do
         {
@@ -187,11 +187,11 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         int nb = (subject_flags & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
         do
         {
-            sentence[3] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), nb + P3_BIT, CPre_BIT + SImp_BIT + SPre_BIT);
+            sentence[3] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), nb + P3_BIT, CPre_BIT + SImp_BIT + SPre_BIT + ImPre_BIT);
         } while (sentence[3] == NULL);
         do
         {
-            sentence[4] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), nb + P3_BIT, CPre_BIT + SImp_BIT + SPre_BIT);
+            sentence[4] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), nb + P3_BIT, CPre_BIT + SImp_BIT + SPre_BIT + ImPre_BIT);
         } while (sentence[4] == NULL);
         do
         {
@@ -227,7 +227,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         p_form sentence[9];
         do
         {
-            sentence[1] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), 0, CPre_BIT + SImp_BIT + SPre_BIT + Inf_BIT + PPas_BIT + PPre_BIT);
+            sentence[1] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), 0, CPre_BIT + SImp_BIT + SPre_BIT + Inf_BIT + PPas_BIT + PPre_BIT + ImPre_BIT);
         } while (sentence[1] == NULL);
         int nb = (sentence[1]->tag & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
         int person = (sentence[1]->tag & P1_BIT) == P1_BIT ? P1_BIT : (sentence[1]->tag & P2_BIT) == P2_BIT ? P2_BIT
@@ -263,7 +263,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         sentence[5] = &que;
         do
         {
-            sentence[6] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), P3_BIT, IPre_BIT + IFut_BIT + IImp_BIT + CPre_BIT + IPSim_BIT);
+            sentence[6] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), P3_BIT, IPre_BIT + IFut_BIT + IImp_BIT + CPre_BIT + IPSim_BIT + ImPre_BIT);
         } while (sentence[6] == NULL);
         nb = (sentence[6]->tag & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
         do

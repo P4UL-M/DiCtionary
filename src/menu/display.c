@@ -38,6 +38,8 @@ void displayForm(t_form form)
         wprintf(L"present of the conditional at the ");
     else if ((form.tag & IPre_BIT) == IPre_BIT)
         wprintf(L"present of the indicative at the ");
+    else if ((form.tag & ImPre_BIT) == ImPre_BIT)
+        wprintf(L"present of the imperative at the ");
 
     // Person for the verbs:
     if ((form.tag & P1_BIT) == P1_BIT)

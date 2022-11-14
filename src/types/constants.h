@@ -28,8 +28,8 @@ This file contains the constants and define*/
 #define PPas L"PPas"
 #define IFut L"IFut"
 #define CPre L"CPre"
-#define ImPre L"ImPre"
 #define Inf L"Inf"
+#define ImPre L"ImPre"
 
 #define Mas L"Mas"
 #define Fem L"Fem"
@@ -63,9 +63,10 @@ This file contains the constants and define*/
 #define IFut_BIT 4096
 #define CPre_BIT 8192
 #define Inf_BIT 16384
+#define ImPre_BIT 32768
 
-#define Mas_BIT 32768
-#define Fem_BIT 65536
+#define Mas_BIT 65536
+#define Fem_BIT 131072
 #define InvGen_BIT Mas_BIT + Fem_BIT
 #define InvPL_BIT PL_BIT + SG_BIT
 

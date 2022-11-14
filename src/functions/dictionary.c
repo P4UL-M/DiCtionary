@@ -115,6 +115,8 @@ unsigned int getFlags(wchar_t *tag)
             flags += InvGen_BIT;
         else if (wcscmp(flag, InvPL) == 0)
             flags += InvPL_BIT;
+        else if (wcscmp(flag, ImPre) == 0)
+            flags += ImPre_BIT;
     } while ((flag = wcstok(NULL, L"+", &saveptr1)));
     return flags;
 }
