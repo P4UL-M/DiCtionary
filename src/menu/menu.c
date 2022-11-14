@@ -240,7 +240,7 @@ void waitKey()
     sleep(1);
     while (1)
     {
-        if (getchar())
+        if (getKeyFunc())
         {
             fflush(stdin);
             break;
