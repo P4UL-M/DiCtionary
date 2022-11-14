@@ -48,6 +48,8 @@ wchar_t *smoothSentence(wchar_t *sentence)
     }
     // make first letter uppercase
     *output = towupper(*output);
+    // make sure last character is \0
+    output[wcslen(output)] = L'\0';
     return output;
 }
 

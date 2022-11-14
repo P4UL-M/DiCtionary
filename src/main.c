@@ -19,7 +19,7 @@ int main()
 {
     clock_t t;
     t = clock();
-    char *locale = setlocale(LC_ALL, "");
+    setlocale(LC_ALL, "");
     t_dictionary dictionary = extractFile("data/sorted_dictionnaire.txt");
     wprintf(L"time of execution: %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
     buildPonderations(dictionary);
