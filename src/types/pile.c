@@ -42,19 +42,19 @@ void displayNode(p_pnode node)
     {
         displayNode(node->next);
     }
-    printf("%c", node->node->value);
+    wprintf(L"%c", node->node->value);
 }
 
 void displayPile(p_pile pile)
 {
     if (isEmpty(pile))
     {
-        printf("Empty pile\n");
+        wprintf(L"Empty pile\n");
         return;
     }
-    printf("current word is : '");
+    wprintf(L"current word is : '");
     displayNode(pile->head);
-    printf("'\n");
+    wprintf(L"'\n");
 }
 
 void enpileForm(p_fpile pile, p_form value)
@@ -80,7 +80,7 @@ void displayFPile(p_fpile pile)
 {
     if (pile->head == NULL)
     {
-        printf("Empty pile\n");
+        wprintf(L"Empty pile\n");
         return;
     }
     else
@@ -88,11 +88,11 @@ void displayFPile(p_fpile pile)
         p_form temp = pile->head;
         while (temp != NULL)
         {
-            printf("%ls, ", temp->word);
+            wprintf(L"%ls, ", temp->word);
             temp = temp->next;
         }
     }
-    printf("\b\b  \b\b\n");
+    wprintf(L"\b\b  \b\b\n");
 }
 
 p_form depileForm(p_fpile pile)

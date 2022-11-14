@@ -26,7 +26,7 @@ This file contains the main menu*/
 void title()
 {
     system(CLEAR);
-    printf("%s\tWelcome in the DiCtionary%s\t\n\n", ANSI_BACKGROUND_WHITE, ANSI_COLOR_RESET);
+    wprintf(L"%s\tWelcome in the DiCtionary%s\t\n\n", ANSI_BACKGROUND_WHITE, ANSI_COLOR_RESET);
 }
 
 void menu(t_dictionary dico)
@@ -40,13 +40,13 @@ void menu(t_dictionary dico)
         do
         {
             title();
-            printf("%sDo you want to:\n", ANSI_COLOR_GREEN);
-            printf("%s1.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-            printf("%s2.%s Generate a random sentence?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-            printf("%s3.%s Add a word in the dictionary?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-            printf("%s4.%s Exit?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            wprintf(L"%sDo you want to:\n", ANSI_COLOR_GREEN);
+            wprintf(L"%s1.%s Search for a word?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            wprintf(L"%s2.%s Generate a random sentence?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            wprintf(L"%s3.%s Add a word in the dictionary?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            wprintf(L"%s4.%s Exit?\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
             printf(ANSI_COLOR_RESET);
-            printf("\n>");
+            wprintf(L"\n>");
             scanf("%d", &action);
             fflush(stdin);
         } while (action < 1 || action > 4);
@@ -64,9 +64,9 @@ void menu(t_dictionary dico)
             break;
         case 3:
             title();
-            printf("%sEnter the word you want to add:\n", ANSI_COLOR_GREEN);
+            wprintf(L"%sEnter the word you want to add:\n", ANSI_COLOR_GREEN);
             printf(ANSI_COLOR_RESET);
-            printf("\n>");
+            wprintf(L"\n>");
             wchar_t target[50];
             scanf("%50ls", target);
             p_word word = getWord(dico.nouns, target, true);
@@ -84,7 +84,7 @@ void menu(t_dictionary dico)
             }
             if (word != NULL)
             {
-                printf("%sThe word already exists in the dictionary\n%s", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+                wprintf(L"%sThe word already exists in the dictionary\n%s", ANSI_COLOR_RED, ANSI_COLOR_RESET);
                 waitKey();
             }
             break;
@@ -100,29 +100,29 @@ void searchMenu(t_dictionary dico)
 // Function to launch the search of a word
 {
     int trueSearch;
-    printf("%sDo you want to search\n%s1.%s A simple word?\n%s2.%s A complex word?\n", ANSI_COLOR_GREEN, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+    wprintf(L"%sDo you want to search\n%s1.%s A simple word?\n%s2.%s A complex word?\n", ANSI_COLOR_GREEN, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE);
     do
     {
         printf(ANSI_COLOR_RESET);
-        printf("\n>");
+        wprintf(L"\n>");
         scanf("%d", &trueSearch);
         fflush(stdin);
     } while (trueSearch < 1 || trueSearch > 2);
     trueSearch--;
     int type;
     title();
-    printf("%sWhat type of word do you want to search?\n%s1.%s Noun\n%s2.%s Adjective\n%s3.%s Adverb\n%s4.%s Verb\n%s5.%s Any", ANSI_COLOR_GREEN, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+    wprintf(L"%sWhat type of word do you want to search?\n%s1.%s Noun\n%s2.%s Adjective\n%s3.%s Adverb\n%s4.%s Verb\n%s5.%s Any", ANSI_COLOR_GREEN, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE);
     do
     {
         printf(ANSI_COLOR_RESET);
-        printf("\n>");
+        wprintf(L"\n>");
         scanf("%d", &type);
         fflush(stdin);
     } while (type < 1 || type > 5);
     title();
-    printf("%sEnter the word you want to search:\n", ANSI_COLOR_GREEN);
+    wprintf(L"%sEnter the word you want to search:\n", ANSI_COLOR_GREEN);
     printf(ANSI_COLOR_RESET);
-    printf("\n>");
+    wprintf(L"\n>");
     wchar_t target[50];
     scanAutoCompletion(dico, target, type);
     fflush(stdin);
@@ -141,7 +141,7 @@ void searchword(t_dictionary dico, wchar_t *target, int type, bool trueSearch)
             form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
-            printf("%ls is a noun that is ", target);
+            wprintf(L"%ls is a noun that is ", target);
             displayForms(*result, *form);
             return;
         }
@@ -153,7 +153,7 @@ void searchword(t_dictionary dico, wchar_t *target, int type, bool trueSearch)
             form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
-            printf("%ls is an adjective that is ", target);
+            wprintf(L"%ls is an adjective that is ", target);
             displayForms(*result, *form);
             return;
         }
@@ -165,7 +165,7 @@ void searchword(t_dictionary dico, wchar_t *target, int type, bool trueSearch)
             form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
-            printf("%ls is an adverb that is ", target);
+            wprintf(L"%ls is an adverb that is ", target);
             displayForms(*result, *form);
             return;
         }
@@ -177,22 +177,22 @@ void searchword(t_dictionary dico, wchar_t *target, int type, bool trueSearch)
             form = getForm(*result, target);
         if (result != NULL && form != NULL)
         {
-            printf("%ls is a verb that is ", target);
+            wprintf(L"%ls is a verb that is ", target);
             displayForms(*result, *form);
             return;
         }
     }
-    printf("%sThe word doesn't exist in the dictionary\n%s", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
+    wprintf(L"%sThe word doesn't exist in the dictionary\n%s", ANSI_COLOR_CYAN, ANSI_COLOR_RESET);
     if (trueSearch)
     {
         int adding;
         do
         {
-            printf("Do you want to add this word to the dictionnary?\n");
-            printf("%s1.%s Yes\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-            printf("%s2.%s No", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            wprintf(L"Do you want to add this word to the dictionnary?\n");
+            wprintf(L"%s1.%s Yes\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+            wprintf(L"%s2.%s No", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
             printf(ANSI_COLOR_RESET);
-            printf("\n>");
+            wprintf(L"\n>");
             scanf("%d", &adding);
             fflush(stdin);
         } while (adding < 1 || adding > 2);
@@ -207,28 +207,28 @@ void generateSentenceMenu(t_dictionary dico)
 {
     title();
     int generation_mode = 0, random_type = 0;
-    printf("%sWhich type of random do you want ?\n%s1.%s Fastest one\n%s2.%s Most uniform one\n", ANSI_COLOR_GREEN, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+    wprintf(L"%sWhich type of random do you want ?\n%s1.%s Fastest one\n%s2.%s Most uniform one\n", ANSI_COLOR_GREEN, ANSI_COLOR_RED, ANSI_COLOR_BLUE, ANSI_COLOR_RED, ANSI_COLOR_BLUE);
     do
     {
         printf(ANSI_COLOR_RESET);
-        printf("\n>");
+        wprintf(L"\n>");
         scanf("%d", &random_type);
         fflush(stdin);
     } while (random_type < 1 || random_type > 2);
     title();
-    printf("%sWhich form of sentence do you want to generate?\n", ANSI_COLOR_GREEN);
-    printf("%s1.%s Noun - Adjective - Verb - Noun\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-    printf("%s2.%s Noun - \"qui\" - Verb - Verb - Noun - Adjective\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-    printf("%s3.%s Verb - Noun - Past Participe - \"que\" - Subjonctif - Noun\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+    wprintf(L"%sWhich form of sentence do you want to generate?\n", ANSI_COLOR_GREEN);
+    wprintf(L"%s1.%s Noun - Adjective - Verb - Noun\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+    wprintf(L"%s2.%s Noun - \"qui\" - Verb - Verb - Noun - Adjective\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+    wprintf(L"%s3.%s Verb - Noun - Past Participe - \"que\" - Subjonctif - Noun\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
     do
     {
         printf(ANSI_COLOR_RESET);
-        printf("\n>");
+        wprintf(L"\n>");
         scanf("%d", &generation_mode);
         fflush(stdin);
     } while (generation_mode < 1 || generation_mode > 3); // Ne pas oublier l'easter egg
     title();
-    printf("%sSentence :%s\n\n> ", ANSI_COLOR_RED, ANSI_COLOR_RESET);
+    wprintf(L"%sSentence :%s\n\n> ", ANSI_COLOR_RED, ANSI_COLOR_RESET);
     generateSentence(dico, generation_mode, random_type);
 }
 
@@ -236,7 +236,7 @@ void waitKey()
 // Function to wait for the users in resolution
 {
     fflush(stdin);
-    printf("\nPress a key to continue...\n");
+    wprintf(L"\nPress a key to continue...\n");
     sleep(1);
     while (1)
     {
@@ -254,22 +254,22 @@ void addToDico(t_dictionary dico, wchar_t *word)
     title();
     do
     {
-        printf("%sWhat is the type of the word?\n", ANSI_COLOR_GREEN);
-        printf("%s1.%s Noun\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf("%s2.%s Adjective\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf("%s3.%s Adverb\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
-        printf("%s4.%s Verb\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+        wprintf(L"%sWhat is the type of the word?\n", ANSI_COLOR_GREEN);
+        wprintf(L"%s1.%s Noun\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+        wprintf(L"%s2.%s Adjective\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+        wprintf(L"%s3.%s Adverb\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
+        wprintf(L"%s4.%s Verb\n", ANSI_COLOR_RED, ANSI_COLOR_BLUE);
         printf(ANSI_COLOR_RESET);
-        printf("\n>");
+        wprintf(L"\n>");
         scanf("%d", &type);
         fflush(stdin);
     } while (type < 1 || type > 4);
     title();
-    printf("%sIs your word the base form of the word? (1 for yes, 2 for no)%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+    wprintf(L"%sIs your word the base form of the word? (1 for yes, 2 for no)%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
     int base;
     do
     {
-        printf("\n>");
+        wprintf(L"\n>");
         scanf("%d", &base);
         fflush(stdin);
     } while (base < 1 || base > 2);
@@ -277,10 +277,10 @@ void addToDico(t_dictionary dico, wchar_t *word)
     if (base - 1)
     {
         title();
-        printf("%sWhat is the base form of the word?%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
+        wprintf(L"%sWhat is the base form of the word?%s\n", ANSI_COLOR_GREEN, ANSI_COLOR_RESET);
         do
         {
-            printf("\n>");
+            wprintf(L"\n>");
             scanf("%50ls", baseForm);
             fflush(stdin);
         } while (wcslen(baseForm) < 1);
@@ -288,10 +288,10 @@ void addToDico(t_dictionary dico, wchar_t *word)
     else
         wcscpy(baseForm, word);
     title();
-    printf("%sEnter the tags of your word separated by a '+' :\n\n", ANSI_COLOR_GREEN);
-    printf("%sAll the possible tags are :\n", ANSI_COLOR_RED);
-    printf("%s> SG - PL\n> Mas - Fem\n> P1 - P2 - P3\n", ANSI_COLOR_CYAN);
-    printf("> IPre - IImp - SPre - SImp - IPSim - PPre - SImp - PPas - IFut - CPre - Inf\n\n%s>", ANSI_COLOR_RESET);
+    wprintf(L"%sEnter the tags of your word separated by a '+' :\n\n", ANSI_COLOR_GREEN);
+    wprintf(L"%sAll the possible tags are :\n", ANSI_COLOR_RED);
+    wprintf(L"%s> SG - PL\n> Mas - Fem\n> P1 - P2 - P3\n", ANSI_COLOR_CYAN);
+    wprintf(L"> IPre - IImp - SPre - SImp - IPSim - PPre - SImp - PPas - IFut - CPre - Inf\n\n%s>", ANSI_COLOR_RESET);
     wchar_t tags[50];
     scanf("%50ls", tags);
     fflush(stdin);

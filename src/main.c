@@ -7,6 +7,7 @@ This file contains the main algorithm*/
 #include <locale.h>
 #include <wchar.h>
 #include <wchar.h>
+#include <locale.h>
 
 #include "types/struct.h"
 #include "functions/dictionary.h"
@@ -18,10 +19,11 @@ int main()
 {
     clock_t t;
     t = clock();
+    char *locale = setlocale(LC_ALL, "");
     t_dictionary dictionary = extractFile("data/sorted_dictionnaire.txt");
-    printf("time of execution: %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
+    wprintf(L"time of execution: %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
     buildPonderations(dictionary);
     menu(dictionary);
-    printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
+    wprintf(L"time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }

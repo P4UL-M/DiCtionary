@@ -122,10 +122,10 @@ unsigned int getFlags(wchar_t *tag)
 t_dictionary extractFile(char *path)
 {
     FILE *fp;
-    fp = fopen(path, "r");
+    fp = fopen(path, "r,ccs=UNICODE");
     if (fp == NULL)
     {
-        printf("Error opening file");
+        wprintf(L"Error opening file");
         exit(1);
     }
     wchar_t line[MAX_SIZE_LINE];
@@ -226,10 +226,10 @@ void addToBuffer(p_buffer buffer, wchar_t *line)
 
 void updateFile(char *path, t_inputWord word)
 {
-    FILE *fp = fopen(path, "r");
+    FILE *fp = fopen(path, "r,ccs=UNICODE");
     if (fp == NULL)
     {
-        printf("Error opening file");
+        wprintf(L"Error opening file");
         exit(1);
     }
     wchar_t line[MAX_SIZE_LINE];
@@ -239,10 +239,10 @@ void updateFile(char *path, t_inputWord word)
         addToBuffer(buffer, line);
     }
     fclose(fp);
-    fp = fopen(path, "w");
+    fp = fopen(path, "w,ccs=UNICODE");
     if (fp == NULL)
     {
-        printf("Error opening file");
+        wprintf(L"Error opening file");
         exit(1);
     }
     p_line entry = buffer->first;

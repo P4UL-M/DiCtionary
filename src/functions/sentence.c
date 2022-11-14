@@ -152,7 +152,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
             output = wcscat(output, L" ");
         }
         output = wcscat(output, L".");
-        printf("%ls\n", smoothSentence(output));
+        wprintf(L"%ls\n", smoothSentence(output));
         free(output);
         return;
     }
@@ -220,7 +220,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         int i = 0;
         while (c != '\0')
         {
-            printf("%c ", c);
+            wprintf(L"%c %d\n", c, c);
             c = output[++i];
         }
         free(output);
@@ -291,7 +291,7 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
             output = wcscat(output, L" ");
         }
         output = wcscat(output, L".");
-        printf("%ls\n", smoothSentence(output));
+        wprintf(L"%ls\n", smoothSentence(output));
         free(output);
         return;
     }

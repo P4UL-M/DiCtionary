@@ -10,14 +10,9 @@
 #include <conio.h>
 #define getKey()                                             \
     ({                                                       \
-        wchar_t *c = (wchar_t *)malloc(sizeof(wchar_t) * 3); \
-        c[0] = (wchar_t)getwchar();                          \
+        wchar_t *c = (wchar_t *)malloc(sizeof(wchar_t) * 2); \
+        c[0] = (wchar_t)_getwch();                           \
         c[1] = '\0';                                         \
-        if (c[0] == 195)                                     \
-            c[1] = (wchar_t)getwchar();                      \
-        else                                                 \
-            c[1] = '\0';                                     \
-        c[2] = '\0';                                         \
         fflush(stdin);                                       \
         return c;                                            \
     })
@@ -63,12 +58,12 @@ wchar_t *scanAutoCompletion(t_dictionary dictionnary, wchar_t *target, int type)
             wchar_t *c = getKeyFunc();
             if (c[0] == '\t')
             {
-                printf("\n");
+                wprintf(L"\n");
                 state = AUTOCOMPLETION;
             }
             else if (c[0] == '\n' || c[0] == 13)
             {
-                printf("\n");
+                wprintf(L"\n");
                 state = STOP;
             }
             else if (c[0] == 127)
@@ -76,12 +71,12 @@ wchar_t *scanAutoCompletion(t_dictionary dictionnary, wchar_t *target, int type)
                 if (i > 0)
                 {
                     target[--i] = '\0';
-                    printf("\b \b");
+                    wprintf(L"\b \b");
                 }
             }
             else
             {
-                printf("%ls", c);
+                wprintf(L"%ls", c);
                 for (int j = 0; j < wcslen(c); j++)
                 {
                     target[i++] = c[j];
@@ -115,20 +110,20 @@ wchar_t *scanAutoCompletion(t_dictionary dictionnary, wchar_t *target, int type)
             }
             if (pile->size == 0)
             {
-                printf("No word found\n");
+                wprintf(L"No word found\n");
             }
             else if (pile->size > 10)
             {
-                printf("Too many words found, please be more specific\n");
+                wprintf(L"Too many words found, please be more specific\n");
             }
             else
             {
-                printf("Words found:\n");
+                wprintf(L"Words found:\n");
                 displayFPile(pile);
             }
             freeFPile(pile);
             state = CONTINUE;
-            printf(">%ls", target);
+            wprintf(L">%ls", target);
         }
     }
     return target;
