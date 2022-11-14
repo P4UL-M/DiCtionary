@@ -82,6 +82,8 @@ void displayForms(t_word word, t_form form)
     t_node temp = {
         .forms = word.forms,
     };
+    if (temp.forms == NULL)
+        return;
     wprintf(L".\nOther forms of the word are :\n");
 
 #pragma region Verbs
@@ -234,7 +236,6 @@ void displayForms(t_word word, t_form form)
                     wprintf(L"%ls\n>Forms:\n", ANSI_COLOR_RED);
                     Nounsaid = 0;
                 }
-                wprintf(L"\n%ls>Noun:\n", ANSI_COLOR_RED);
                 wprintf(L"\t%ls%ls:%ls %ls\n", ANSI_COLOR_CYAN, person[i], ANSI_COLOR_RESET, declin->word);
             }
         }
