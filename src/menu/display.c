@@ -49,7 +49,7 @@ void displayForm(t_form form)
 
     // Plural/Singular:
     if ((form.tag & InvPL_BIT) == InvPL_BIT)
-        printf(" invariable in number");
+        printf("invariable in number");
     else if ((form.tag & PL_BIT) == PL_BIT)
         printf("plural");
     else if ((form.tag & SG_BIT) == SG_BIT)

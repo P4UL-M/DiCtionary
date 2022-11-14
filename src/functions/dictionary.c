@@ -5,6 +5,10 @@ This file contains the functions in order to extract text from the dictionary*/
 #include <stdlib.h>
 #define _GNU_SOURCE
 #include <wchar.h>
+#ifdef _WIN32
+wchar_t *wcstok_s(wchar_t *str, const wchar_t *delim, wchar_t **ptr);
+#define wcstok wcstok_s
+#endif
 #include "dictionary.h"
 #include "search.h"
 #include "../types/struct.h"
