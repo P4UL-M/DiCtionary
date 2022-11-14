@@ -35,14 +35,14 @@ This file contains the constants and define*/
 #define InvGen L"InvGen"
 #define InvPL L"InvPL"
 
-#define ANSI_COLOR_RED "\x1b[0m\x1b[31;4m"
-#define ANSI_COLOR_GREEN "\x1b[0m\x1b[32;1;3m"
-#define ANSI_COLOR_YELLOW "\x1b[0m\x1b[33m"
-#define ANSI_COLOR_BLUE "\x1b[0m\x1b[34m"
-#define ANSI_COLOR_MAGENTA "\x1b[0m\x1b[35m"
-#define ANSI_COLOR_CYAN "\x1b[0m\x1b[36m"
-#define ANSI_COLOR_RESET "\x1b[0m"
-#define ANSI_BACKGROUND_WHITE "\x1b[0m\x1b[39;1m\e[47m\e[K"
+#define ANSI_COLOR_RED L"\x1b[0m\x1b[31;4m"
+#define ANSI_COLOR_GREEN L"\x1b[0m\x1b[32;1;3m"
+#define ANSI_COLOR_YELLOW L"\x1b[0m\x1b[33m"
+#define ANSI_COLOR_BLUE L"\x1b[0m\x1b[34m"
+#define ANSI_COLOR_MAGENTA L"\x1b[0m\x1b[35m"
+#define ANSI_COLOR_CYAN L"\x1b[0m\x1b[36m"
+#define ANSI_COLOR_RESET L"\x1b[0m"
+#define ANSI_BACKGROUND_WHITE L"\x1b[0m\x1b[39;1m\e[47m\e[K"
 
 // binary constants
 #define SG_BIT 1
