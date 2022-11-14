@@ -28,13 +28,43 @@ wchar_t *smoothSentence(wchar_t *sentence)
         if (wcspbrk(index, L"ae") == index + 1 && wcschr(index, L' ') == index + 2 && (index == output || *(index - 1) == L' '))
         {
             wchar_t *next = index + 3;
-            if (wcspbrk(next, L"aeiouy") == next)
+            if (wcspbrk(next, L"aeiouyéèê") == next)
             {
                 *(index + 1) = '\'';
                 wmemmove(index + 2, index + 3, wcslen(index + 3) + 1);
             }
         }
         index += 3;
+    }
+    // detect je to j'
+    index = output;
+    while ((index = wcschr(index, L'j')) != NULL)
+    {
+        if (wcspbrk(index, L"e") == index + 1 && wcschr(index, L' ') == index + 2 && (index == output || *(index - 1) == L' '))
+        {
+            wchar_t *next = index + 3;
+            if (wcspbrk(next, L"aeiouyéèê") == next)
+            {
+                *(index + 1) = '\'';
+                wmemmove(index + 2, index + 3, wcslen(index + 3) + 1);
+            }
+        }
+        index += 3;
+    }
+    // detect que to qu'
+    index = output;
+    while ((index = wcschr(index, L'q')) != NULL)
+    {
+        if (wcspbrk(index, L"u") == index + 1 && wcschr(index, L'e') == index + 2 && wcschr(index, L' ') == index + 3 && (index == output || *(index - 1) == L' '))
+        {
+            wchar_t *next = index + 4;
+            if (wcspbrk(next, L"aeiouyéèê") == next)
+            {
+                *(index + 2) = '\'';
+                wmemmove(index + 3, index + 4, wcslen(index + 4) + 1);
+            }
+        }
+        index += 4;
     }
     // remove space before ponctuation
     index = output;
