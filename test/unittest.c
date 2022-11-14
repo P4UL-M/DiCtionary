@@ -156,15 +156,7 @@ int main()
     setlocale(LC_ALL, "");
     clock_t t;
     t = clock();
-    FILE *fp;
-    fp = fopen("data/sorted_dictionnaire.txt", "r,ccs=UNICODE");
-    if (fp == NULL)
-    {
-        wprintf(L"Error opening file");
-        exit(1);
-    }
-    wchar_t line[MAX_SIZE_LINE];
-    t_dictionary dictionary = extractFile("data/dictionnaire.txt");
+    t_dictionary dictionary = extractFile("data/sorted_dictionnaire.txt");
     buildPonderations(dictionary);
     wprintf(L"number of words: %d", dictionary.nouns->ponderation + dictionary.verbs->ponderation + dictionary.adjectives->ponderation + dictionary.adverbs->ponderation);
     wprintf(L"Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
@@ -176,7 +168,7 @@ int main()
     {
         wprintf(L"Random words are correct\n");
     }
-    if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
+    if (checkExtract(dictionary, "data/sorted_dictionnaire.txt") == 0)
     {
         wprintf(L"Extracted file is correct\n");
     }
