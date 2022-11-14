@@ -66,7 +66,7 @@ wchar_t *scanAutoCompletion(t_dictionary dictionnary, wchar_t *target, int type)
                 wprintf(L"\n");
                 state = STOP;
             }
-            else if (c[0] == 127)
+            else if (c[0] == 127 || c[0] == '\b')
             {
                 if (i > 0)
                 {
