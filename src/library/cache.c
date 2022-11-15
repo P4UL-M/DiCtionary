@@ -1,6 +1,6 @@
-/*TaCuzu
-Paul Mairesse and Axel Loones
-This file contains function to interact with the cache*/
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains functions to interact with the cache*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>

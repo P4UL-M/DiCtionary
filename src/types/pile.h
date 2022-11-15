@@ -1,5 +1,6 @@
 /*DiCtionary
-Quentin Cardona, Axel Loones and Paul Mairesse*/
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains functions for stack gestion*/
 #ifndef PILE_H
 #define PILE_H
 #include <stdbool.h>

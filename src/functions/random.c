@@ -114,7 +114,7 @@ p_word getRandomWord(p_tree tree, bool trueSearchMode)
         node = findRandom(tree);
     p_word result = (p_word)malloc(sizeof(t_word));
     result->forms = node->forms;
-    result->base = getFormByIndex(*node, Main_BIT);
+    result->base = getFormByTag(*node, Main_BIT);
     if (result->base == NULL)
     {
         result->base = result->forms;

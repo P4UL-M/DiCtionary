@@ -8,6 +8,7 @@ This file contains the functions for the structures*/
 #include <wchar.h>
 
 p_tree create_tree()
+// To create an empty tree
 {
     p_tree tree = (p_tree)malloc(sizeof(t_tree));
     tree->children = NULL;
@@ -17,6 +18,7 @@ p_tree create_tree()
 }
 
 p_node add_child(p_node parent, wchar_t letter)
+// To add a child to a node
 {
     p_child child = (p_child)malloc(sizeof(t_child));
     if (parent->children == NULL)
@@ -40,6 +42,7 @@ p_node add_child(p_node parent, wchar_t letter)
 }
 
 p_node get_child(p_node parent, wchar_t letter)
+// To get a child from a node with the letter
 {
     p_child current = parent->children;
     while (current != NULL)
@@ -54,6 +57,7 @@ p_node get_child(p_node parent, wchar_t letter)
 }
 
 int countForms(p_node node)
+// To count all forms on a node
 {
     int count = 0;
     p_form current = node->forms;
@@ -66,6 +70,7 @@ int countForms(p_node node)
 }
 
 int hasForms(p_node node)
+// To check if a node has forms
 {
     int count = 0;
     p_form current = node->forms;
@@ -77,6 +82,7 @@ int hasForms(p_node node)
 }
 
 int countChildren(p_node node)
+// To count the children of a node
 {
     if (node == NULL)
         return 0;
@@ -91,6 +97,7 @@ int countChildren(p_node node)
 }
 
 void addForm(p_node node, wchar_t *word, int tag)
+// To add a form to a node
 {
     p_form current = (p_form)malloc(sizeof(t_form));
     if (node->forms == NULL)

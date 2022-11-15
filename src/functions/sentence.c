@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains all generation functions*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -16,7 +19,7 @@ p_form accords(p_word word, unsigned int tag)
     t_node temp = {
         .forms = word->forms,
     };
-    return getFormByIndex(temp, tag);
+    return getFormByTag(temp, tag);
 }
 
 wchar_t *smoothSentence(wchar_t *sentence)

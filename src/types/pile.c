@@ -1,5 +1,6 @@
 /*DiCtionary
-Quentin Cardona, Axel Loones and Paul Mairesse*/
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains functions for stack gestion*/
 #include "struct.h"
 #include "pile.h"
 #include <stdio.h>
@@ -7,6 +8,7 @@ Quentin Cardona, Axel Loones and Paul Mairesse*/
 #include <stdbool.h>
 
 p_pile createEmptyPile()
+// To create an empty stack
 {
     p_pile pile = (p_pile)malloc(sizeof(t_pile));
     pile->head = NULL;
@@ -14,11 +16,13 @@ p_pile createEmptyPile()
 }
 
 bool isEmpty(p_pile pile)
+// To check if the stask is empty
 {
     return pile->head == NULL;
 }
 
 void enpile(p_pile pile, p_node value)
+// To add a value to the stack
 {
     p_pnode node = (p_pnode)malloc(sizeof(t_pnode));
     node->next = pile->head;
@@ -28,6 +32,7 @@ void enpile(p_pile pile, p_node value)
 }
 
 p_node depile(p_pile pile)
+// To unstack
 {
     if (isEmpty(pile))
         return NULL;
@@ -37,6 +42,7 @@ p_node depile(p_pile pile)
 }
 
 void displayNode(p_pnode node)
+// To display node of a pile
 {
     if (node->next != NULL)
     {
@@ -46,6 +52,7 @@ void displayNode(p_pnode node)
 }
 
 void displayPile(p_pile pile)
+// To display a pile
 {
     if (isEmpty(pile))
     {
@@ -58,6 +65,7 @@ void displayPile(p_pile pile)
 }
 
 void enpileForm(p_fpile pile, p_form value)
+// To stack with second type stack
 {
     p_form form = (p_form)malloc(sizeof(t_form));
     form->next = pile->head;
@@ -69,6 +77,7 @@ void enpileForm(p_fpile pile, p_form value)
 }
 
 p_fpile createEmptyFPile()
+// To create empty second type stack
 {
     p_fpile pile = (p_fpile)malloc(sizeof(t_fpile));
     pile->head = NULL;
@@ -77,6 +86,7 @@ p_fpile createEmptyFPile()
 }
 
 void displayFPile(p_fpile pile)
+// To display second type stack
 {
     if (pile->head == NULL)
     {
@@ -96,6 +106,7 @@ void displayFPile(p_fpile pile)
 }
 
 p_form depileForm(p_fpile pile)
+// To unstack second type stack
 {
     if (pile->head == NULL)
         return NULL;
@@ -105,6 +116,7 @@ p_form depileForm(p_fpile pile)
 }
 
 void freeFPile(p_fpile pile)
+// To free second type stack
 {
     p_form form = NULL;
     while ((form = depileForm(pile)) != NULL)

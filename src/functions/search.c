@@ -12,6 +12,7 @@ This file contains all searching functions*/
 #include "../library/cache.h" // TODO : give credit for library (uhash owner and us in last project)
 
 p_node searchInChild(p_node parent, wchar_t myChar)
+// Search in all direct childs of parent for the char myChar
 {
     if (parent == NULL)
         return NULL;
@@ -56,6 +57,7 @@ p_node search(p_tree tree, wchar_t *word)
 }
 
 p_form getForm(t_word word, wchar_t *form)
+// Get the specific form of the word having its string
 {
     p_form current = word.forms;
     while (current != NULL)
@@ -69,7 +71,8 @@ p_form getForm(t_word word, wchar_t *form)
     return NULL;
 }
 
-p_form getFormByIndex(t_node node, int index)
+p_form getFormByTag(t_node node, int index)
+// Get the specific form having its tag
 {
     p_form current = node.forms;
     while (current != NULL)
@@ -156,7 +159,7 @@ p_word getWord(p_tree tree, wchar_t *word, bool truesearch)
         return NULL;
     p_word result = (p_word)malloc(sizeof(t_word));
     result->forms = current->forms;
-    result->base = getFormByIndex(*current, Main_BIT);
+    result->base = getFormByTag(*current, Main_BIT);
     if (result->base == NULL)
     {
         result->base = result->forms;
@@ -165,12 +168,13 @@ p_word getWord(p_tree tree, wchar_t *word, bool truesearch)
 }
 
 void autocompletionAtNode(p_node node, p_fpile results)
+// Get autocompletion results from the node
 {
     if (node == NULL)
         return;
     if (results->size > 10)
         return;
-    p_form main = getFormByIndex(*node, Main_BIT);
+    p_form main = getFormByTag(*node, Main_BIT);
     if (main != NULL)
     {
         enpileForm(results, main);
@@ -185,6 +189,7 @@ void autocompletionAtNode(p_node node, p_fpile results)
 }
 
 void autocompletion(p_tree tree, wchar_t *word, p_fpile result)
+// Get the autocompletion of the word
 {
     if (tree == NULL)
         return;

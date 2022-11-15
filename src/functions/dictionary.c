@@ -61,6 +61,7 @@ void addInTree(p_tree tree, wchar_t *word, wchar_t *base, int tag)
 }
 
 int countChar(wchar_t *word, wchar_t c)
+// Count occurences of c in word
 {
     int count = 0;
     for (int i = 0; word[i] != '\0'; i++)
@@ -204,6 +205,7 @@ t_dictionary extractFile(char *path)
 }
 
 p_buffer createBuffer()
+// Creates a buffer
 {
     p_buffer buffer = (p_buffer)malloc(sizeof(t_buffer));
     buffer->size = 0;
@@ -213,6 +215,7 @@ p_buffer createBuffer()
 }
 
 void addToBuffer(p_buffer buffer, wchar_t *line)
+// Add a line to the buffer
 {
     p_line entry = (p_line)malloc(sizeof(t_line));
     wcscpy(entry->line, line);
@@ -232,6 +235,7 @@ void addToBuffer(p_buffer buffer, wchar_t *line)
 }
 
 void updateFile(char *path, t_inputWord word)
+// Update the file by adding word in it
 {
     FILE *fp = fopen(path, "r,ccs=UNICODE");
     if (fp == NULL)
