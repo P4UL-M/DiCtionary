@@ -294,7 +294,7 @@ void addToDico(t_dictionary dico, wchar_t *word)
     wprintf(L"%lsEnter the tags of your word separated by a '+' :\n\n", ANSI_COLOR_GREEN);
     wprintf(L"%lsAll the possible tags are :\n", ANSI_COLOR_RED);
     wprintf(L"%ls> SG - PL\n> Mas - Fem\n> P1 - P2 - P3\n", ANSI_COLOR_CYAN);
-    wprintf(L"> IPre - IImp - SPre - SImp - IPSim - PPre - SImp - PPas - IFut - CPre - Inf\n\n%ls>", ANSI_COLOR_RESET);
+    wprintf(L"> IPre - IImp - SPre - SImp - IPSim - PPre - SImp - PPas - IFut - CPre - Inf - ImPre\n\n%ls>", ANSI_COLOR_RESET);
     wchar_t tags[50];
     scanf("%50ls", tags);
     fflush(stdin);
