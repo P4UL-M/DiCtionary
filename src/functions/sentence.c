@@ -301,11 +301,6 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         sentence[5] = &que;
         do
         {
-            sentence[6] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), P3_BIT, IPre_BIT + IFut_BIT + IImp_BIT + CPre_BIT + IPSim_BIT + ImPre_BIT);
-        } while (sentence[6] == NULL);
-        nb = (sentence[6]->tag & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
-        do
-        {
             sentence[8] = randomFormWithMask(getRandomWord(dico.nouns, trueRandom), 0, 0);
         } while (sentence[8] == NULL);
         object_flags = sentence[8]->tag & ~Main_BIT;
@@ -317,6 +312,11 @@ void generateSentence(t_dictionary dico, int sentenceType, bool trueRandom)
         {
             sentence[7] = accords(mydet, object_flags);
         } while (sentence[7] == NULL);
+        nb = (sentence[8]->tag & SG_BIT) == SG_BIT ? SG_BIT : PL_BIT;
+        do
+        {
+            sentence[6] = randomFormWithMask(getRandomWord(dico.verbs, trueRandom), P3_BIT + nb, IPre_BIT + IFut_BIT + IImp_BIT + CPre_BIT + IPSim_BIT + ImPre_BIT);
+        } while (sentence[6] == NULL);
         wchar_t *output = calloc(100, sizeof(wchar_t));
         for (int i = 0; i < 9; i++)
         {
