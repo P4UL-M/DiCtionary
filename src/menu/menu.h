@@ -9,9 +9,9 @@ This file contains the main menu*/
 
 void menu(t_dictionary);
 void searchMenu(t_dictionary);
-void searchword(t_dictionary dico, char *target, int type, bool trueSearch);
+void searchword(t_dictionary dico, wchar_t *target, int type, bool trueSearch);
 void generateSentenceMenu(t_dictionary);
 void waitKey();
-void addToDico(t_dictionary, char *);
+void addToDico(t_dictionary, wchar_t *);
 
 #endif

@@ -1,3 +1,6 @@
+/*DiCtionary
+Quentin Cardona, Axel Loones and Paul Mairesse
+This file contains all generation functions*/
 #ifndef SENTENCE_H
 #define SENTENCE_H
 

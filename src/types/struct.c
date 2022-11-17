@@ -5,9 +5,10 @@ This file contains the functions for the structures*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <string.h>
+#include <wchar.h>
 
 p_tree create_tree()
+// To create an empty tree
 {
     p_tree tree = (p_tree)malloc(sizeof(t_tree));
     tree->children = NULL;
@@ -16,7 +17,8 @@ p_tree create_tree()
     return tree;
 }
 
-p_node add_child(p_node parent, char letter)
+p_node add_child(p_node parent, wchar_t letter)
+// To add a child to a node
 {
     p_child child = (p_child)malloc(sizeof(t_child));
     if (parent->children == NULL)
@@ -39,7 +41,8 @@ p_node add_child(p_node parent, char letter)
     return child->node;
 }
 
-p_node get_child(p_node parent, char letter)
+p_node get_child(p_node parent, wchar_t letter)
+// To get a child from a node with the letter
 {
     p_child current = parent->children;
     while (current != NULL)
@@ -54,6 +57,7 @@ p_node get_child(p_node parent, char letter)
 }
 
 int countForms(p_node node)
+// To count all forms on a node
 {
     int count = 0;
     p_form current = node->forms;
@@ -66,6 +70,7 @@ int countForms(p_node node)
 }
 
 int hasForms(p_node node)
+// To check if a node has forms
 {
     int count = 0;
     p_form current = node->forms;
@@ -77,6 +82,7 @@ int hasForms(p_node node)
 }
 
 int countChildren(p_node node)
+// To count the children of a node
 {
     if (node == NULL)
         return 0;
@@ -90,7 +96,8 @@ int countChildren(p_node node)
     return count;
 }
 
-void addForm(p_node node, char *word, int tag)
+void addForm(p_node node, wchar_t *word, int tag)
+// To add a form to a node
 {
     p_form current = (p_form)malloc(sizeof(t_form));
     if (node->forms == NULL)
@@ -103,8 +110,8 @@ void addForm(p_node node, char *word, int tag)
         current->next = node->forms;
         node->forms = current;
     }
-    current->word = (char *)malloc(sizeof(char) * (strlen(word) + 1));
-    strcpy(current->word, word);
+    current->word = (wchar_t *)malloc(sizeof(wchar_t) * (wcslen(word) + 1));
+    wcscpy(current->word, word);
     current->tag = tag;
     return;
 }

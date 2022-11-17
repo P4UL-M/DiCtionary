@@ -5,44 +5,45 @@ This file contains the constants and define*/
 #define verb_h
 
 // string constants
-#define VERB_TYPE "Ver"
-#define NOUN_TYPE "Nom"
-#define ADJECTIVE_TYPE "Adj"
-#define ADVERB_TYPE "Adv"
-#define PRONOUN_TYPE "Pro"
-#define DETERMINANTS_TYPE "Det"
+#define VERB_TYPE L"Ver"
+#define NOUN_TYPE L"Nom"
+#define ADJECTIVE_TYPE L"Adj"
+#define ADVERB_TYPE L"Adv"
+#define PRONOUN_TYPE L"Pro"
+#define DETERMINANTS_TYPE L"Det"
 
-#define SG "SG"
-#define PL "PL"
+#define SG L"SG"
+#define PL L"PL"
 
-#define P1 "P1"
-#define P2 "P2"
-#define P3 "P3"
+#define P1 L"P1"
+#define P2 L"P2"
+#define P3 L"P3"
 
-#define IPre "IPre"
-#define IImp "IImp"
-#define SPre "SPre"
-#define IPSim "IPSim"
-#define PPre "PPre"
-#define SImp "SImp"
-#define PPas "PPas"
-#define IFut "IFut"
-#define CPre "CPre"
-#define Inf "Inf"
+#define IPre L"IPre"
+#define IImp L"IImp"
+#define SPre L"SPre"
+#define IPSim L"IPSim"
+#define PPre L"PPre"
+#define SImp L"SImp"
+#define PPas L"PPas"
+#define IFut L"IFut"
+#define CPre L"CPre"
+#define Inf L"Inf"
+#define ImPre L"ImPre"
 
-#define Mas "Mas"
-#define Fem "Fem"
-#define InvGen "InvGen"
-#define InvPL "InvPL"
+#define Mas L"Mas"
+#define Fem L"Fem"
+#define InvGen L"InvGen"
+#define InvPL L"InvPL"
 
-#define ANSI_COLOR_RED "\x1b[0m\x1b[31;4m"
-#define ANSI_COLOR_GREEN "\x1b[0m\x1b[32;1;3m"
-#define ANSI_COLOR_YELLOW "\x1b[0m\x1b[33m"
-#define ANSI_COLOR_BLUE "\x1b[0m\x1b[34m"
-#define ANSI_COLOR_MAGENTA "\x1b[0m\x1b[35m"
-#define ANSI_COLOR_CYAN "\x1b[0m\x1b[36m"
-#define ANSI_COLOR_RESET "\x1b[0m"
-#define ANSI_BACKGROUND_WHITE "\x1b[0m\x1b[39;1m\e[47m\e[K"
+#define ANSI_COLOR_RED L"\x1b[0m\x1b[31;4m"
+#define ANSI_COLOR_GREEN L"\x1b[0m\x1b[32;1;3m"
+#define ANSI_COLOR_YELLOW L"\x1b[0m\x1b[33m"
+#define ANSI_COLOR_BLUE L"\x1b[0m\x1b[34m"
+#define ANSI_COLOR_MAGENTA L"\x1b[0m\x1b[35m"
+#define ANSI_COLOR_CYAN L"\x1b[0m\x1b[36m"
+#define ANSI_COLOR_RESET L"\x1b[0m"
+#define ANSI_BACKGROUND_WHITE L"\x1b[0m\x1b[39;1m\e[47m\e[K"
 
 // binary constants
 #define SG_BIT 1
@@ -62,9 +63,10 @@ This file contains the constants and define*/
 #define IFut_BIT 4096
 #define CPre_BIT 8192
 #define Inf_BIT 16384
+#define ImPre_BIT 32768
 
-#define Mas_BIT 32768
-#define Fem_BIT 65536
+#define Mas_BIT 65536
+#define Fem_BIT 131072
 #define InvGen_BIT Mas_BIT + Fem_BIT
 #define InvPL_BIT PL_BIT + SG_BIT
 

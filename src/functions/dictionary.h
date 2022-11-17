@@ -22,15 +22,15 @@ typedef struct dictionary
 
 typedef struct s_inputWord
 {
-    char *word;
-    char *base;
-    char *flags;
-    char *type;
+    wchar_t *word;
+    wchar_t *base;
+    wchar_t *flags;
+    wchar_t *type;
 } t_inputWord, *p_inputWord;
 
 typedef struct s_line
 {
-    char line[MAX_SIZE_LINE];
+    wchar_t line[MAX_SIZE_LINE];
     struct s_line *next;
     struct s_line *prev;
 
@@ -44,9 +44,9 @@ typedef struct s_buffer
 } t_buffer, *p_buffer;
 
 t_dictionary extractFile(char *);
-char **extractWord(char *);
+wchar_t **extractWord(wchar_t *);
 void updateFile(char *, t_inputWord);
-void addInTree(p_tree tree, char *word, char *base, int tag);
-unsigned int getFlags(char *tag);
+void addInTree(p_tree tree, wchar_t *word, wchar_t *base, int tag);
+unsigned int getFlags(wchar_t *tag);
 
 #endif

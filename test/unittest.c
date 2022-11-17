@@ -4,99 +4,105 @@ This file contains the main algorithm*/
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "string.h"
+#include "wchar.h"
 #include "../src/types/struct.h"
 #include "../src/functions/dictionary.h"
 #include "../src/functions/search.h"
 #include "../src/functions/random.h"
 #include "../src/functions/sentence.h"
 #include "../src/menu/menu.h"
+#include <locale.h>
+#ifdef _WIN32
+wchar_t *wcstok_s(wchar_t *str, const wchar_t *delim, wchar_t **ptr);
+#define wcstok wcstok_s
+#endif
 
 void displayTree(p_tree dico)
 {
-    printf("%sNODE '%p' with value %c\n", ANSI_COLOR_RED, dico, dico->value);
-    printf("%s-> ponderation: %d\n", ANSI_COLOR_GREEN, dico->ponderation);
-    printf("%sENUMERATING CHILD%s\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
+    wprintf(L"%lsNODE '%p' with value %c\n", ANSI_COLOR_RED, dico, dico->value);
+    wprintf(L"%ls-> ponderation: %d\n", ANSI_COLOR_GREEN, dico->ponderation);
+    wprintf(L"%lsENUMERATING CHILD%ls\n", ANSI_COLOR_BLUE, ANSI_COLOR_RESET);
     for (p_child child = dico->children; child != NULL; child = child->next)
     {
         displayTree(child->node);
     }
-    printf("%sEnd of node '%p'%s\n", ANSI_COLOR_BLUE, dico, ANSI_COLOR_RESET);
+    wprintf(L"%lsEnd of node '%p'%ls\n", ANSI_COLOR_BLUE, dico, ANSI_COLOR_RESET);
 }
 
 int checkExtract(t_dictionary dictionary, char *path)
 {
     FILE *fp;
-    fp = fopen(path, "r");
+    fp = fopen(path, "r,ccs=UNICODE");
     if (fp == NULL)
     {
-        printf("Error opening file");
+        wprintf(L"Error opening file");
         exit(1);
     }
-    char line[MAX_SIZE_LINE];
-    while (fgets(line, MAX_SIZE_LINE, fp))
+    wchar_t line[MAX_SIZE_LINE];
+    while (fgetws(line, MAX_SIZE_LINE, fp))
     {
-        char **extractedStrings = extractWord(line);
+        wchar_t **extractedStrings = extractWord(line);
         if (extractedStrings != NULL)
         {
-            char *type = strtok(extractedStrings[2], ":");
-            if (strcmp(type, NOUN_TYPE) == 0)
+            wchar_t *saveptr;
+            wchar_t *type = wcstok(extractedStrings[2], L":", &saveptr);
+            if (wcscmp(type, NOUN_TYPE) == 0)
             {
                 p_word word = getWord(dictionary.nouns, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in noun %s\n", extractedStrings[0]);
+                    wprintf(L"Error in noun %ls\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word baseWord = getWord(dictionary.nouns, extractedStrings[1], false);
                 if (baseWord == NULL)
                 {
-                    printf("Error in noun %s\n", extractedStrings[1]);
+                    wprintf(L"Error in noun %ls\n", extractedStrings[1]);
                     return 1;
                 }
             }
-            else if (strcmp(type, VERB_TYPE) == 0)
+            else if (wcscmp(type, VERB_TYPE) == 0)
             {
                 p_word word = getWord(dictionary.verbs, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in verb %s\n", extractedStrings[0]);
+                    wprintf(L"Error in verb %ls\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word base = getWord(dictionary.verbs, extractedStrings[1], false);
                 if (base == NULL)
                 {
-                    printf("Error in verb %s\n", extractedStrings[1]);
+                    wprintf(L"Error in verb %ls\n", extractedStrings[1]);
                     return 1;
                 }
             }
-            else if (strcmp(type, ADJECTIVE_TYPE) == 0)
+            else if (wcscmp(type, ADJECTIVE_TYPE) == 0)
             {
                 p_word word = getWord(dictionary.adjectives, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in adjective base %s\n", extractedStrings[0]);
+                    wprintf(L"Error in adjective base %ls\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word base = getWord(dictionary.adjectives, extractedStrings[1], false);
                 if (base == NULL)
                 {
-                    printf("Error in adjective base %s\n", extractedStrings[1]);
+                    wprintf(L"Error in adjective base %ls\n", extractedStrings[1]);
                     return 1;
                 }
             }
-            else if (strcmp(type, ADVERB_TYPE) == 0)
+            else if (wcscmp(type, ADVERB_TYPE) == 0)
             {
                 p_word word = getWord(dictionary.adverbs, extractedStrings[0], true);
                 if (word == NULL)
                 {
-                    printf("Error in adverb base %s\n", extractedStrings[0]);
+                    wprintf(L"Error in adverb base %ls\n", extractedStrings[0]);
                     return 1;
                 }
                 p_word base = getWord(dictionary.adverbs, extractedStrings[1], false);
                 if (base->base != word->base)
                 {
-                    printf("Error in adverb base %s\n", extractedStrings[1]);
+                    wprintf(L"Error in adverb base %ls\n", extractedStrings[1]);
                     return 1;
                 }
             }
@@ -147,24 +153,25 @@ int checkRandom(t_dictionary dictionary)
 int main()
 {
     srand(time(NULL));
+    setlocale(LC_ALL, "");
     clock_t t;
     t = clock();
-    t_dictionary dictionary = extractFile("data/dictionnaire.txt");
+    t_dictionary dictionary = extractFile("data/sorted_dictionnaire.txt");
     buildPonderations(dictionary);
-    printf("number of words: %d", dictionary.nouns->ponderation + dictionary.verbs->ponderation + dictionary.adjectives->ponderation + dictionary.adverbs->ponderation);
-    printf("Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
+    wprintf(L"number of words: %d", dictionary.nouns->ponderation + dictionary.verbs->ponderation + dictionary.adjectives->ponderation + dictionary.adverbs->ponderation);
+    wprintf(L"Time taken to extract the dictionary : %f seconds\n", (double)(clock() - t) / CLOCKS_PER_SEC);
     for (int i = 0; i < 1000; i++)
     {
         generateSentence(dictionary, 3, true);
     }
     if (checkRandom(dictionary) == 0)
     {
-        printf("Random words are correct\n");
+        wprintf(L"Random words are correct\n");
     }
-    if (checkExtract(dictionary, "data/dictionnaire.txt") == 0)
+    if (checkExtract(dictionary, "data/sorted_dictionnaire.txt") == 0)
     {
-        printf("Extracted file is correct\n");
+        wprintf(L"Extracted file is correct\n");
     }
-    printf("time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
+    wprintf(L"time of execution: %f seconds", (double)(clock() - t) / CLOCKS_PER_SEC);
     return 0;
 }
