@@ -14,6 +14,7 @@ This file contains the main menu*/
 #include "../functions/random.h"
 #include "../types/struct.h"
 #include "../library/cache.h"
+#include "easteregg.h"
 #ifdef _WIN32
 #include <windows.h>
 #define CLEAR "cls"
@@ -50,7 +51,8 @@ void menu(t_dictionary dico)
             wprintf(L"\n>");
             scanf("%d", &action);
             fflush(stdin);
-        } while (action < 1 || action > 4);
+        } while ((action < 1 || action > 4) && (action ^ getCode()));
+        easterEgg(action, dico);
         switch (action)
         {
         case 1:
