@@ -31,6 +31,15 @@ You can also choose your intensity of randomness:
 - A dumb random, where the algorithm navigate into the tree randomly.
 - A smart random, where the algorithm navigate into the tree with a probability based on the number of words in the tree.
 
+## Organization of the project
+### Files
+- `src/main.c` : main file of the project
+- `src/functions/*` : all the functionnalities of the project
+- `src/struct/*` : all the structures of the project and their direct functions
+- `src/menu/*` : all the functions of the menu
+- `test/*` : all the test scripts of the functionnalities of the project
+- `stats.py` : python script to generate statistics about the random algorithm
+
 ## Credits
 In this project, we used the following libraries:
 - [uthash](https://troydhanson.github.io/uthash/)
